@@ -1,0 +1,338 @@
+<drawer id="drawer">
+  <vertical>
+    <appbar>
+      <toolbar id="toolbar" title="EniucsStudio测试版本"/>
+      <tabs id="tabs"/>
+    </appbar>
+    <vertical w="auto" h="auto">
+      <viewpager id="viewpager">
+        <frame>
+          <scroll fillViewport="true">
+            <vertical>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+                            <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="快手刷视频" textSize="16sp" gravity="center_vertical"/>
+                  <Switch id="swBtn" marginLeft="210" layout_gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw" bg="#f44336" h="*" w="10"/>
+              </card>
+              <card w="*" h="50" margin="10 5" gravity="center_vertical">
+                <horizontal paddingLeft="22" h="auto">
+                  <text text="抖音刷视频" textSize="16sp" />
+                  <Switch id="swBtn2" marginLeft="210" gravity="center_vertical"/>
+                </horizontal>
+                <View id="vw2" bg="#f44336" h="*" w="10"/>
+              </card>
+            </vertical>
+          </scroll>
+        </frame>
+        <frame>
+        </frame>
+      </viewpager>
+    </vertical>
+  </vertical>
+  <vertical layout_gravity="left" bg="#ffffff" w="280">
+    <list id="menu">
+      <horizontal bg="?selectableItemBackagroud" w="*">
+        <img w="50" h="50" padding="16" src="{{this.icon}}"
+             tint="{{menu_color}}"/>
+        <text textColor="green" textSize="15sp" layout_gravity="center"
+              text="{{this.text}}"/>
+      </horizontal>
+    </list>
+  </vertical>
+</drawer>
