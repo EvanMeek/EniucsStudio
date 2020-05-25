@@ -4,7 +4,19 @@ var menu_color = "#000000";
 ui.layoutFile("./mainUI.xml");
 ui.viewpager.setTitles(["功能管理","功能参数"]);
 ui.tabs.setupWithViewPager(ui.viewpager);
+activity.setSupportActionBar(ui.toolbar);
 ui.toolbar.setupWithDrawer(ui.drawer);
+ui.emitter.on("create_options_menu", menu => {
+    menu.add("日志");
+    menu.add("关于");
+});
+ui.emitter.on("options_item_selected", (e,item) => {
+    switch(item.getTitle()){
+    case "日志":
+        app.startActivity('console');
+        break;
+    }
+});
 // 设置左滑菜单栏的数据源
 ui.menu.setDataSource([
     {
@@ -39,4 +51,3 @@ ui.swBtn2.on("click", ()=>{
     else
         ui.vw2.attr("bg","#4caf50");
 });
-
