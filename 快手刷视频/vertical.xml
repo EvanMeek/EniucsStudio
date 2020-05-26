@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<vertical h="300dp" weightSum="6">
-  <text layout_weiget="1" text="test1"/>
-  <text layout_weiget="1" text="test2"/>
-  <text layout_weiget="2" text="test3" bg="#123432"/>
-  <text layout_weiget="1" text="test4" bg="#fff212"/>
-  <text layout_weiget="1" text="test5" bg="#ff0000"/>
-</vertical>
