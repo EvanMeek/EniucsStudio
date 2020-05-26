@@ -1,0 +1,5 @@
+<scroll>
+  <text id="log text" maxLine="2000" text=""/>
+</scroll>
+
+
