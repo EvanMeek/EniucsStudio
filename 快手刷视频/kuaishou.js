@@ -12,13 +12,16 @@ test();
 
 ////// 当调用moudle.export时,以上代码全部注释 //////
 ////////////////////////////////////////////////////
+
+
 function test() {
     // swipeVideo();
     // run(100000);
     // Sign_in();
     // Over_slider(user,pass);
     // Clean_cache();
-    run(1200);
+    run(12000,_user,_pass);
+    // overSlider(_user, _pass);
     // Skip_Atlas();
 }
 
@@ -147,12 +150,13 @@ function overSlider(usr, pass) {
             pointData = pointData.data.res;
             Log(pointData);
         } else {
+            Log(JSON.stringify(pointData));
             return 0;
         }
 
         //计算X坐标
-        let x1 = parseInt(pointData.split("|")[0].split(",")[0]);
-        let x2 = parseInt(pointData.split("|")[1].split(",")[0]);
+        let x1 = parseInt(pointData.data.res.split("|")[0].split(",")[0]);
+        let x2 = parseInt(pointData.data.res.split("|")[1].split(",")[0]);
         let x = slideBlock.centerX() + (x2 - x1);
         Log(x);
 
