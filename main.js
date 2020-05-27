@@ -1,14 +1,22 @@
 "ui";
+
 const _user = "yzl178me";
 const _pass = "Yangzelin995;";
 var menu_color = "#000000";
 var tabletOperation = require("./Libary/平板操作/tabletOperation.js");
 
-
+let ViewIdListRegisterListener = require("./Libary/utils/saveUIConfig.js");
 ui.layoutFile("./main.xml");
+// 初始化UI;
 initUI();
+// 初始化权限;
+initPermissionThread = threads.start(function(){
+    initPermission();
+});
+// 杀死初始化权限线程
+initPermissionThread.interrupt();
 
-
+// 点击开始后要做的事
 ui.runAllBtn.on("click", () => {
 	log("runAllBtn");
 	threads.start(function () {
@@ -16,23 +24,19 @@ ui.runAllBtn.on("click", () => {
 	});
 });
 
+saveConfig();
+
 /**
  * 主函数
  */
 function main() {
-	// 请求截图权限
-	if (!requestScreenCapture()) {
-		toast("过滑块需要截图权限支持");
-		exit();
-	};
-	//快手极速版
-	if (ui.swBtn.isChecked()) {
-		kwai();
-	}
-	//抖音短视频
-	if (ui.swBtn2.isChecked()) {
-		// douyin();
-	}
+    if(ui.swBtn.isChecked()){
+    	tabletOperation.openApp("快手极速版");
+    	kwai();
+    }
+    if(ui.swBtn2.isChecked()){
+	    // douyin();
+    }
 }
 /**
  * 初始化UI
@@ -167,5 +171,28 @@ function kwai() {
 		//关闭快手
 		tabletOperation.killApp(appName);
 	}
-
+}
+/**
+ * 保存UI配置
+ */
+function saveConfig(){
+    let storage = storages.create('UIConfigInfo')
+    let 需要备份和还原的控件id列表集合 = [
+	['kWaiRunTimeInput'],
+	['kWaiFlyModeBtn','kWaiSignInBtn','kWaiCleanCacheBtn'],
+	['swBtn', 'swBtn2']
+    ]
+    需要备份和还原的控件id列表集合.map((viewIdList) => {
+	let inputViewIdListRegisterListener = new ViewIdListRegisterListener(viewIdList, storage, ui)
+	inputViewIdListRegisterListener.registerlistener()
+	inputViewIdListRegisterListener.restore()
+    });
+}
+/**
+ * 初始化权限
+ */
+function initPermission(){
+    // 无障碍权限
+    auto();
+    requestScreenCapture();
 }
