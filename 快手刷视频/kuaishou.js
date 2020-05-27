@@ -1,17 +1,17 @@
-// 快手刷视频
+// // 快手刷视频
 
-const _user = "yzl178me";
-const _pass = "Yangzelin995;";
+// const _user = "yzl178me";
+// const _pass = "Yangzelin995;";
 
-//请求截图权限
-if (!requestScreenCapture()) {
-    toast("过滑块需要截图权限支持");
-    exit();
-};
-test();
+// //请求截图权限
+// if (!requestScreenCapture()) {
+//     toast("过滑块需要截图权限支持");
+//     exit();
+// };
+// test();
 
-////// 当调用moudle.export时,以上代码全部注释 //////
-////////////////////////////////////////////////////
+// ////// 当调用moudle.export时,以上代码全部注释 //////
+// ////////////////////////////////////////////////////
 
 
 function test() {
@@ -65,7 +65,7 @@ function run(totalTime,user,pass) {
 
 /**
  * 跳过图集
-*/
+ */
 function skipAtlas() {
     if (textContains("点击打开").findOne(500)) {
         swipeVideo(1);
@@ -269,16 +269,16 @@ function swipeVideo(swipeCount) {
     if (swipeCount % 6 == 0) {
         //  双数的第6次下滑
         smlMove(width - random(-50, 50), height + offSet + (videoSwipeDistance / 2),
-            width + random(-50, 50), height + offSet - (videoSwipeDistance / 2), 30);
+		width + random(-50, 50), height + offSet - (videoSwipeDistance / 2), 30);
     } else if (swipeCount % 2 == 0) {
         //双数次上滑        
         smlMove(width + random(-50, 50), height + offSet,
-            width + random(-50, 50), height + offSet + (videoSwipeDistance / 2), 30);
+		width + random(-50, 50), height + offSet + (videoSwipeDistance / 2), 30);
 
     } else {
         //单数下滑
         smlMove(width - random(-50, 50), height + offSet + (videoSwipeDistance / 2),
-            width + random(-50, 50), height + offSet - (videoSwipeDistance / 2), 30);
+		width + random(-50, 50), height + offSet - (videoSwipeDistance / 2), 30);
     }
 
 }
@@ -481,8 +481,9 @@ function bezierCurves(cp, t) {
     result.y = (ay * tCubed) + (by * tSquared) + (cy * t) + cp[0].y;
     return result;
 };
-
-//需要调用时取消注释
-// model.export = {
-//     run:run,    //单个快手流程
-// }
+// 需要调用时取消注释
+module.exports = {
+    run:run,    //单个快手流程
+    signIn:signIn,
+    cleanCache:cleanCache,
+}

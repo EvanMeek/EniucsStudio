@@ -1,20 +1,35 @@
 "ui";
-
-main();
+const _user = "yzl178me";
+const _pass = "Yangzelin995;";
 var menu_color = "#000000";
+var tabletOperation = require("./Libary/平板操作/tabletOperation.js");
+ui.layoutFile("./main.xml");
+initUI();
+
+ui.runAllBtn.on("click",()=>{
+    log("runAllBtn");
+    threads.start(function(){
+	main();
+    });
+});
+
 /**
  * 主函数
  */
-function main(){
-    initUI();
+function main() {
+    if(ui.swBtn.isChecked()){
+	tabletOperation.openApp("快手极速版");
+	kwai();
+    }
+    if(ui.swBtn2.isChecked()){
+	// douyin();
+    }
 }
 /**
  * 初始化UI
  */
 function initUI() {
-
-    ui.layoutFile("./main.xml");
-    ui.viewpager.setTitles(["功能管理", "功能参数"]);
+    ui.viewpager.setTitles(["首页", "功能管理", "功能参数"]);
     ui.tabs.setupWithViewPager(ui.viewpager);
     activity.setSupportActionBar(ui.toolbar);
     ui.toolbar.setupWithDrawer(ui.drawer);
@@ -50,13 +65,48 @@ function initUI() {
     ]);
 
     ui.swBtn.on("click", () => {
-	log("被点击");
-	if (!ui.swBtn.isChecked()) ui.vw.attr("bg", "#f44336");
-	else ui.vw.attr("bg", "#4caf50");
+	if (!ui.swBtn.isChecked())
+	    ui.vw.attr("bg", "#f44336");
+	else
+	    ui.vw.attr("bg", "#4caf50");
+	
     });
     ui.swBtn2.on("click", () => {
-	log("被点击");
-	if (!ui.swBtn2.isChecked()) ui.vw2.attr("bg", "#f44336");
-	else ui.vw2.attr("bg", "#4caf50");
+	if (!ui.swBtn2.isChecked())
+	    ui.vw2.attr("bg", "#f44336");
+	else
+	    ui.vw2.attr("bg", "#4caf50");
     });
+}
+
+/**
+ * 快手
+ * @UI ID如下:
+ * 首页按钮: runAllBtn
+ * 功能管理: 快手刷视频-swBtn 抖音刷视频-swBtn2
+ * 功能参数: 刷视频时间-kwaiRunTimeInput 飞行模式-kWaiFlyModeBtn 签到-kWaiSignInBtn 清理缓存-kWaiCleanCacheBtn
+ */
+function kwai() {
+    var kwaiMain = require("./快手刷视频/kuaishou.js");
+    var flyModeStat = ui.kWaiFlyModeBtn.isChecked();
+    var signInStat = ui.kWaiSignInBtn.isChecked();
+    var cleanCacheStat = ui.kWaiCleanCacheBtn.isChecked();
+    if (flyModeStat){
+	tabletOperation.openFlightMode();
+	log("开启飞行模式");
+	tabletOperation.closeFlightMode();
+	log("关闭飞行模式");
+    }
+    if(signInStat){
+	kwaiMain.signIn();
+    }
+    if(cleanCacheStat){
+	kwaiMain.cleanCache();
+    }
+    //请求截图权限
+    if (!requestScreenCapture()) {
+	toast("过滑块需要截图权限支持");
+	exit();
+    };    
+    kwaiMain.run((ui.kWaiRunTimeInput.text()*60),_user,_pass);	
 }

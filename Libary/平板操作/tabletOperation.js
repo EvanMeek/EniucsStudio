@@ -1,12 +1,4 @@
 
-
-test();
-function test() {
-    var arr = [];
-    clearApp(arr);
-    Log("err");
-}
-
 /**
  * 打开应用
  * @param {应用名} appName 需要打开app名称
@@ -102,7 +94,6 @@ function clearApp(runAppRetain) {
             }
         }
         sleep(100);
-
     } while (true);
     //结束
     home();
@@ -161,7 +152,7 @@ function Log(obj) {
 }
 
 //需要调用时取消注释
-model.export  = { 
+module.exports  = { 
     openApp:openApp,                    //打开app
     killApp:killApp,                    //退出App
     clearApp:clearApp,                  //清理后台App
