@@ -3,7 +3,8 @@
 // test();
 
 function test() {
-    isNetwork();
+    let arr = ["Auto.js Pro"];
+    clearApp(arr);
 }
 
 /**
@@ -69,7 +70,6 @@ function clearApp(runAppRetain) {
             home();
             break;
         }
-
         // Log(run_app_list);
         //遍历所有任务
         for (let i = runAppList.length - 1; i >= 0; i--) {
@@ -89,7 +89,10 @@ function clearApp(runAppRetain) {
                 Log("清除任务");
                 searchDelete = runAppList[i].findOne(descContains("移除"));
                 // Log(search_delete);
-                searchDelete.click();
+                if (searchDelete){
+                    sleep(1000);
+                    searchDelete.click();
+                }
                 x = runAppList[i].bounds().centerX();
                 y1 = runAppList[i].bounds().top;
                 y2 = runAppList[i].bounds().bottom;
@@ -181,6 +184,7 @@ function isNetwork() {
             return true;
         }
         sleep(1000);
+        return false;
     }
 }
 

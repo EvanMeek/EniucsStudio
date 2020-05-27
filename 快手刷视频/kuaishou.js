@@ -16,8 +16,48 @@
 
 function test() {
     // swipeVideo();
-    var base = depth(0)
-    press(x, y, duration);
+    // run(120, _user, _pass);
+    reduceSimilarWorks();
+
+}
+
+/**
+ * 减少类似作品
+ */
+function reduceSimilarWorks() {
+    //获取第一个控件
+    let base = depth(0).findOnce();
+    if (base) {
+        Log("开始减少类似作品");
+        //获取获取坐标然后长按
+        let x = base.bounds().centerX();
+        x = random((x - 100), (x + 100));
+        let y = base.bounds().centerY();
+        x = random((x - 150), (x + 150));
+        press(x, y, 1500);
+        //随机选择4个选项
+        let choice = random(0, 3);
+        sleep(1000);
+        if (choice == 0) {
+            click("作品质量差");
+        } else if (choice == 1) {
+            click("不看该作者");
+        } else if (choice == 2) {
+            click("看过类似作品");
+        } else {
+            click("作品引起不适");
+        }
+        // let reduceWork = text("减少类似作品").findOne(1500);
+        // if (reduceWork) {
+        //     reduceWork = reduceWork.parent().children();
+        //     sleep(2000);
+        //     reduceWork[random(1, 4)].click();
+        // } else {
+        //     Log("没有找到减少类似作品");
+        // }
+    } else {
+        Log("减少类似作品失败");
+    }
 }
 
 /**
@@ -44,18 +84,19 @@ function run(totalTime, user, pass) {
         }
         //判断弹窗事件
         popUpEvent();
-        let waitTime = perVideoWatchTime + random(-4, 2)
+        let waitTime = perVideoWatchTime + random(-2, 4)
 
-        log("本视频观看时长" + waitTime)
+        // log("本视频观看时长" + waitTime);
         sleep(waitTime / 2 * 1000);
         likeAndFollow(7);
         skipAtlas();
         sleep(waitTime / 2 * 1000);
         watchTime += waitTime;
-        log("已看：" + i + "个视频 " + watchTime + "秒");
+        // log("已看：" + i + "个视频 " + watchTime + "秒");
         swipeVideo(i);
         skipAtlas();
     }
+    Log("本次观看时长" + watchTime + "秒");
 }
 
 /**
@@ -63,8 +104,7 @@ function run(totalTime, user, pass) {
  */
 function skipAtlas() {
     if (textContains("点击打开").findOne(500)) {
-        swipeVideo(1);
-        sleep(100);
+        Log("跳过图片");
         swipeVideo(1);
     }
 }
@@ -84,14 +124,15 @@ function cleanCache() {
     let set_Btn = text("设置").findOne(3000);
     if (set_Btn) {
         sleep(500);
-        set_Btn.parent().click();
+        click("设置");
     } else {
         id("left_btn").findOne(3000).click();
         set_Btn = text("设置").findOne(3000);
         sleep(500);
-        set_Btn.parent().click();
+        // set_Btn.parent().click();
+        click("设置");
     }
-    sleep(5000);
+    sleep(1000);
     //找到清理缓存并点击
     let clean_cache_Btn = text("清除缓存").findOne(30000);
     if (clean_cache_Btn) {
@@ -103,7 +144,7 @@ function cleanCache() {
         Log("检测超时，退出清理缓存");
     }
     menuArea();
-    Log(clean_cache_Btn);
+    // Log(clean_cache_Btn);
 
 }
 
@@ -121,6 +162,7 @@ function cleanCache() {
  */
 function overSlider(usr, pass) {
     //找到滑块区域控件
+    sleep(1500);
     let sliderArea = className("android.widget.Image").findOne(1000);
     if (sliderArea) {
         //找到滑块验证区域范围
@@ -150,9 +192,18 @@ function overSlider(usr, pass) {
         }
 
         //计算X坐标
-        let x1 = parseInt(pointData.data.res.split("|")[0].split(",")[0]);
-        let x2 = parseInt(pointData.data.res.split("|")[1].split(",")[0]);
-        let x = slideBlock.centerX() + (x2 - x1);
+        let x2 = pointData.split("|")[1];
+        let x1;
+        let x;
+        if (x2 != undefined) {
+            x2 = x2.split(",")[0];
+            // Log(x2);
+            x1 = pointData.split("|")[0].split(",")[0];
+            x = slideBlock.centerX() + (x2 - x1);
+        } else {
+            x2 = pointData.split("|")[0].split(",")[0];
+            x = slideBlock.centerX() + (x2 - 55);
+        }
         Log(x);
 
         //滑动滑块
@@ -237,9 +288,10 @@ function signIn() {
  */
 function menuArea() {
     let timeCount = 0;
-    while (timeCount >= 10) {
+    while (timeCount <= 10) {
         if (id("slide_right_btn").findOne(1500)) {
             Log("找到主界面");
+            break;
         } else {
             back();
             sleep(1000);
@@ -253,30 +305,30 @@ function menuArea() {
 /**
  * 滑动视频
  * @param {滑动次数} swipeCount 
- * 1. 获取宽高
- * 2. 单数下滑,双数下滑,swipeCount % 6 == 0 下滑
  */
 function swipeVideo(swipeCount) {
     const height = device.height / 2;
     const width = device.width / 2;
     const videoSwipeDistance = height - 100;//视频下滑的长度 px
     let offSet = random(-100, 0)
-    swipeCount += random(3, 6);
-    if (swipeCount % 6 == 0) {
-        //  双数的第6次下滑
-        smlMove( (width - random(-50, 50)), (height + offSet + (videoSwipeDistance / 2)),
-            (width + random(-50, 50)), (height + offSet - (videoSwipeDistance / 2), 30));
+    let upSwipe = random(-6, 6);
+    if (upSwipe == 0) {
+        //  随机上滑
+        // smlMove( (width - random(-50, 50)), (height + offSet + (videoSwipeDistance / 2)),
+        //     (width + random(-50, 50)), (height + offSet - (videoSwipeDistance / 2), 30));
+        smlMove(width + random(-50, 50), height + offSet,
+            width + random(-50, 50), height + offSet + (videoSwipeDistance / 2), 30);
     }
     // else if (swipeCount % 2 == 0) {
     //     //双数次上滑        
     //     smlMove(width + random(-50, 50), height + offSet,
     //         width + random(-50, 50), height + offSet + (videoSwipeDistance / 2), 30);
-
-    // } else {
-    //     //单数下滑
-    //     smlMove(width - random(-50, 50), height + offSet + (videoSwipeDistance / 2),
-    //         width + random(-50, 50), height + offSet - (videoSwipeDistance / 2), 30);
     // }
+    else {
+        //单数下滑
+        smlMove((width - random(-50, 50)), (height + offSet + (videoSwipeDistance / 2)),
+            (width + random(-50, 50)), (height + offSet - (videoSwipeDistance / 2)), 30);
+    }
 
 }
 
@@ -298,7 +350,7 @@ function popUpEvent() {
 }
 
 /**
- * 随机点赞或者关注
+ * 随机点赞或者关注和或者减少类似作品
  * @param {点赞概率} range 有range*2+1分之一的概率点喜欢,range*4+1分之一的概率点关注,关注必定喜欢
  * 1. 获取需要双击喜欢的坐标点
  * 2. 判断随机数 如果喜欢了再判断关注
@@ -322,6 +374,11 @@ function likeAndFollow(range) {
             log("点了关注");
         } else {
             // log("不是点关注的概率:"+isFollow)
+        }
+        //减少类似作品
+        let isreduceSimilarWorks = random(0, 10);
+        if (isreduceSimilarWorks == 4) {
+            reduceSimilarWorks();
         }
     } else {
         // log("不是点喜欢的概率:"+isLike)
@@ -479,10 +536,10 @@ function bezierCurves(cp, t) {
     return result;
 };
 // 需要调用时取消注释
-module.exports = {
-    run: run,    //快手刷视频
-    signIn: signIn,  //快手登录
-    cleanCache: cleanCache,  //快手清理缓存
-    popUpEvent: popUpEvent,  //快手弹窗
-    overSlider: overSlider   //滑块验证
-}
+// module.exports = {
+//     run: run,    //快手刷视频
+//     signIn: signIn,  //快手登录
+//     cleanCache: cleanCache,  //快手清理缓存
+//     popUpEvent: popUpEvent,  //快手弹窗
+//     overSlider: overSlider   //滑块验证
+// }
