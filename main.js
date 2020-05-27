@@ -1,4 +1,5 @@
 "ui";
+
 const _user = "yzl178me";
 const _pass = "Yangzelin995;";
 var menu_color = "#000000";
@@ -6,8 +7,17 @@ var tabletOperation = require("./Libary/平板操作/tabletOperation.js");
 
 let ViewIdListRegisterListener = require("./Libary/utils/saveUIConfig.js");
 ui.layoutFile("./main.xml");
+// 初始化UI;
 initUI();
+// 初始化权限;
+initPermissionThread = threads.start(function(){
+    initPermission();
+});
+// 杀死初始化权限线程
+initPermissionThread.interrupt();
 
+
+// 点击开始后要做的事
 ui.runAllBtn.on("click",()=>{
     log("runAllBtn");
     threads.start(function(){
@@ -27,6 +37,12 @@ function main() {
     }
     if(ui.swBtn2.isChecked()){
 	// douyin();
+    }
+    if (!requestScreenCapture()) {
+	toast("过滑块需要截图权限支持");
+	log("截图权限没有!");
+    }else{
+	log("截图权限Get!");
     }
 }
 /**
@@ -107,11 +123,7 @@ function kwai() {
     if(cleanCacheStat){
 	kwaiMain.cleanCache();
     }
-    //请求截图权限
-    if (!requestScreenCapture()) {
-	toast("过滑块需要截图权限支持");
-	exit();
-    };    
+
     kwaiMain.run((ui.kWaiRunTimeInput.text()*60),_user,_pass);	
 }
 /**
@@ -129,4 +141,12 @@ function saveConfig(){
 	inputViewIdListRegisterListener.registerlistener()
 	inputViewIdListRegisterListener.restore()
     });
+}
+/**
+ * 初始化权限
+ */
+function initPermission(){
+    // 无障碍权限
+    auto();
+    requestScreenCapture();
 }
