@@ -16,13 +16,8 @@
 
 function test() {
     // swipeVideo();
-    // run(100000);
-    // Sign_in();
-    // Over_slider(user,pass);
-    // Clean_cache();
-    run(12000,_user,_pass);
-    // overSlider(_user, _pass);
-    // Skip_Atlas();
+    var base = depth(0)
+    press(x, y, duration);
 }
 
 /**
@@ -39,7 +34,7 @@ function test() {
  *   6. 检查图集
  * 4. 刷视频完成
  */
-function run(totalTime,user,pass) {
+function run(totalTime, user, pass) {
     const perVideoWatchTime = 5;//每隔视频观看10秒
     log("计划时长：" + totalTime)
     let watchTime = 0;
@@ -107,7 +102,7 @@ function cleanCache() {
     } else {
         Log("检测超时，退出清理缓存");
     }
-    back();
+    menuArea();
     Log(clean_cache_Btn);
 
 }
@@ -221,16 +216,16 @@ function signIn() {
                 textContains("今日已签").findOne(1500);
                 sleep(500);
                 Log("签到成功");
-                back();
+                menuArea();
             } else {
                 Log("已经签到过了");
-                back();
+                menuArea();
             }
         }
 
     } else {
         Log("检测超时,退出签到");
-        back();
+        menuArea();
     }
 
 }
@@ -266,20 +261,22 @@ function swipeVideo(swipeCount) {
     const width = device.width / 2;
     const videoSwipeDistance = height - 100;//视频下滑的长度 px
     let offSet = random(-100, 0)
+    swipeCount += random(3, 6);
     if (swipeCount % 6 == 0) {
         //  双数的第6次下滑
-        smlMove(width - random(-50, 50), height + offSet + (videoSwipeDistance / 2),
-		width + random(-50, 50), height + offSet - (videoSwipeDistance / 2), 30);
-    } else if (swipeCount % 2 == 0) {
-        //双数次上滑        
-        smlMove(width + random(-50, 50), height + offSet,
-		width + random(-50, 50), height + offSet + (videoSwipeDistance / 2), 30);
-
-    } else {
-        //单数下滑
-        smlMove(width - random(-50, 50), height + offSet + (videoSwipeDistance / 2),
-		width + random(-50, 50), height + offSet - (videoSwipeDistance / 2), 30);
+        smlMove( (width - random(-50, 50)), (height + offSet + (videoSwipeDistance / 2)),
+            (width + random(-50, 50)), (height + offSet - (videoSwipeDistance / 2), 30));
     }
+    // else if (swipeCount % 2 == 0) {
+    //     //双数次上滑        
+    //     smlMove(width + random(-50, 50), height + offSet,
+    //         width + random(-50, 50), height + offSet + (videoSwipeDistance / 2), 30);
+
+    // } else {
+    //     //单数下滑
+    //     smlMove(width - random(-50, 50), height + offSet + (videoSwipeDistance / 2),
+    //         width + random(-50, 50), height + offSet - (videoSwipeDistance / 2), 30);
+    // }
 
 }
 
@@ -294,7 +291,7 @@ function popUpEvent() {
         sleep(300);
         click("我知道了");
     }
-    else if (id("立即邀请").findOnce()) {
+    else if (text("立即邀请").findOnce()) {
         sleep(300);
         back();
     }
@@ -483,7 +480,9 @@ function bezierCurves(cp, t) {
 };
 // 需要调用时取消注释
 module.exports = {
-    run:run,    //单个快手流程
-    signIn:signIn,
-    cleanCache:cleanCache,
+    run: run,    //快手刷视频
+    signIn: signIn,  //快手登录
+    cleanCache: cleanCache,  //快手清理缓存
+    popUpEvent: popUpEvent,  //快手弹窗
+    overSlider: overSlider   //滑块验证
 }

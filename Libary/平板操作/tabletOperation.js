@@ -1,4 +1,11 @@
 
+
+// test();
+
+function test() {
+    isNetwork();
+}
+
 /**
  * 打开应用
  * @param {应用名} appName 需要打开app名称
@@ -47,6 +54,7 @@ function clearApp(runAppRetain) {
     let runAppList;//运行app列表
     let currentText;//当前app文本
     let searchDelete;//清除按钮
+    Log("清理后台");
     // 回到主页
     home();
     //打开最近任务
@@ -61,9 +69,7 @@ function clearApp(runAppRetain) {
             home();
             break;
         }
-        if (runAppList.length == runAppRetain.length) {
-            break;
-        }
+
         // Log(run_app_list);
         //遍历所有任务
         for (let i = runAppList.length - 1; i >= 0; i--) {
@@ -94,6 +100,9 @@ function clearApp(runAppRetain) {
             }
         }
         sleep(100);
+        if (runAppList.length == runAppRetain.length) {
+            break;
+        }
     } while (true);
     //结束
     home();
@@ -124,10 +133,15 @@ function openSplitScreen(appName1, appName2) {
     //打开app1
     openApp(appName1);
     //分屏
-    sleep(1000);
     splitScreen();
+    sleep(2000);
     // 打开app2
-    openApp(appName2);
+    home();
+    sleep(500);
+    //应用名转换包名
+    appName2 = app.getPackageName(appName2);
+    //打开应用
+    app.launch(appName2);
 }
 
 /**
@@ -151,14 +165,34 @@ function Log(obj) {
     log("--->" + obj);
 }
 
+/**
+ * 判断网络是否可用
+ */
+function isNetwork() {
+    importClass(android.net.ConnectivityManager);
+    var cm = context.getSystemService(context.CONNECTIVITY_SERVICE);
+    var net = cm.getActiveNetworkInfo();
+    log(net);
+    for (var i = 0;i < 10;i++){
+        if (net == null || !net.isAvailable()) {
+            Log("网络连接不可用!");
+        } else {
+            Log("网络连接可用!");
+            return true;
+        }
+        sleep(1000);
+    }
+}
+
 //需要调用时取消注释
-module.exports  = { 
-    openApp:openApp,                    //打开app
-    killApp:killApp,                    //退出App
-    clearApp:clearApp,                  //清理后台App
-    openFlightMode:openFlightMode,      //打开飞行模式
-    closeFlightMode:closeFlightMode,    //关闭飞行模式   
-    openSplitScreen:openSplitScreen,    //打开分屏
-    closeSplitScreen:closeSplitScreen,  //关闭分屏  
-    Log:Log,                            //加强日志
+module.exports = {
+    openApp: openApp,                    //打开app
+    killApp: killApp,                    //退出App
+    clearApp: clearApp,                  //清理后台App
+    openFlightMode: openFlightMode,      //打开飞行模式
+    closeFlightMode: closeFlightMode,    //关闭飞行模式   
+    openSplitScreen: openSplitScreen,    //打开分屏
+    closeSplitScreen: closeSplitScreen,  //关闭分屏  
+    Log: Log,                            //加强日志
+    isNetwork:isNetwork,                 //判断网络是否可用
 }
