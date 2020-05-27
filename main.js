@@ -3,6 +3,8 @@ const _user = "yzl178me";
 const _pass = "Yangzelin995;";
 var menu_color = "#000000";
 var tabletOperation = require("./Libary/平板操作/tabletOperation.js");
+
+let ViewIdListRegisterListener = require("./Libary/utils/saveUIConfig.js");
 ui.layoutFile("./main.xml");
 initUI();
 
@@ -12,6 +14,8 @@ ui.runAllBtn.on("click",()=>{
 	main();
     });
 });
+
+saveConfig();
 
 /**
  * 主函数
@@ -109,4 +113,20 @@ function kwai() {
 	exit();
     };    
     kwaiMain.run((ui.kWaiRunTimeInput.text()*60),_user,_pass);	
+}
+/**
+ * 保存UI配置
+ */
+function saveConfig(){
+    let storage = storages.create('UIConfigInfo')
+    let 需要备份和还原的控件id列表集合 = [
+	['kWaiRunTimeInput'],
+	['kWaiFlyModeBtn','kWaiSignInBtn','kWaiCleanCacheBtn'],
+	['swBtn', 'swBtn2']
+    ]
+    需要备份和还原的控件id列表集合.map((viewIdList) => {
+	let inputViewIdListRegisterListener = new ViewIdListRegisterListener(viewIdList, storage, ui)
+	inputViewIdListRegisterListener.registerlistener()
+	inputViewIdListRegisterListener.restore()
+    });
 }

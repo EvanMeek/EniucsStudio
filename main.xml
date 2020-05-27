@@ -42,7 +42,7 @@
 	      <!-- 刷视频时间 -->
 	      <horizontal w="*" h="*">
 		<text text="刷视频时间: " textSize="18sp" layout_gravity="center_vertical"/>
-		<input id="kWaiRunTimeInput" inputType="number" w="70" text="10"/>
+		<input tag="EditText" id="kWaiRunTimeInput" inputType="number" w="70" text="10"/>
 		<text text="分钟" textSize="18sp" layout_gravity="center_vertical" w="auto"/>
 	      </horizontal>
 	      <!-- 飞行模式 -->
