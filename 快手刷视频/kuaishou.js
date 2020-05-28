@@ -17,8 +17,12 @@
 function test() {
     // swipeVideo();
     // run(120, _user, _pass);
-    reduceSimilarWorks();
-
+    // reduceSimilarWorks();
+    for (var i = 0;i < 5;i++){
+        cleanCache();
+        signIn();
+    }    
+    
 }
 
 /**
@@ -79,13 +83,12 @@ function run(totalTime, user, pass) {
     log("计划时长：" + totalTime)
     let watchTime = 0;
     for (let i = 1; totalTime > watchTime; i++) {
-        if (text("拖动滑块").findOne(500)) {
-            overSlider(user, pass);
-        }
-        //判断弹窗事件
-        popUpEvent();
+        // if (text("拖动滑块").findOne(500)) {
+        //     overSlider(user, pass);
+        // }
+        // //判断弹窗事件
+        // popUpEvent();
         let waitTime = perVideoWatchTime + random(-2, 4)
-
         // log("本视频观看时长" + waitTime);
         sleep(waitTime / 2 * 1000);
         likeAndFollow(7);
@@ -123,10 +126,14 @@ function cleanCache() {
     //判断侧边栏是否打开
     let set_Btn = text("设置").findOne(3000);
     if (set_Btn) {
+        //滑出侧边栏
+        smlMove(10, 500, random(400, 600), random(400, 500), 200);
         sleep(500);
+        Log(1);
         click("设置");
     } else {
-        id("left_btn").findOne(3000).click();
+        //滑出侧边栏
+        smlMove(10, 500, random(400, 600), random(400, 500), 200);
         set_Btn = text("设置").findOne(3000);
         sleep(500);
         // set_Btn.parent().click();
@@ -235,10 +242,13 @@ function signIn() {
     //判断侧边栏是否打开
     let moneyBtn = text("去赚钱").findOne(3000);
     if (moneyBtn) {
+        //滑出侧边栏
+        smlMove(10, 500, random(400, 600), random(400, 500), 200);
         sleep(500);
         moneyBtn.parent().click();
     } else {
-        id("left_btn").findOne(3000).click();
+        //滑出侧边栏
+        smlMove(10, 500, random(400, 600), random(400, 500), 200);
         moneyBtn = text("去赚钱").findOne(3000);
         sleep(500);
         moneyBtn.parent().click();
@@ -336,6 +346,7 @@ function swipeVideo(swipeCount) {
  * 处理弹窗
  * 1. 我知道了
  * 2. 邀请好友
+ * 3. 应用未响应
  */
 function popUpEvent() {
 
@@ -346,6 +357,10 @@ function popUpEvent() {
     else if (text("立即邀请").findOnce()) {
         sleep(300);
         back();
+    }
+    else if (textContains("没有响应").findOnce()) {
+        sleep(1000);
+        click("等待");
     }
 }
 
@@ -360,6 +375,7 @@ function likeAndFollow(range) {
     const height = (depth(0).findOnce().bounds().height() / 2) + random(20, 50);
     const width = (depth(0).findOnce().bounds().width() / 2) + random(20, 50);
     let isLike = random(-1 * range, range);
+    let isreduceSimilarWorks = random(0, 30);
     if (isLike == 0) {
         click(width, height);
         sleep(50);
@@ -375,12 +391,12 @@ function likeAndFollow(range) {
         } else {
             // log("不是点关注的概率:"+isFollow)
         }
+    }
+    else if (isreduceSimilarWorks == 4) {
         //减少类似作品
-        let isreduceSimilarWorks = random(0, 10);
-        if (isreduceSimilarWorks == 4) {
-            reduceSimilarWorks();
-        }
-    } else {
+        reduceSimilarWorks();
+    }
+    else {
         // log("不是点喜欢的概率:"+isLike)
     }
 
@@ -536,10 +552,10 @@ function bezierCurves(cp, t) {
     return result;
 };
 // 需要调用时取消注释
-// module.exports = {
-//     run: run,    //快手刷视频
-//     signIn: signIn,  //快手登录
-//     cleanCache: cleanCache,  //快手清理缓存
-//     popUpEvent: popUpEvent,  //快手弹窗
-//     overSlider: overSlider   //滑块验证
-// }
+module.exports = {
+    run: run,    //快手刷视频
+    signIn: signIn,  //快手登录
+    cleanCache: cleanCache,  //快手清理缓存
+    popUpEvent: popUpEvent,  //快手弹窗
+    overSlider: overSlider   //滑块验证
+}

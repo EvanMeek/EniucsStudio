@@ -2,6 +2,7 @@
 
 const _user = "yzl178me";
 const _pass = "Yangzelin995;";
+let Apparr = ["Auto.js Pro","合集"];	//不被清理的应用数组,通用
 var menu_color = "#000000";
 var tabletOperation = require("./Libary/平板操作/tabletOperation.js");
 
@@ -10,11 +11,9 @@ ui.layoutFile("./main.xml");
 // 初始化UI;
 initUI();
 // 初始化权限;
-initPermissionThread = threads.start(function(){
-    initPermission();
+initPermissionThread = threads.start(function () {
+	initPermission();
 });
-// 杀死初始化权限线程
-initPermissionThread.interrupt();
 
 // 点击开始后要做的事
 ui.runAllBtn.on("click", () => {
@@ -30,13 +29,18 @@ saveConfig();
  * 主函数
  */
 function main() {
-    if(ui.swBtn.isChecked()){
-    	tabletOperation.openApp("快手极速版");
-    	kwai();
-    }
-    if(ui.swBtn2.isChecked()){
-	    // douyin();
-    }
+	// 等待线程完成之后杀死初始化权限线程
+	initPermissionThread.join(60000);
+	initPermissionThread.interrupt();
+
+	//快手极速版
+	if (ui.swBtn.isChecked()) {
+		kwai();
+	}
+	//抖音短视频
+	if (ui.swBtn2.isChecked()) {
+		// douyin();
+	}
 }
 /**
  * 初始化UI
@@ -108,7 +112,6 @@ function kwai() {
 
 	let appName;	//应用名
 
-	let Apparr = ["Auto.js Pro"];	//不被清理的应用数组
 	for (var i = 0; i < 3; i++) {
 
 		//清理后台App(平台专属)
@@ -133,7 +136,12 @@ function kwai() {
 			appName = "快手" + i;
 		}
 		if (app.getPackageName(appName)) {
-			tabletOperation.openApp(appName);
+			//判断是否开启成功,不成功重启一次
+			if (tabletOperation.openApp(appName) == false ){
+				tabletOperation.killApp(appName);
+				sleep(3000);
+				tabletOperation.openApp(appName);
+			};
 		} else {
 			log(appName + "应用不存在");
 			break;
@@ -162,37 +170,43 @@ function kwai() {
 			kwaiMain.cleanCache();
 		}
 
-		//关闭检测弹窗线程
-		checkPop.interrupt();
-
 		//快手刷视频
 		kwaiMain.run((ui.kWaiRunTimeInput.text() * 60), _user, _pass);
 
 		//关闭快手
 		tabletOperation.killApp(appName);
+
+		//关闭检测弹窗线程
+		checkPop.interrupt();
 	}
 }
 /**
  * 保存UI配置
  */
-function saveConfig(){
-    let storage = storages.create('UIConfigInfo')
-    let 需要备份和还原的控件id列表集合 = [
-	['kWaiRunTimeInput'],
-	['kWaiFlyModeBtn','kWaiSignInBtn','kWaiCleanCacheBtn'],
-	['swBtn', 'swBtn2']
-    ]
-    需要备份和还原的控件id列表集合.map((viewIdList) => {
-	let inputViewIdListRegisterListener = new ViewIdListRegisterListener(viewIdList, storage, ui)
-	inputViewIdListRegisterListener.registerlistener()
-	inputViewIdListRegisterListener.restore()
-    });
+function saveConfig() {
+	let storage = storages.create('UIConfigInfo')
+	let 需要备份和还原的控件id列表集合 = [
+		['kWaiRunTimeInput'],
+		['kWaiFlyModeBtn', 'kWaiSignInBtn', 'kWaiCleanCacheBtn'],
+		['swBtn', 'swBtn2']
+	]
+	需要备份和还原的控件id列表集合.map((viewIdList) => {
+		let inputViewIdListRegisterListener = new ViewIdListRegisterListener(viewIdList, storage, ui)
+		inputViewIdListRegisterListener.registerlistener()
+		inputViewIdListRegisterListener.restore()
+	});
 }
 /**
  * 初始化权限
  */
-function initPermission(){
-    // 无障碍权限
-    auto();
-    requestScreenCapture();
+function initPermission() {
+	// 无障碍权限
+	auto.waitFor();
+	auto.setMode("normal");
+	sleep(1000);
+	// 请求截图权限
+	if (!requestScreenCapture()) {
+		toast("过滑块需要截图权限支持");
+		exit();
+	};
 }
