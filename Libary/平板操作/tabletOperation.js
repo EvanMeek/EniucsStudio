@@ -103,7 +103,7 @@ function clearApp(runAppRetain) {
             }
         }
         sleep(100);
-        if (runAppList.length == runAppRetain.length) {
+        if (runAppList.length <= runAppRetain.length) {
             break;
         }
     } while (true);
