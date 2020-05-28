@@ -12,7 +12,7 @@
 
 // ////// 当调用moudle.export时,以上代码全部注释 //////
 // ////////////////////////////////////////////////////
-
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 
 function test() {
     // swipeVideo();
@@ -22,12 +22,13 @@ function test() {
         cleanCache();
         signIn();
     }    
-    
+    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 }
-
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 /**
  * 减少类似作品
  */
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 function reduceSimilarWorks() {
     //获取第一个控件
     let base = depth(0).findOnce();
@@ -62,8 +63,9 @@ function reduceSimilarWorks() {
     } else {
         Log("减少类似作品失败");
     }
+    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 }
-
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 /**
  * 刷视频流程 
  * @param {总时长} totalTime 刷快手视频的总时长
@@ -78,6 +80,7 @@ function reduceSimilarWorks() {
  *   6. 检查图集
  * 4. 刷视频完成
  */
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 function run(totalTime, user, pass) {
     const perVideoWatchTime = 5;//每隔视频观看10秒
     log("计划时长：" + totalTime)
@@ -101,7 +104,7 @@ function run(totalTime, user, pass) {
     }
     Log("本次观看时长" + watchTime + "秒");
 }
-
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 /**
  * 跳过图集
  */
@@ -125,16 +128,19 @@ function cleanCache() {
     Log("开始清理缓存");
     //判断侧边栏是否打开
     let set_Btn = text("设置").findOne(3000);
+    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
     if (set_Btn) {
         //滑出侧边栏
         smlMove(10, 500, random(400, 600), random(400, 500), 200);
         sleep(500);
+	// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
         Log(1);
         click("设置");
     } else {
         //滑出侧边栏
         smlMove(10, 500, random(400, 600), random(400, 500), 200);
         set_Btn = text("设置").findOne(3000);
+	// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
         sleep(500);
         // set_Btn.parent().click();
         click("设置");
@@ -143,16 +149,18 @@ function cleanCache() {
     //找到清理缓存并点击
     let clean_cache_Btn = text("清除缓存").findOne(30000);
     if (clean_cache_Btn) {
+	// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
         sleep(500);
         clean_cache_Btn.parent().parent().click();
         Log("清理缓存中");
+	// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
         sleep(1500);
     } else {
         Log("检测超时，退出清理缓存");
     }
     menuArea();
     // Log(clean_cache_Btn);
-
+    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 }
 
 /**
@@ -167,6 +175,7 @@ function cleanCache() {
  * 6. 计算滑动X坐标 X = 积木中间 + 两个积木之间的距离
  * 7. 回收图片
  */
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 function overSlider(usr, pass) {
     //找到滑块区域控件
     sleep(1500);
@@ -179,7 +188,7 @@ function overSlider(usr, pass) {
         // 找到积木控件范围
         let slideBlock = className("android.widget.Image").find().get(1).bounds();
         Log(slideBlock);
-
+	// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
         //获取截图
         let p1 = images.captureScreen();
         p1 = images.rotate(p1, 180);
@@ -191,13 +200,15 @@ function overSlider(usr, pass) {
         //对接联众
         let pointData = getCode(usr, pass, p2);
         if (pointData.data) {
+	    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
             pointData = pointData.data.res;
             Log(pointData);
+	    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
         } else {
             Log(JSON.stringify(pointData));
             return 0;
         }
-
+	// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
         //计算X坐标
         let x2 = pointData.split("|")[1];
         let x1;
@@ -222,9 +233,10 @@ function overSlider(usr, pass) {
         p2.recycle();
 
     } else {
+	// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
         toastLog("没有找到滑块积木")
     }
-
+    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 }
 
 /**
@@ -235,7 +247,7 @@ function overSlider(usr, pass) {
  * 4. 翻到最下面找到签到按钮并判断点击或者立即签到
  */
 function signIn() {
-
+    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
     //回到主界面
     menuArea();
     Log("开始签到");
@@ -247,6 +259,7 @@ function signIn() {
         sleep(500);
         moneyBtn.parent().click();
     } else {
+	// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
         //滑出侧边栏
         smlMove(10, 500, random(400, 600), random(400, 500), 200);
         moneyBtn = text("去赚钱").findOne(3000);
@@ -264,9 +277,11 @@ function signIn() {
             signInNowBtn.click();
             sleep(500);
             back();
+	    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
         } else {
             scrollDown(0);
             sleep(500);
+	    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
             scrollDown(0);
             Log("滑动到最后");
             //找到去签到按钮
@@ -327,7 +342,7 @@ function swipeVideo(swipeCount) {
         // smlMove( (width - random(-50, 50)), (height + offSet + (videoSwipeDistance / 2)),
         //     (width + random(-50, 50)), (height + offSet - (videoSwipeDistance / 2), 30));
         smlMove(width + random(-50, 50), height + offSet,
-            width + random(-50, 50), height + offSet + (videoSwipeDistance / 2), 30);
+		width + random(-50, 50), height + offSet + (videoSwipeDistance / 2), 30);
     }
     // else if (swipeCount % 2 == 0) {
     //     //双数次上滑        
@@ -337,7 +352,7 @@ function swipeVideo(swipeCount) {
     else {
         //单数下滑
         smlMove((width - random(-50, 50)), (height + offSet + (videoSwipeDistance / 2)),
-            (width + random(-50, 50)), (height + offSet - (videoSwipeDistance / 2)), 30);
+		(width + random(-50, 50)), (height + offSet - (videoSwipeDistance / 2)), 30);
     }
 
 }
@@ -492,12 +507,13 @@ function getCode(username, password, img) {
  */
 function smlMove(qx, qy, zx, zy, time) {
     var xxy = [time];
+    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
     var point = [];
     var dx0 = {
         "x": qx,
         "y": qy
     };
-
+    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
     var dx1 = {
         "x": random(qx - 100, qx + 100),
         "y": random(qy, qy + 50)
@@ -506,14 +522,16 @@ function smlMove(qx, qy, zx, zy, time) {
         "x": random(zx - 100, zx + 100),
         "y": random(zy, zy + 50),
     };
+    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
     var dx3 = {
         "x": zx,
         "y": zy
     };
+    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
     for (var i = 0; i < 4; i++) {
 
         eval("point.push(dx" + i + ")");
-
+	// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
     };
     // log(point[3].x)
 
@@ -521,18 +539,19 @@ function smlMove(qx, qy, zx, zy, time) {
         xxyy = [parseInt(bezierCurves(point, i).x), parseInt(bezierCurves(point, i).y)]
 
         xxy.push(xxyy);
-
+	// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
     }
-
+    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
     // log(xxy);
     gesture.apply(null, xxy);
 };
-
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 /**
  * 仿真随机带曲线滑动的子方法
  * @param {*} cp 
  * @param {*} t 
  */
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 function bezierCurves(cp, t) {
     cx = 3.0 * (cp[1].x - cp[0].x);
     bx = 3.0 * (cp[2].x - cp[1].x) - cx;
@@ -540,17 +559,19 @@ function bezierCurves(cp, t) {
     cy = 3.0 * (cp[1].y - cp[0].y);
     by = 3.0 * (cp[2].y - cp[1].y) - cy;
     ay = cp[3].y - cp[0].y - cy - by;
-
+    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
     tSquared = t * t;
     tCubed = tSquared * t;
     result = {
         "x": 0,
         "y": 0
+	// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
     };
     result.x = (ax * tCubed) + (bx * tSquared) + (cx * t) + cp[0].x;
     result.y = (ay * tCubed) + (by * tSquared) + (cy * t) + cp[0].y;
     return result;
 };
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 // 需要调用时取消注释
 module.exports = {
     run: run,    //快手刷视频
@@ -559,3 +580,5 @@ module.exports = {
     popUpEvent: popUpEvent,  //快手弹窗
     overSlider: overSlider   //滑块验证
 }
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
