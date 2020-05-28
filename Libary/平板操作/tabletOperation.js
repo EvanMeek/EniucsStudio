@@ -6,7 +6,7 @@ function test() {
     let arr = ["Auto.js Pro"];
     clearApp(arr);
 }
-
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 /**
  * 打开应用
  * @param {应用名} appName 需要打开app名称
@@ -17,12 +17,14 @@ function openApp(appName) {
     home();
     sleep(100);
     home();
+    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
     //应用名转换包名
     appName = app.getPackageName(appName);
     //打开应用
     app.launch(appName);
     //判断应用是否打开成功
     while (true) {
+	// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
         if (currentPackage() == appName) {
             Log("打开app成功");
             return appName;
@@ -44,14 +46,16 @@ function killApp(appName) {
     shell('am force-stop ' + appName, true);
     Log("退出app");
 };
-
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 /**
  * 清理后台所有App
  * @param {应用名数组} runAppRetain 不被清理的应用名数组,最多4个 例如 let run_app_retain = ["微信","QQ"];
  */
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 function clearApp(runAppRetain) {
     let isDelete;//是否清除
     let x, y1, y2;//滑动坐标
+    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
     let runAppList;//运行app列表
     let currentText;//当前app文本
     let searchDelete;//清除按钮
@@ -63,17 +67,20 @@ function clearApp(runAppRetain) {
     sleep(1500);
     //循环滑动任务
     do {
+	// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
         runAppList = className("ScrollView").findOne(3000);
         if (runAppList != null) {
             runAppList = runAppList.children();
         } else {
             home();
+	    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
             break;
         }
         // Log(run_app_list);
         //遍历所有任务
         for (let i = runAppList.length - 1; i >= 0; i--) {
             //遍历需要保留的任务
+	    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
             for (let j = 0; j <= runAppRetain.length; j++) {
                 //当前任务和保存任务比较 true 跳过
                 currentText = runAppList[i].findOne(className("TextView")).text();
@@ -94,7 +101,9 @@ function clearApp(runAppRetain) {
                     searchDelete.click();
                 }
                 x = runAppList[i].bounds().centerX();
+		// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
                 y1 = runAppList[i].bounds().top;
+		// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
                 y2 = runAppList[i].bounds().bottom;
                 swipe(x, y1, x, y2, 300);
                 break;
@@ -103,9 +112,11 @@ function clearApp(runAppRetain) {
             }
         }
         sleep(100);
+	// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
         if (runAppList.length <= runAppRetain.length) {
             break;
         }
+	// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
     } while (true);
     //结束
     home();
@@ -115,6 +126,7 @@ function clearApp(runAppRetain) {
  * 打开飞行模式
  */
 function openFlightMode() {
+    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
     // 打开飞行模式
     new Shell().exec("su -c 'settings put global airplane_mode_on 1; am broadcast -a android.intent.action.AIRPLANE_MODE --ez state true'")
 }
@@ -139,6 +151,7 @@ function openSplitScreen(appName1, appName2) {
     splitScreen();
     sleep(2000);
     // 打开app2
+    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
     home();
     sleep(500);
     //应用名转换包名
@@ -146,7 +159,7 @@ function openSplitScreen(appName1, appName2) {
     //打开应用
     app.launch(appName2);
 }
-
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 /**
  * 关闭分屏模式
  * @param {应用名} appName 分屏上面的app   
@@ -159,7 +172,7 @@ function closeSplitScreen(appName) {
     killApp(appName);
     Log("退出分屏");
 }
-
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 /**
  * 日志加强
  * @param {任意对象} obj 带箭头输出任何变量
@@ -167,7 +180,7 @@ function closeSplitScreen(appName) {
 function Log(obj) {
     log("--->" + obj);
 }
-
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 /**
  * 判断网络是否可用
  */
@@ -187,7 +200,7 @@ function isNetwork() {
         return false;
     }
 }
-
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 //需要调用时取消注释
 module.exports = {
     openApp: openApp,                    //打开app
@@ -200,3 +213,6 @@ module.exports = {
     Log: Log,                            //加强日志
     isNetwork:isNetwork,                 //判断网络是否可用
 }
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。

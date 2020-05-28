@@ -1,4 +1,5 @@
 "ui";
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 var timeout_date = new Date(2020,5,5,12,00,00);
 var now_date = new Date();
 const _user = "yzl178me";
@@ -15,7 +16,7 @@ initUI();
 initPermissionThread = threads.start(function () {
     initPermission();
 });
-
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 // 点击开始后要做的事
 ui.runAllBtn.on("click", () => {
     log("runAllBtn");
@@ -30,7 +31,7 @@ ui.runAllBtn.on("click", () => {
 });
 
 saveConfig();
-
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 /**
  * 主函数
  */
@@ -48,6 +49,7 @@ function main() {
 	// douyin();
     }
 }
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 /**
  * 初始化UI
  */
@@ -100,8 +102,9 @@ function initUI() {
 	else
 	    ui.vw2.attr("bg", "#4caf50");
     });
+    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 }
-
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 /**
  * 快手
  * @UI ID如下:
@@ -164,20 +167,22 @@ function kwai() {
 		//滑块验证
 		if (text("拖动滑块").findOne(500)) {
 		    kwaiMain.overSlider(_user, _pass);
+		    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 		}
 		sleep(1000);
 	    }
+	    // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 	});
 	//快手签到
 	if (signInStat) {
 	    kwaiMain.signIn();
 	}
-
+	// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 	//快手清理缓存
 	if (cleanCacheStat) {
 	    kwaiMain.cleanCache();
 	}
-
+	// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 	//快手刷视频
 	kwaiMain.run((ui.kWaiRunTimeInput.text() * 60), _user, _pass);
 
@@ -188,6 +193,7 @@ function kwai() {
 	checkPop.interrupt();
     }
 }
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 /**
  * 保存UI配置
  */
@@ -204,6 +210,7 @@ function saveConfig() {
 	inputViewIdListRegisterListener.restore()
     });
 }
+// 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 /**
  * 初始化权限
  */
