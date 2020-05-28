@@ -39,6 +39,14 @@
 	    <!-- 快手 -->
 	    <vertical margin="20">
 	      <text textSize="22sp" text="快手极速版" color="#4caf50"/>
+	      <!-- 快手换号区间 -->
+	      <horizontal>
+		<text text="换号区间(1-10): 从" textSize="18sp"/>
+		<input tag="EditText" id="switchAccountBegin"
+		       inputType="number" w="30" text="1"/>
+		<text text="到" textSize="18sp"/>
+		<input tag="EditText" id="switchAccountEnd" w="30" text="10"/>
+	      </horizontal>
 	      <!-- 刷视频时间 -->
 	      <horizontal w="*" h="*">
 		<text text="刷视频时间: " textSize="18sp" layout_gravity="center_vertical"/>
