@@ -41,7 +41,7 @@
 	      <text textSize="22sp" text="快手极速版" color="#4caf50"/>
 	      <!-- 快手换号区间 -->
 	      <horizontal>
-		<text text="换号区间(1-10): 从" textSize="18sp"/>
+		<text text="换号区间(0-10): 从" textSize="18sp"/>
 		<input tag="EditText" id="switchAccountBegin"
 		       inputType="number" w="30" text="1"/>
 		<text text="到" textSize="18sp"/>

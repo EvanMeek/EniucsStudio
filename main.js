@@ -194,7 +194,7 @@ function kwai() {
 function saveConfig() {
     let storage = storages.create('UIConfigInfo')
     let 需要备份和还原的控件id列表集合 = [
-	['kWaiRunTimeInput'],
+	['kWaiRunTimeInput','switchAccountBegin','switchAccountEnd'],
 	['kWaiFlyModeBtn', 'kWaiSignInBtn', 'kWaiCleanCacheBtn'],
 	['swBtn', 'swBtn2']
     ]
