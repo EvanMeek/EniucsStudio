@@ -1,0 +1,70 @@
+<drawer id="drawer">
+  <linear orientation="vertical">
+    <!-- 应用头 -->
+    <vertical w="*" h="100">
+      <card h="90">
+	<vertical>
+	  <horizontal w="*">
+	    <img id="logo" src="http://www.autojs.org/assets/uploads/profile/3-profileavatar.png" w="60" h="60" radius="20dp"/>      
+	    <text id="titleBeg" text="Eniucs" textSize="25sp" textStyle="bold" textColor="#00BFFF" marginTop="10"/>
+	    <text id="titleEnd" text="Studio" textSize="25SP" textStyle="bold" textColor="#8A2BE2" marginTop="10"/>
+	    <button text="查看日志" layout_gravity="right" style="Widget.AppCompat.Button.Borderless.Colored" layout_gravity="center_vertical"/>
+	    <button text="解绑卡密" layout_gravity="right" style="Widget.AppCompat.Button.Borderless.Colored" layout_gravity="center_vertical"/>
+	  </horizontal>
+	  <text text="本软件目前仅支持安卓系统7.0及以上系统使用." textStyle="italic" textSize="14sp" marginLeft="50" gravity="left"/>
+	</vertical>
+      </card>
+    </vertical>
+    <!-- 应用体 -->
+    <vertical w="*" layout_weight="5">
+      <!-- 可上下滚动 -->
+      <viewpager id="viewpager">
+	<scroll padding="10">
+	  <vertical>
+	    <!-- 激活码 -->
+	    <card>
+	      <vertical gravity="center_horizontal">
+		<horizontal gravity="center_vertical|center_horizontal">
+		  <text text="激活码: " textStyle="bold" textSize="16sp"/>
+		  <input inputType="text" w="200" tag="EditText"/>
+		  <text text=" 剩余时间 " textSize="14sp" textColor="#EE2C2C"/>
+		  <text text="10天" id="daoQiDayText" textSize="14sp" textColor="#EE00EE"/>
+		</horizontal>
+		<text text="激活码一旦激活无法在其他设备上二次激活，请谨慎激活！" textSize="12sp" textColor="#CDC5BF" w="auto"/>
+	      </vertical>
+	    </card>
+	    <!-- 基础设置 -->
+	    <card>
+	      <vertical gravity="center_horizontal">
+		<horizontal gravity="center_vertical|center_horizontal">
+		  <text text="定时启动"/>
+		</horizontal>
+	      </vertical>
+	    </card>
+	  </vertical>
+	</scroll>
+	<scroll>
+	  <vertical>
+	    <text text="pageTwo"/>
+	  </vertical>
+	</scroll>
+	<!-- 功能 -->
+	<scroll>
+	  <vertical>
+	    <text text="pageThree"/>
+	  </vertical>
+	</scroll>
+      </viewpager>
+    </vertical>
+    <!-- 应用脚 -->
+    <vertical h="50" w="*">
+      <card h="50" bg="#D3D3D3">
+	<horizontal>
+	  <button text="启动脚本" typeSize="18sp" style="Widget.AppCompat.Button.Colored" layout_weight="1"/>
+	  <button text="退出脚本" typeSize="18sp" style="Widget.AppCompat.Button.Colored" layout_weight="1"/>
+	  <button text="更新日志" typeSize="18sp" style="Widget.AppCompat.Button.Colored" layout_weight="1"/>
+	</horizontal>
+      </card>
+    </vertical>
+  </linear>
+</drawer>

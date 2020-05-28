@@ -581,4 +581,3 @@ module.exports = {
     overSlider: overSlider   //滑块验证
 }
 
-
