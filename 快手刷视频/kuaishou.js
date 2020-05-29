@@ -18,26 +18,25 @@ function test() {
     // swipeVideo();
     // run(120, _user, _pass);
     // reduceSimilarWorks();
-    for (var i = 0;i < 5;i++){
+    for (var i = 0; i < 5; i++) {
         cleanCache();
         signIn();
-    }    
-    
+    }
+
 }
 
 /**
  * 减少类似作品
+ * 获取设备高度
  */
 
 function reduceSimilarWorks() {
-    //获取第一个控件
-    let base = depth(0).findOnce();
     if (base) {
         Log("开始减少类似作品");
         //获取获取坐标然后长按
-        let x = base.bounds().centerX();
+        let x = device.width / 2;
         x = random((x - 100), (x + 100));
-        let y = base.bounds().centerY();
+        let y = device.height / 2;
         x = random((x - 150), (x + 150));
         press(x, y, 1500);
         //随机选择4个选项
@@ -63,7 +62,7 @@ function reduceSimilarWorks() {
     } else {
         Log("减少类似作品失败");
     }
-    
+
 }
 
 /**
@@ -85,6 +84,7 @@ function run(totalTime, user, pass) {
     const perVideoWatchTime = 5;//每隔视频观看10秒
     log("计划时长：" + totalTime)
     let watchTime = 0;
+    menuArea();
     for (let i = 1; totalTime > watchTime; i++) {
         // if (text("拖动滑块").findOne(500)) {
         //     overSlider(user, pass);
@@ -128,19 +128,19 @@ function cleanCache() {
     Log("开始清理缓存");
     //判断侧边栏是否打开
     let set_Btn = text("设置").findOne(3000);
-    
+
     if (set_Btn) {
         //滑出侧边栏
-        smlMove(10, 500, random(400, 600), random(400, 500), 200);
+        swipe(10, 500, random(400, 600), random(400, 500), 200);
         sleep(500);
-	
+
         Log(1);
         click("设置");
     } else {
         //滑出侧边栏
-        smlMove(10, 500, random(400, 600), random(400, 500), 200);
+        swipe(10, 500, random(400, 600), random(400, 500), 200);
         set_Btn = text("设置").findOne(3000);
-	
+
         sleep(500);
         // set_Btn.parent().click();
         click("设置");
@@ -149,18 +149,22 @@ function cleanCache() {
     //找到清理缓存并点击
     let clean_cache_Btn = text("清除缓存").findOne(30000);
     if (clean_cache_Btn) {
-	
         sleep(500);
         clean_cache_Btn.parent().parent().click();
+        sleep(1000);
+        if (textContains("深度清理").findOne(1000)) {
+            sleep(500);
+            click("清除缓存");
+        }
         Log("清理缓存中");
-	
+
         sleep(1500);
     } else {
         Log("检测超时，退出清理缓存");
     }
     menuArea();
     // Log(clean_cache_Btn);
-    
+
 }
 
 /**
@@ -178,7 +182,6 @@ function cleanCache() {
 
 function overSlider(usr, pass) {
     //找到滑块区域控件
-    sleep(1500);
     let sliderArea = className("android.widget.Image").findOne(1000);
     if (sliderArea) {
         //找到滑块验证区域范围
@@ -188,7 +191,7 @@ function overSlider(usr, pass) {
         // 找到积木控件范围
         let slideBlock = className("android.widget.Image").find().get(1).bounds();
         Log(slideBlock);
-	
+
         //获取截图
         let p1 = images.captureScreen();
         p1 = images.rotate(p1, 180);
@@ -200,15 +203,15 @@ function overSlider(usr, pass) {
         //对接联众
         let pointData = getCode(usr, pass, p2);
         if (pointData.data) {
-	    
+
             pointData = pointData.data.res;
             Log(pointData);
-	    
+
         } else {
             Log(JSON.stringify(pointData));
             return 0;
         }
-	
+
         //计算X坐标
         let x2 = pointData.split("|")[1];
         let x1;
@@ -233,10 +236,10 @@ function overSlider(usr, pass) {
         p2.recycle();
 
     } else {
-	
+
         toastLog("没有找到滑块积木")
     }
-    
+
 }
 
 /**
@@ -247,7 +250,7 @@ function overSlider(usr, pass) {
  * 4. 翻到最下面找到签到按钮并判断点击或者立即签到
  */
 function signIn() {
-    
+
     //回到主界面
     menuArea();
     Log("开始签到");
@@ -255,15 +258,17 @@ function signIn() {
     let moneyBtn = text("去赚钱").findOne(3000);
     if (moneyBtn) {
         //滑出侧边栏
-        smlMove(10, 500, random(400, 600), random(400, 500), 200);
+        swipe(10, 500, random(400, 600), random(400, 500), 200);
         sleep(500);
         moneyBtn.parent().click();
     } else {
-	
         //滑出侧边栏
-        smlMove(10, 500, random(400, 600), random(400, 500), 200);
+        swipe(10, 500, random(400, 600), random(400, 500), 200);
         moneyBtn = text("去赚钱").findOne(3000);
         sleep(500);
+        if (!moneyBtn) {
+            return 0;
+        }
         moneyBtn.parent().click();
     }
 
@@ -277,11 +282,11 @@ function signIn() {
             signInNowBtn.click();
             sleep(500);
             back();
-	    
+
         } else {
             scrollDown(0);
             sleep(500);
-	    
+
             scrollDown(0);
             Log("滑动到最后");
             //找到去签到按钮
@@ -342,7 +347,7 @@ function swipeVideo(swipeCount) {
         // smlMove( (width - random(-50, 50)), (height + offSet + (videoSwipeDistance / 2)),
         //     (width + random(-50, 50)), (height + offSet - (videoSwipeDistance / 2), 30));
         smlMove(width + random(-50, 50), height + offSet,
-		width + random(-50, 50), height + offSet + (videoSwipeDistance / 2), 30);
+            width + random(-50, 50), height + offSet + (videoSwipeDistance / 2), 30);
     }
     // else if (swipeCount % 2 == 0) {
     //     //双数次上滑        
@@ -352,7 +357,7 @@ function swipeVideo(swipeCount) {
     else {
         //单数下滑
         smlMove((width - random(-50, 50)), (height + offSet + (videoSwipeDistance / 2)),
-		(width + random(-50, 50)), (height + offSet - (videoSwipeDistance / 2)), 30);
+            (width + random(-50, 50)), (height + offSet - (videoSwipeDistance / 2)), 30);
     }
 
 }
@@ -387,8 +392,8 @@ function popUpEvent() {
  */
 function likeAndFollow(range) {
     //获取
-    const height = (depth(0).findOnce().bounds().height() / 2) + random(20, 50);
-    const width = (depth(0).findOnce().bounds().width() / 2) + random(20, 50);
+    const height = (device.height / 2) + random(20, 50);
+    const width = (device.width / 2) + random(20, 50);
     let isLike = random(-1 * range, range);
     let isreduceSimilarWorks = random(0, 30);
     if (isLike == 0) {
@@ -507,13 +512,13 @@ function getCode(username, password, img) {
  */
 function smlMove(qx, qy, zx, zy, time) {
     var xxy = [time];
-    
+
     var point = [];
     var dx0 = {
         "x": qx,
         "y": qy
     };
-    
+
     var dx1 = {
         "x": random(qx - 100, qx + 100),
         "y": random(qy, qy + 50)
@@ -522,16 +527,16 @@ function smlMove(qx, qy, zx, zy, time) {
         "x": random(zx - 100, zx + 100),
         "y": random(zy, zy + 50),
     };
-    
+
     var dx3 = {
         "x": zx,
         "y": zy
     };
-    
+
     for (var i = 0; i < 4; i++) {
 
         eval("point.push(dx" + i + ")");
-	
+
     };
     // log(point[3].x)
 
@@ -539,9 +544,9 @@ function smlMove(qx, qy, zx, zy, time) {
         xxyy = [parseInt(bezierCurves(point, i).x), parseInt(bezierCurves(point, i).y)]
 
         xxy.push(xxyy);
-	
+
     }
-    
+
     // log(xxy);
     gesture.apply(null, xxy);
 };
@@ -559,13 +564,13 @@ function bezierCurves(cp, t) {
     cy = 3.0 * (cp[1].y - cp[0].y);
     by = 3.0 * (cp[2].y - cp[1].y) - cy;
     ay = cp[3].y - cp[0].y - cy - by;
-    
+
     tSquared = t * t;
     tCubed = tSquared * t;
     result = {
         "x": 0,
         "y": 0
-	
+
     };
     result.x = (ax * tCubed) + (bx * tSquared) + (cx * t) + cp[0].x;
     result.y = (ay * tCubed) + (by * tSquared) + (cy * t) + cp[0].y;
@@ -575,7 +580,7 @@ function bezierCurves(cp, t) {
 // 需要调用时取消注释
 module.exports = {
     run: run,    //快手刷视频
-    signIn: signIn,  //快手登录
+    signIn: signIn,  //快手签到
     cleanCache: cleanCache,  //快手清理缓存
     popUpEvent: popUpEvent,  //快手弹窗
     overSlider: overSlider   //滑块验证
