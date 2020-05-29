@@ -3,8 +3,8 @@
 // test();
 
 function test() {
-    let arr = ["Auto.js Pro"];
-    clearApp(arr);
+    
+    
 }
 
 /**
@@ -65,8 +65,8 @@ function clearApp(runAppRetain) {
     //打开最近任务
     recents();
     sleep(1500);
-    //循环滑动任务
-    do {
+    //循环滑动任务 (最多15次)
+    for (var time = 0;time < 15;time++){
 	
         runAppList = className("ScrollView").findOne(3000);
         if (runAppList != null) {
@@ -97,8 +97,10 @@ function clearApp(runAppRetain) {
                 searchDelete = runAppList[i].findOne(descContains("移除"));
                 // Log(search_delete);
                 if (searchDelete){
-                    sleep(1000);
+                    sleep(1500);
                     searchDelete.click();
+                }else{
+                    break;
                 }
                 x = runAppList[i].bounds().centerX();
 		
@@ -117,9 +119,25 @@ function clearApp(runAppRetain) {
             break;
         }
 	
-    } while (true);
+    } 
     //结束
     home();
+}
+
+function clearAppPro(){
+    // 回到主页
+    home();
+    //打开最近任务
+    recents();
+    sleep(1500);
+    for(var i = 0;i < 4;i++){
+        swipe(400,50,400,1100,300);
+    }
+    if (text("全部清除").findOne(3000)){
+        click(700,75);
+    }else{
+        home();
+    }
 }
 
 /**
@@ -212,4 +230,5 @@ module.exports = {
     closeSplitScreen: closeSplitScreen,  //关闭分屏  
     Log: Log,                            //加强日志
     isNetwork:isNetwork,                 //判断网络是否可用
+    // clearAppPro:clearAppPro
 }
