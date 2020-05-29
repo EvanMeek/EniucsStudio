@@ -40,7 +40,7 @@ function main() {
 	initPermissionThread.join(10000);
 	initPermissionThread.interrupt();
 
-	// while (true) {
+	while (true) {
 		//快手极速版
 		if (ui.swBtn.isChecked()) {
 			kwai();
@@ -49,7 +49,7 @@ function main() {
 		if (ui.swBtn2.isChecked()) {
 			// douyin();
 		}
-	// }
+	}
 }
 
 /**

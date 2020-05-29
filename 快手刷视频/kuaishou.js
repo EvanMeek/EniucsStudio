@@ -18,10 +18,7 @@ function test() {
     // swipeVideo();
     // run(120, _user, _pass);
     // reduceSimilarWorks();
-    for (var i = 0; i < 5; i++) {
-        cleanCache();
-        signIn();
-    }
+    Log(click("关注"));
 
 }
 
@@ -31,37 +28,33 @@ function test() {
  */
 
 function reduceSimilarWorks() {
-    if (base) {
-        Log("开始减少类似作品");
-        //获取获取坐标然后长按
-        let x = device.width / 2;
-        x = random((x - 100), (x + 100));
-        let y = device.height / 2;
-        x = random((x - 150), (x + 150));
-        press(x, y, 1500);
-        //随机选择4个选项
-        let choice = random(0, 3);
-        sleep(1000);
-        if (choice == 0) {
-            click("作品质量差");
-        } else if (choice == 1) {
-            click("不看该作者");
-        } else if (choice == 2) {
-            click("看过类似作品");
-        } else {
-            click("作品引起不适");
-        }
-        // let reduceWork = text("减少类似作品").findOne(1500);
-        // if (reduceWork) {
-        //     reduceWork = reduceWork.parent().children();
-        //     sleep(2000);
-        //     reduceWork[random(1, 4)].click();
-        // } else {
-        //     Log("没有找到减少类似作品");
-        // }
+    Log("开始减少类似作品");
+    //获取获取坐标然后长按
+    let x = device.width / 2;
+    x = random((x - 100), (x + 100));
+    let y = device.height / 2;
+    x = random((x - 150), (x + 150));
+    press(x, y, 1500);
+    //随机选择4个选项
+    let choice = random(0, 3);
+    sleep(1000);
+    if (choice == 0) {
+        click("作品质量差");
+    } else if (choice == 1) {
+        click("不看该作者");
+    } else if (choice == 2) {
+        click("看过类似作品");
     } else {
-        Log("减少类似作品失败");
+        click("作品引起不适");
     }
+    // let reduceWork = text("减少类似作品").findOne(1500);
+    // if (reduceWork) {
+    //     reduceWork = reduceWork.parent().children();
+    //     sleep(2000);
+    //     reduceWork[random(1, 4)].click();
+    // } else {
+    //     Log("没有找到减少类似作品");
+    // }
 
 }
 
@@ -405,7 +398,7 @@ function likeAndFollow(range) {
         if (isFollow == 0) {
             let follow = text("关注").find();
             if (follow) {
-                follow[1].parent().click();
+                click("关注");
             }
             log("点了关注");
         } else {
