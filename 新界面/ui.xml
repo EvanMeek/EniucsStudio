@@ -19,88 +19,68 @@
     <vertical w="*" layout_weight="5">
       <!-- 可上下滚动 -->
       <viewpager id="viewpager">
-	<scroll padding="10">
-	  <vertical>
-	    <!-- 激活码 -->
-	    <card>
-	      <vertical padding="10">
-		<horizontal>
-		  <text text="激活码: " textStyle="bold" textSize="16sp"/>
-		  <input inputType="text" w="200" tag="EditText"/>
-		  <text text=" 剩余时间 " textSize="14sp" textColor="#EE2C2C"/>
-		  <text text="10天" id="daoQiDayText" textSize="14sp" textColor="#EE00EE"/>
-		</horizontal>
-		<text text="激活码一旦激活无法在其他设备上二次激活，请谨慎激活！" textSize="12sp" textColor="#CDC5BF" w="auto"/>
-	      </vertical>
-	    </card>
-	    <button h="5" w="*"/>
-	    <!-- 基础设置 -->
-	    <card>
-	      <vertical padding="10">
-		<!-- 定时启动 -->
-		<horizontal>
-		  <text text="定时启动: " textStyle="bold" textSize="16sp" />
-		  <input inputType="number" id="startTimeInput" hint="整" />
-		  <text text="点到" textStyle="bold" textSize="16sp"/>
-		  <input inputType="number" id="endTimeInput" hint="整"/>
-		  <text text="点 结束" textStyle="bold" textSize="16sp"/>
-		</horizontal>
-		<!-- 各种权限 -->
-		<horizontal w="auto" h="auto">
-		  <vertical>
-		    <Switch text="无障碍" textColor="red" textSize="16sp" textStyle="bold"/>
-		    <Switch text="悬浮窗" textSize="16sp" textStyle="bold"/>
-		    <Switch text="自动检测更新" textSize="16sp" textStyle="bold"/>
-		  </vertical>
-		  <vertical layout_gravity="right" marginLeft="30">
-		    <Switch text="MIUI自动更新APP" textSize="16sp" textStyle="bold"/>
-		    <Switch text="清除缓存" textSize="16sp" textStyle="bold"/>
-		    <Switch text="微信辅助" textSize="16sp" textStyle="bold"/>
-		  </vertical>
-		</horizontal>
-		<!-- 联众帐号 -->
-		<horizontal>
-		  <text text="联众帐号: " textStyle="bold" textSize="14sp"/>
-		  <input inputType="textEmailAddress"  w="80"/>
-		  <text text="密码: " textStyle="bold" textSize="14sp"/>
-		  <input inputType="textPassword"  w="80"/>
-		  <button text="验证" style="Widget.AppCompat.Button.Colored"/>
-		</horizontal>
-		<!-- 攒攒帐号 -->
-		<horizontal>
-		  <text text="攒攒帐号: " textStyle="bold" textSize="14sp"/>
-		  <input inputType="textEmailAddress"  w="80"/>
-		  <text text="密码: " textStyle="bold" textSize="14sp"/>
-		  <input inputType="textPassword"  w="80"/>
-		  <button text="验证" style="Widget.AppCompat.Button.Colored"/>
-		</horizontal>
-	      </vertical>
-	    </card>
-	    <button h="5" w="*"/>
-	    <card>
+	<vertical>
+	  <!-- 激活码 -->
+	  <card layout_widget="1">
+	    <vertical padding="10">
+	      <horizontal>
+		<text text="激活码: " textStyle="bold" textSize="16sp"/>
+		<input inputType="text" w="200" tag="EditText"/>
+		<text text=" 剩余时间 " textSize="14sp" textColor="#EE2C2C"/>
+		<text text="10天" id="daoQiDayText" textSize="14sp" textColor="#EE00EE"/>
+	      </horizontal>
+	      <text text="激活码一旦激活无法在其他设备上二次激活，请谨慎激活！" textSize="12sp" textColor="#CDC5BF" w="auto"/>
+	    </vertical>
+	  </card>
+	  <button h="5" w="*"/>
+	  <!-- 基础设置 -->
+	  <card layout_widget="2">
+	    <vertical padding="10">
+	      <!-- 换号区间 -->
+	      <horizontal>
+		<text text="换号区间: " textStyle="bold" textSize="16sp" />
+		<input tag="EditText" inputType="number" id="switchAccountBegin" w="80" text="0" gravity="center"/>
+		<text text="到" textStyle="bold" textSize="16sp"/>
+		<input tag="EditText" inputType="number" id="switchAccountEnd" w="80" text="0" gravity="center"/>
+		<text text="之间" textStyle="bold" textSize="16sp"/>
+	      </horizontal>
+	      <!-- 各种权限 -->
+	      <horizontal w="auto" h="auto">
+		<vertical>
+		  <Switch id="swAccessibility" text="无障碍" textColor="red" textSize="16sp" textStyle="bold"/>
+		  <Switch id="swFloatWindow" text="悬浮窗" textSize="16sp" textStyle="bold"/>
+		  <Switch id="swAutoUpdate" text="自动检测更新" textSize="16sp" textStyle="bold"/>
+		</vertical>
+		<vertical layout_gravity="right" marginLeft="30">
+		  <Switch id="swkWaiFlyModeBtn" text="飞行模式" textSize="16sp" textStyle="bold"/>
+		  <Switch id="swCleanApp" text="清理后台" textSize="16sp" textStyle="bold"/>
+		  <Switch text="微信辅助" textSize="16sp" textStyle="bold"/>
+		</vertical>
+	      </horizontal>
+	    </vertical>
+	  </card>
+	  <button h="5" w="*"/>
+	  <card layout_widget="3">
+	    <viewpager id="appTypeViewPager">
+	      <!-- 视频播放类 -->
 	      <vertical>
 		<text text="视频播放类" textSize="18p" textStyle="bold" layout_gravity="center_horizontal" w="auto"/>
 		<list id="videoList">
 		  <horizontal>
-		    <checkbox/>
-		    <text text="{{appName}}" textColor="{{appNameColor}}" textStyle="bold"/>
-		    <text text=" 单次: "/>
-		    <input inputType="number" w="30"/>
-		    <text text=" 上限: "/>
-		    <input inputType="number" w="30"/>
-		    <button text="假装这个按钮有用" w="*" layout_gravity="right"/>
+		    <Switch id="{{this.appSwitchBtn}}" text="testAAA"/>
+		    <text text="{{appName}}" textColor="{{appNameColor}}" textStyle="bold" width="70"/>
+		    <input tag="EditText" id="{{this.appRunTimeInput}}" inputType="number" text="10"/>
+		    <text text="分钟" textSize="16sp"/>
 		  </horizontal>
 		</list>
 	      </vertical>
-	    </card>
-	    <button h="5" w="*"/>
-	    <card>
+	      <!-- 新闻阅读类 -->
 	      <vertical>
 		<text text="新闻阅读类" textSize="18p" textStyle="bold" layout_gravity="center_horizontal" w="auto"/>
 		<list id="newsList">
 		  <horizontal>
-		    <checkbox/>
-		    <text text="{{appName}}" textColor="{{appNameColor}}" textStyle="bold"/>
+		    <Switch id="appSwitchBtn"/>
+		    <text text="{{appName}}" textColor="{{appNameColor}}" textStyle="bold" width="70"/>
 		    <text text=" 单次: "/>
 		    <input inputType="number" w="30"/>
 		    <text text=" 上限: "/>
@@ -109,10 +89,10 @@
 		  </horizontal>
 		</list>
 	      </vertical>
-	    </card>
-	    <button h="5" w="*"/>
-	  </vertical>
-	</scroll>
+	    </viewpager>
+	  </card>
+	  <button h="5" w="*"/>
+	</vertical>
 	<scroll>
 	  <vertical>
 	    <text text="pageTwo"/>
@@ -130,7 +110,7 @@
     <vertical h="50" w="*">
       <card h="50" bg="#D3D3D3">
 	<horizontal>
-	  <button text="启动脚本" typeSize="18sp" style="Widget.AppCompat.Button.Colored" layout_weight="1"/>
+	  <button id="runAllBtn" text="启动脚本" typeSize="18sp" style="Widget.AppCompat.Button.Colored" layout_weight="1"/>
 	  <button text="退出脚本" typeSize="18sp" style="Widget.AppCompat.Button.Colored" layout_weight="1"/>
 	  <button text="更新日志" typeSize="18sp" style="Widget.AppCompat.Button.Colored" layout_weight="1"/>
 	</horizontal>
