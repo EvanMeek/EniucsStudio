@@ -18,6 +18,7 @@ var flyModeStat = ui.swFlyModeBtn.isChecked();
 // var signInStat = ui.kWaiSignInBtn.isChecked();
 // var cleanCacheStat = ui.kWaiCleanCacheBtn.isChecked();
 // 初始化权限;
+
 initPermissionThread = threads.start(function() {
 	initPermission();
 });
@@ -109,7 +110,6 @@ function initUI() {
  */
 function kwai() {
 	var kwaiMain = require("./快手刷视频/kuaishou.js"); //导入快手js文件
-
 	let appName;	//应用名
 	// switchAccountBegin 换号区间 开始
 	// switchAccountEnd 换号区间 结束
@@ -175,7 +175,6 @@ function kwai() {
 
 		//关闭快手
 		tabletOperation.killApp(appName);
-
 		//关闭检测弹窗线程
 		checkPop.interrupt();
 	}
