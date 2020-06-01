@@ -11,11 +11,7 @@ var tabletOperation = require("./Libary/平板操作/tabletOperation.js");
 let ViewIdListRegisterListener = require("./Libary/utils/saveUIConfig.js");
 ui.layoutFile("./main.xml");
 // 初始化UI;
-var initThread = threads.start(function(){
-    initUI();
-});
-initThread.join(1000);
-
+initUI();
 
 //获取UI信息
 var flyModeStat = ui.swFlyModeBtn.isChecked();
@@ -39,7 +35,12 @@ ui.runAllBtn.on("click", () => {
 	});
 });
 
-saveConfig();
+
+var mainThread = threads.currentThread();
+
+mainThread.setTimeout(function() {
+	saveConfig();
+}, 500);
 
 /**
  * 主函数
@@ -186,8 +187,7 @@ function kwai() {
 function saveConfig() {
 	let storage = storages.create('UIConfigInfo')
 	let 需要备份和还原的控件id列表集合 = [
-		['switchAccountBegin', 'switchAccountEnd', 'swKuaiShouTime', 'swWeiShiTime',
-		 'activateCode'],
+		['switchAccountBegin', 'switchAccountEnd', 'kuaiShouTime', 'weiShiTime', 'activateCode'],
 		['swAccessibility', 'swFloatWindow', 'swAutoUpdate', 'swFlyModeBtn', 'swCleanApp', 'swKuaiShou', 'swWeiShi'],
 	]
 	需要备份和还原的控件id列表集合.map((viewIdList) => {
