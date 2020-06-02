@@ -4,9 +4,16 @@ var timeout_date = new Date(2020, 5, 5, 12, 00, 00);
 var now_date = new Date();
 const _user = "yzl178me";
 const _pass = "Yangzelin995;";
-let Apparr = ["Auto.js Pro", "合集"];	//不被清理的应用数组,通用
+var Apparr = ["Auto.js Pro", "合集"];	//不被清理的应用数组,通用
 var menu_color = "#000000";
 var tabletOperation = require("./Libary/平板操作/tabletOperation.js");
+
+//ui
+var accessibility;	//无障碍
+var flightMode;		//飞行模式
+var cleanApp;		//清理App
+var switchAccountBegin;	//换号开始
+var switchAccountEnd;	//换号结束
 
 let ViewIdListRegisterListener = require("./Libary/utils/saveUIConfig.js");
 ui.layoutFile("./main.xml");
@@ -19,14 +26,14 @@ var flyModeStat = ui.swFlyModeBtn.isChecked();
 // var cleanCacheStat = ui.kWaiCleanCacheBtn.isChecked();
 // 初始化权限;
 
-initPermissionThread = threads.start(function() {
+initPermissionThread = threads.start(function () {
 	initPermission();
 });
 
 // 点击开始后要做的事
 ui.runAllBtn.on("click", () => {
 	log("runAllBtn");
-	threads.start(function() {
+	threads.start(function () {
 		if (now_date > timeout_date) {
 			toast("应用已过期，请购买永久版本!");
 		} else {
@@ -39,7 +46,7 @@ ui.runAllBtn.on("click", () => {
 
 var mainThread = threads.currentThread();
 
-mainThread.setTimeout(function() {
+mainThread.setTimeout(function () {
 	saveConfig();
 }, 500);
 
@@ -51,14 +58,23 @@ function main() {
 	initPermissionThread.join(60000);
 	initPermissionThread.interrupt();
 
-	//快手极速版
-	if (ui.swBtn.isChecked()) {
-		kwai();
+	//初始化信息
+	accessibility = ui.swAccessibility.isChecked();
+	flightMode = ui.swFlyModeBtn.isChecked();
+	cleanApp = ui.swCleanApp.isChecked();
+	switchAccountBegin = ui.switchAccountBegin.text();
+	switchAccountEnd = ui.switchAccountEnd.text();
+	while (true) {
+		//快手极速版
+		if (ui.swKuaiShou.isChecked()) {
+			kwai();
+		}
+		//抖音短视频
+		if (ui.swWeiShi.isChecked()) {
+			weiShi();
+		}
 	}
-	//抖音短视频
-	if (ui.swBtn2.isChecked()) {
-		// douyin();
-	}
+
 }
 
 /**
@@ -113,14 +129,16 @@ function kwai() {
 	let appName;	//应用名
 	// switchAccountBegin 换号区间 开始
 	// switchAccountEnd 换号区间 结束
-	for (var i = ui.switchAccountBegin.text(); i < ui.switchAccountEnd.text(); i++) {
+	for (var i = switchAccountBegin; i <= switchAccountEnd; i++) {
 
 		//清理后台App(平台专属)
-		tabletOperation.clearApp(Apparr);
-		sleep(1000);
+		if (cleanApp) {
+			tabletOperation.clearApp(Apparr);
+			sleep(1000);
+		}
 
 		//飞行模式
-		if (flyModeStat) {
+		if (flightMode) {
 			tabletOperation.openFlightMode();
 			log("开启飞行模式");
 			sleep(3000);
@@ -150,7 +168,7 @@ function kwai() {
 		}
 
 		//开启一个线程检测弹窗
-		let checkPop = threads.start(function() {
+		let checkPop = threads.start(function () {
 			while (true) {
 				//弹窗事件
 				kwaiMain.popUpEvent();
@@ -171,12 +189,62 @@ function kwai() {
 		kwaiMain.cleanCache();
 
 		//快手刷视频
-		kwaiMain.run((ui.kWaiRunTimeInput.text() * 60), _user, _pass);
+		kwaiMain.run((ui.kuaiShouTime.text() * 60), _user, _pass);
 
 		//关闭快手
 		tabletOperation.killApp(appName);
 		//关闭检测弹窗线程
 		checkPop.interrupt();
+	}
+}
+
+function weiShi() {
+	var weiShi = require("./微视/weiShi.js"); //导入快手js文件
+	let appName;	//应用名
+	// switchAccountBegin 换号区间 开始
+	// switchAccountEnd 换号区间 结束
+	for (var i = switchAccountBegin; i <= switchAccountEnd; i++) {
+
+		//清理后台App(平台专属)
+		if (cleanApp) {
+			tabletOperation.clearApp(Apparr);
+			sleep(1000);
+		}
+
+		//飞行模式
+		if (flightMode) {
+			tabletOperation.openFlightMode();
+			log("开启飞行模式");
+			sleep(3000);
+			tabletOperation.closeFlightMode();
+			log("关闭飞行模式");
+			//检查网络
+			tabletOperation.isNetwork();
+		}
+
+		//第0个默认为原版快手,其他的按这个顺序来
+		if (i == 0) {
+			appName = "微视";
+		} else {
+			appName = "微视" + i;
+		}
+		if (app.getPackageName(appName)) {
+			//判断是否开启成功,不成功重启一次
+			if (tabletOperation.openApp(appName) == false) {
+				tabletOperation.killApp(appName);
+				sleep(3000);
+				tabletOperation.openApp(appName);
+			};
+		} else {
+			log(appName + "应用不存在");
+			break;
+		}
+
+		//微视刷视频
+		weiShi.run((ui.weiShiTime.text() * 60));
+
+		//关闭微视
+		tabletOperation.killApp(appName);
 	}
 }
 

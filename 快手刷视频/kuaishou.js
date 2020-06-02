@@ -87,7 +87,7 @@ function run(totalTime, user, pass) {
         let waitTime = perVideoWatchTime + random(-2, 4)
         // log("本视频观看时长" + waitTime);
         sleep(waitTime / 2 * 1000);
-        likeAndFollow(7);
+        likeAndFollow(20);
         skipAtlas();
         sleep(waitTime / 2 * 1000);
         watchTime += waitTime;
