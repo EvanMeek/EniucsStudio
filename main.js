@@ -44,6 +44,10 @@ ui.runAllBtn.on("click", () => {
     });
 });
 
+ui.logBtn.on("click",()=>{
+    app.startActivity("console");
+});
+
 var mainThread = threads.currentThread();
 
 mainThread.setTimeout(function() {
@@ -261,9 +265,6 @@ function saveConfig() {
     ]
     需要备份和还原的控件id列表集合.map((viewIdList) => {
 	let inputViewIdListRegisterListener = new ViewIdListRegisterListener(viewIdList, storage, ui);
-	log("===================================");
-	log(inputViewIdListRegisterListener);
-	log("===================================");
 	// 恢复配置的条件是已经初始化过了
 	if (initStorage.get("inited") != null) {
 	    inputViewIdListRegisterListener.registerlistener()
