@@ -48,6 +48,18 @@ ui.logBtn.on("click",()=>{
     app.startActivity("console");
 });
 
+ui.swAccessibility.on("check",function(checked){
+    // 用户勾选无障碍服务的选项时，跳转到页面让用户去开启
+    if(checked && auto.service == null) {
+        app.startActivity({
+            action: "android.settings.ACCESSIBILITY_SETTINGS"
+        });
+    }
+    if(!checked && auto.service != null){
+        auto.service.disableSelf();
+    } 
+});
+
 var mainThread = threads.currentThread();
 
 mainThread.setTimeout(function() {

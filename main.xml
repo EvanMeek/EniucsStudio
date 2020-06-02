@@ -47,7 +47,7 @@
 	      <!-- 各种权限 -->
 	      <horizontal w="auto" h="auto">
 		<vertical>
-		  <Switch tag="Switch" id="swAccessibility" text="无障碍" textColor="red" textSize="16sp" textStyle="bold"/>
+		  <Switch tag="Switch" id="swAccessibility" text="无障碍" textSize="16sp" textStyle="bold" checked="{{auto.service !=null}}"/>
 		  <Switch tag="Switch" id="swFloatWindow" text="悬浮窗" textSize="16sp" textStyle="bold"/>
 		  <Switch tag="Switch" id="swAutoUpdate" text="自动检测更新" textSize="16sp" textStyle="bold"/>
 		</vertical>
