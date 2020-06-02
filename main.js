@@ -57,14 +57,25 @@ ui.swAccessibility.on("check",function(checked){
     }
     if(!checked && auto.service != null){
         auto.service.disableSelf();
-    } 
+    }
+});
+
+// 当用户回到本界面时，resume事件会被触发
+ui.emitter.on("resume", function() {
+    // 此时根据无障碍服务的开启情况，同步开关的状态
+    ui.swAccessibility.checked = auto.service != null;
+});
+
+ui.exitBtn.on("click",()=>{
+    toast("欢迎再次使用");
+    exit();
 });
 
 var mainThread = threads.currentThread();
 
-mainThread.setTimeout(function() {
-    saveConfig();
-}, 500);
+// mainThread.setTimeout(function() {
+//     saveConfig();
+// }, 500);
 
 /**
  * 主函数
@@ -293,10 +304,6 @@ function saveConfig() {
  * 初始化权限
  */
 function initPermission() {
-    // 无障碍权限
-    auto.waitFor();
-    auto.setMode("normal");
-    sleep(1000);
     // 请求截图权限
     if (!requestScreenCapture()) {
 	toast("过滑块需要截图权限支持");

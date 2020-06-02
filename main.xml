@@ -47,7 +47,7 @@
 	      <!-- 各种权限 -->
 	      <horizontal w="auto" h="auto">
 		<vertical>
-		  <Switch tag="Switch" id="swAccessibility" text="无障碍" textSize="16sp" textStyle="bold" checked="{{auto.service !=null}}"/>
+		  <Switch tag="Switch" id="swAccessibility" text="无障碍" textSize="16sp" textStyle="bold" checked="{{auto.service!=null}}"/>
 		  <Switch tag="Switch" id="swFloatWindow" text="悬浮窗" textSize="16sp" textStyle="bold"/>
 		  <Switch tag="Switch" id="swAutoUpdate" text="自动检测更新" textSize="16sp" textStyle="bold"/>
 		</vertical>
@@ -69,7 +69,7 @@
 		  <horizontal>
 		    <Switch tag="Switch" id="{{this.appSwitchBtn}}"/>
 		    <text text="{{appName}}" textColor="{{appNameColor}}" textStyle="bold" width="70"/>
- 		    <input tag="EditText"  id="{{this.appRunTimeInput}}" inputType="number" text="10"/>
+ 		    <input tag="EditText"  id="{{this.appRunTimeInput}}" inputType="number" text="10" width="80"/>
 		    <text text="分钟" textSize="16sp"/>
 		  </horizontal>
 		</list>
@@ -111,7 +111,7 @@
       <card h="50" bg="#D3D3D3">
 	<horizontal>
 	  <button id="runAllBtn" text="启动脚本" typeSize="18sp" style="Widget.AppCompat.Button.Colored" layout_weight="1"/>
-	  <button text="退出脚本" typeSize="18sp" style="Widget.AppCompat.Button.Colored" layout_weight="1"/>
+	  <button id="exitBtn" text="退出脚本" typeSize="18sp" style="Widget.AppCompat.Button.Colored" layout_weight="1"/>
 	  <button text="更新日志" typeSize="18sp" style="Widget.AppCompat.Button.Colored" layout_weight="1"/>
 	</horizontal>
       </card>
