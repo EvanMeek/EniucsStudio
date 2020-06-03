@@ -9,7 +9,7 @@
 	    <text id="titleBeg" text="Eniucs" textSize="25sp" textStyle="bold" textColor="#00BFFF" marginTop="10"/>
 	    <text id="titleEnd" text="Studio" textSize="25SP" textStyle="bold" textColor="#8A2BE2" marginTop="10"/>
 	    <button id="logBtn" text="查看日志" layout_gravity="right" style="Widget.AppCompat.Button.Borderless.Colored" layout_gravity="center_vertical"/>
-	    <button text="解绑卡密" layout_gravity="right" style="Widget.AppCompat.Button.Borderless.Colored" layout_gravity="center_vertical"/>
+	    <button id="unBindBtn" text="解绑卡密" layout_gravity="right" style="Widget.AppCompat.Button.Borderless.Colored" layout_gravity="center_vertical"/>
 	  </horizontal>
 	  <text text="本软件目前仅支持安卓系统7.0及以上系统使用." textStyle="italic" textSize="14sp" marginLeft="50" gravity="left"/>
 	</vertical>
@@ -21,13 +21,16 @@
       <viewpager id="viewpager">
 	<vertical>
 	  <!-- 激活码 -->
-	  <card layout_widget="1">
+	  <card layout_widget="1">	    >
 	    <vertical padding="10">
 	      <horizontal>
 		<text text="激活码: " textStyle="bold" textSize="16sp"/>
-		<input tag="EditText" id="activateCode" inputType="text" w="200" />
-		<text text=" 剩余时间 " textSize="14sp" textColor="#EE2C2C"/>
-		<text text="10天" id="daoQiDayText" textSize="14sp" textColor="#EE00EE"/>
+		<input tag="EditText" id="activateCode"  w="*" inputType="textPassword"/> 
+	      </horizontal>
+	      <horizontal alpha="1" w="*">
+		<text text="剩余时间: " textSize="16sp" textStyle="bold" textColor="#EE2C2C" layout_gravity="left|center_vertical" w="auto"/>
+		<text text="-1 天" id="remainDayText" textSize="14sp" textStyle="bold" textColor="#EE00EE" layout_gravity="left|center_vertical" />
+		<button id="activateBtn" style="Widget.AppCompat.Button.Colored" text="验证激活" textSize="16sp" textStyle="bold" w="auto"/>
 	      </horizontal>
 	      <text text="激活码一旦激活无法在其他设备上二次激活，请谨慎激活！" textSize="12sp" textColor="#CDC5BF" w="auto"/>
 	    </vertical>

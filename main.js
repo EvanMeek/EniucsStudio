@@ -1,5 +1,6 @@
 "ui";
-const PJYSDK = (function () {
+
+const PJYSDK = (function() {
 	function PJYSDK(app_key, app_secret) {
 		http.__okhttp__.setMaxRetries(0);
 		http.__okhttp__.setTimeout(10 * 1000);
@@ -36,14 +37,14 @@ const PJYSDK = (function () {
 
 		this._prev_nonce = null;
 	}
-	PJYSDK.prototype.SetCard = function (card) {
+	PJYSDK.prototype.SetCard = function(card) {
 		this._card = card;
 	}
-	PJYSDK.prototype.SetUser = function (username, password) {
+	PJYSDK.prototype.SetUser = function(username, password) {
 		this._username = username;
 		this._password = password;
 	}
-	PJYSDK.prototype.getDeviceID = function () {
+	PJYSDK.prototype.getDeviceID = function() {
 		let id = device.serial;
 		if (id == null || id == "" || id == "unknown") {
 			id = device.getAndroidId();
@@ -53,7 +54,7 @@ const PJYSDK = (function () {
 		}
 		return id;
 	}
-	PJYSDK.prototype.MD5 = function (str) {
+	PJYSDK.prototype.MD5 = function(str) {
 		try {
 			let digest = java.security.MessageDigest.getInstance("md5");
 			let result = digest.digest(new java.lang.String(str).getBytes("UTF-8"));
@@ -73,7 +74,7 @@ const PJYSDK = (function () {
 			return "";
 		}
 	}
-	PJYSDK.prototype.getTimestamp = function () {
+	PJYSDK.prototype.getTimestamp = function() {
 		try {
 			let res = http.get("http://api.m.taobao.com/rest/api3.do?api=mtop.common.getTimestamp");
 			let data = res.body.json();
@@ -82,7 +83,7 @@ const PJYSDK = (function () {
 			return Math.floor(new Date().getTime() / 1000);
 		}
 	}
-	PJYSDK.prototype.genNonce = function () {
+	PJYSDK.prototype.genNonce = function() {
 		const ascii_str = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 		let tmp = '';
 		for (let i = 0; i < 20; i++) {
@@ -90,7 +91,7 @@ const PJYSDK = (function () {
 		}
 		return this.MD5(this.getDeviceID() + tmp);
 	}
-	PJYSDK.prototype.joinParams = function (params) {
+	PJYSDK.prototype.joinParams = function(params) {
 		let ps = [];
 		for (let k in params) {
 			ps.push(k + "=" + params[k])
@@ -98,7 +99,7 @@ const PJYSDK = (function () {
 		ps.sort()
 		return ps.join("&")
 	}
-	PJYSDK.prototype.CheckRespSign = function (resp) {
+	PJYSDK.prototype.CheckRespSign = function(resp) {
 		if (resp.code != 0 && resp.nonce === "" && resp.sign === "") {
 			return resp
 		}
@@ -125,7 +126,7 @@ const PJYSDK = (function () {
 		}
 		return { "code": -99, "message": "轻点，疼~" };
 	}
-	PJYSDK.prototype.retry_fib = function (num) {
+	PJYSDK.prototype.retry_fib = function(num) {
 		if (num > 9) {
 			return 34
 		}
@@ -138,12 +139,12 @@ const PJYSDK = (function () {
 		}
 		return a
 	}
-	PJYSDK.prototype._debug = function (path, params, result) {
+	PJYSDK.prototype._debug = function(path, params, result) {
 		if (this.debug) {
 			log("\n" + path, "\nparams:", params, "\nresult:", result);
 		}
 	}
-	PJYSDK.prototype.Request = function (method, path, params) {
+	PJYSDK.prototype.Request = function(method, path, params) {
 		// 构建公共参数
 		params["app_key"] = this._app_key;
 
@@ -192,10 +193,10 @@ const PJYSDK = (function () {
 		return data;
 	}
 	/* 通用 */
-	PJYSDK.prototype.GetHeartbeatResult = function () {
+	PJYSDK.prototype.GetHeartbeatResult = function() {
 		return this._heartbeat_ret;
 	}
-	PJYSDK.prototype.GetTimeRemaining = function () {
+	PJYSDK.prototype.GetTimeRemaining = function() {
 		let g = this.login_result.expires_ts - this.getTimestamp();
 		if (g < 0) {
 			return 0;
@@ -203,7 +204,7 @@ const PJYSDK = (function () {
 		return g;
 	}
 	/* 卡密相关 */
-	PJYSDK.prototype.CardLogin = function () {  // 卡密登录
+	PJYSDK.prototype.CardLogin = function() {  // 卡密登录
 		if (!this._card) {
 			return { "code": -4, "message": "请先设置卡密" };
 		}
@@ -223,7 +224,7 @@ const PJYSDK = (function () {
 		}
 		return ret;
 	}
-	PJYSDK.prototype.CardHeartbeat = function () {  // 卡密心跳，默认会自动调用
+	PJYSDK.prototype.CardHeartbeat = function() {  // 卡密心跳，默认会自动调用
 		if (!this._token) {
 			return { "code": -2, "message": "请在卡密登录成功后调用" };
 		}
@@ -237,13 +238,13 @@ const PJYSDK = (function () {
 		}
 		return ret;
 	}
-	PJYSDK.prototype._startCardHeartheat = function () {  // 开启卡密心跳任务
+	PJYSDK.prototype._startCardHeartheat = function() {  // 开启卡密心跳任务
 		if (this._heartbeat_task) {
 			this._heartbeat_task.interrupt();
 			this._heartbeat_task = null;
 		}
-		this._heartbeat_task = threads.start(function () {
-			setInterval(function () { }, 10000);
+		this._heartbeat_task = threads.start(function() {
+			setInterval(function() { }, 10000);
 		});
 		this._heartbeat_ret = this.CardHeartbeat();
 
@@ -260,7 +261,7 @@ const PJYSDK = (function () {
 			}
 		}, 1000, this);
 	}
-	PJYSDK.prototype.CardLogout = function () {  // 卡密退出登录
+	PJYSDK.prototype.CardLogout = function() {  // 卡密退出登录
 		this._heartbeat_ret = { "code": -9, "message": "还未开始验证" };
 		if (this._heartbeat_task) { // 结束心跳任务
 			this._heartbeat_task.interrupt();
@@ -283,7 +284,7 @@ const PJYSDK = (function () {
 		};
 		return ret;
 	}
-	PJYSDK.prototype.CardUnbindDevice = function () { // 卡密解绑设备，需开发者后台配置
+	PJYSDK.prototype.CardUnbindDevice = function() { // 卡密解绑设备，需开发者后台配置
 		if (!this._token) {
 			return { "code": -2, "message": "请在卡密登录成功后调用" };
 		}
@@ -292,7 +293,7 @@ const PJYSDK = (function () {
 		let data = { "card": this._card, "device_id": this._device_id, "token": this._token };
 		return this.Request(method, path, data);
 	}
-	PJYSDK.prototype.SetCardUnbindPassword = function (password) { // 自定义设置解绑密码
+	PJYSDK.prototype.SetCardUnbindPassword = function(password) { // 自定义设置解绑密码
 		if (!this._token) {
 			return { "code": -2, "message": "请在卡密登录成功后调用" };
 		}
@@ -301,26 +302,26 @@ const PJYSDK = (function () {
 		let data = { "card": this._card, "password": password, "token": this._token };
 		return this.Request(method, path, data);
 	}
-	PJYSDK.prototype.CardUnbindDeviceByPassword = function (password) { // 用户通过解绑密码解绑设备
+	PJYSDK.prototype.CardUnbindDeviceByPassword = function(password) { // 用户通过解绑密码解绑设备
 		let method = "POST";
 		let path = "/v1/card/unbind_device/by_password";
 		let data = { "card": this._card, "password": password };
 		return this.Request(method, path, data);
 	}
-	PJYSDK.prototype.CardRecharge = function (card, use_card) { // 以卡充卡
+	PJYSDK.prototype.CardRecharge = function(card, use_card) { // 以卡充卡
 		let method = "POST";
 		let path = "/v1/card/recharge";
 		let data = { "card": card, "use_card": use_card };
 		return this.Request(method, path, data);
 	}
 	/* 用户相关 */
-	PJYSDK.prototype.UserRegister = function (username, password, card) {  // 用户注册（通过卡密）
+	PJYSDK.prototype.UserRegister = function(username, password, card) {  // 用户注册（通过卡密）
 		let method = "POST";
 		let path = "/v1/user/register";
 		let data = { "username": username, "password": password, "card": card, "device_id": this._device_id };
 		return this.Request(method, path, data);
 	}
-	PJYSDK.prototype.UserLogin = function () {  // 用户账号登录
+	PJYSDK.prototype.UserLogin = function() {  // 用户账号登录
 		if (!this._username || !this._password) {
 			return { "code": -4, "message": "请先设置用户账号密码" };
 		}
@@ -340,7 +341,7 @@ const PJYSDK = (function () {
 		}
 		return ret;
 	}
-	PJYSDK.prototype.UserHeartbeat = function () {  // 用户心跳，默认会自动开启
+	PJYSDK.prototype.UserHeartbeat = function() {  // 用户心跳，默认会自动开启
 		if (!this._token) {
 			return { "code": -2, "message": "请在用户登录成功后调用" };
 		}
@@ -354,13 +355,13 @@ const PJYSDK = (function () {
 		}
 		return ret;
 	}
-	PJYSDK.prototype._startUserHeartheat = function () {  // 开启用户心跳任务
+	PJYSDK.prototype._startUserHeartheat = function() {  // 开启用户心跳任务
 		if (this._heartbeat_task) {
 			this._heartbeat_task.interrupt();
 			this._heartbeat_task = null;
 		}
-		this._heartbeat_task = threads.start(function () {
-			setInterval(function () { }, 10000);
+		this._heartbeat_task = threads.start(function() {
+			setInterval(function() { }, 10000);
 		});
 		this._heartbeat_ret = this.UserHeartbeat();
 
@@ -377,7 +378,7 @@ const PJYSDK = (function () {
 			}
 		}, 1000, this);
 	}
-	PJYSDK.prototype.UserLogout = function () {  // 用户退出登录
+	PJYSDK.prototype.UserLogout = function() {  // 用户退出登录
 		this._heartbeat_ret = { "code": -9, "message": "还未开始验证" };
 		if (this._heartbeat_task) { // 结束心跳任务
 			this._heartbeat_task.interrupt();
@@ -400,19 +401,19 @@ const PJYSDK = (function () {
 		};
 		return ret;
 	}
-	PJYSDK.prototype.UserChangePassword = function (username, password, new_password) {  // 用户修改密码
+	PJYSDK.prototype.UserChangePassword = function(username, password, new_password) {  // 用户修改密码
 		let method = "POST";
 		let path = "/v1/user/password";
 		let data = { "username": username, "password": password, "new_password": new_password };
 		return this.Request(method, path, data);
 	}
-	PJYSDK.prototype.UserRecharge = function (username, card) { // 用户通过卡密充值
+	PJYSDK.prototype.UserRecharge = function(username, card) { // 用户通过卡密充值
 		let method = "POST";
 		let path = "/v1/user/recharge";
 		let data = { "username": username, "card": card };
 		return this.Request(method, path, data);
 	}
-	PJYSDK.prototype.UserUnbindDevice = function () { // 用户解绑设备，需开发者后台配置
+	PJYSDK.prototype.UserUnbindDevice = function() { // 用户解绑设备，需开发者后台配置
 		if (!this._token) {
 			return { "code": -2, "message": "请在用户登录成功后调用" };
 		}
@@ -422,49 +423,49 @@ const PJYSDK = (function () {
 		return this.Request(method, path, data);
 	}
 	/* 配置相关 */
-	PJYSDK.prototype.GetCardConfig = function () { // 获取卡密配置
+	PJYSDK.prototype.GetCardConfig = function() { // 获取卡密配置
 		let method = "GET";
 		let path = "/v1/card/config";
 		let data = { "card": this._card };
 		return this.Request(method, path, data);
 	}
-	PJYSDK.prototype.UpdateCardConfig = function (config) { // 更新卡密配置
+	PJYSDK.prototype.UpdateCardConfig = function(config) { // 更新卡密配置
 		let method = "POST";
 		let path = "/v1/card/config";
 		let data = { "card": this._card, "config": config };
 		return this.Request(method, path, data);
 	}
-	PJYSDK.prototype.GetUserConfig = function () { // 获取用户配置
+	PJYSDK.prototype.GetUserConfig = function() { // 获取用户配置
 		let method = "GET";
 		let path = "/v1/user/config";
 		let data = { "user": this._username };
 		return this.Request(method, path, data);
 	}
-	PJYSDK.prototype.UpdateUserConfig = function (config) { // 更新用户配置
+	PJYSDK.prototype.UpdateUserConfig = function(config) { // 更新用户配置
 		let method = "POST";
 		let path = "/v1/user/config";
 		let data = { "username": this._username, "config": config };
 		return this.Request(method, path, data);
 	}
 	/* 软件相关 */
-	PJYSDK.prototype.GetSoftwareConfig = function () { // 获取软件配置
+	PJYSDK.prototype.GetSoftwareConfig = function() { // 获取软件配置
 		let method = "GET";
 		let path = "/v1/software/config";
 		return this.Request(method, path, {});
 	}
-	PJYSDK.prototype.GetSoftwareNotice = function () { // 获取软件通知
+	PJYSDK.prototype.GetSoftwareNotice = function() { // 获取软件通知
 		let method = "GET";
 		let path = "/v1/software/notice";
 		return this.Request(method, path, {});
 	}
-	PJYSDK.prototype.GetSoftwareLatestVersion = function (current_ver) { // 获取软件最新版本
+	PJYSDK.prototype.GetSoftwareLatestVersion = function(current_ver) { // 获取软件最新版本
 		let method = "GET";
 		let path = "/v1/software/latest_ver";
 		let data = { "version": current_ver };
 		return this.Request(method, path, data);
 	}
 	/* 试用功能 */
-	PJYSDK.prototype.TrialLogin = function () {  // 试用登录
+	PJYSDK.prototype.TrialLogin = function() {  // 试用登录
 		let method = "POST";
 		let path = "/v1/trial/login";
 		let data = { "device_id": this._device_id };
@@ -478,7 +479,7 @@ const PJYSDK = (function () {
 		}
 		return ret;
 	}
-	PJYSDK.prototype.TrialHeartbeat = function () {  // 试用心跳，默认会自动调用
+	PJYSDK.prototype.TrialHeartbeat = function() {  // 试用心跳，默认会自动调用
 		let method = "POST";
 		let path = "/v1/trial/heartbeat";
 		let data = { "device_id": this._device_id };
@@ -489,13 +490,13 @@ const PJYSDK = (function () {
 		}
 		return ret;
 	}
-	PJYSDK.prototype._startTrialHeartheat = function () {  // 开启试用心跳任务
+	PJYSDK.prototype._startTrialHeartheat = function() {  // 开启试用心跳任务
 		if (this._heartbeat_task) {
 			this._heartbeat_task.interrupt();
 			this._heartbeat_task = null;
 		}
-		this._heartbeat_task = threads.start(function () {
-			setInterval(function () { }, 10000);
+		this._heartbeat_task = threads.start(function() {
+			setInterval(function() { }, 10000);
 		});
 		this._heartbeat_ret = this.TrialHeartbeat();
 
@@ -512,7 +513,7 @@ const PJYSDK = (function () {
 			}
 		}, 1000, this);
 	}
-	PJYSDK.prototype.TrialLogout = function () {  // 试用退出登录，没有http请求，只是清理本地记录
+	PJYSDK.prototype.TrialLogout = function() {  // 试用退出登录，没有http请求，只是清理本地记录
 		this.is_trial = false;
 		this._heartbeat_ret = { "code": -9, "message": "还未开始验证" };
 		if (this._heartbeat_task) { // 结束心跳任务
@@ -530,37 +531,37 @@ const PJYSDK = (function () {
 		return { "code": 0, "message": "OK" };;
 	}
 	/* 高级功能 */
-	PJYSDK.prototype.GetRemoteVar = function (key) { // 获取远程变量
+	PJYSDK.prototype.GetRemoteVar = function(key) { // 获取远程变量
 		let method = "GET";
 		let path = "/v1/af/remote_var";
 		let data = { "key": key };
 		return this.Request(method, path, data);
 	}
-	PJYSDK.prototype.GetRemoteData = function (key) { // 获取远程数据
+	PJYSDK.prototype.GetRemoteData = function(key) { // 获取远程数据
 		let method = "GET";
 		let path = "/v1/af/remote_data";
 		let data = { "key": key };
 		return this.Request(method, path, data);
 	}
-	PJYSDK.prototype.CreateRemoteData = function (key, value) { // 创建远程数据
+	PJYSDK.prototype.CreateRemoteData = function(key, value) { // 创建远程数据
 		let method = "POST";
 		let path = "/v1/af/remote_data";
 		let data = { "action": "create", "key": key, "value": value };
 		return this.Request(method, path, data);
 	}
-	PJYSDK.prototype.UpdateRemoteData = function (key, value) { // 修改远程数据
+	PJYSDK.prototype.UpdateRemoteData = function(key, value) { // 修改远程数据
 		let method = "POST";
 		let path = "/v1/af/remote_data";
 		let data = { "action": "update", "key": key, "value": value };
 		return this.Request(method, path, data);
 	}
-	PJYSDK.prototype.DeleteRemoteData = function (key, value) { // 删除远程数据
+	PJYSDK.prototype.DeleteRemoteData = function(key, value) { // 删除远程数据
 		let method = "POST";
 		let path = "/v1/af/remote_data";
 		let data = { "action": "delete", "key": key };
 		return this.Request(method, path, data);
 	}
-	PJYSDK.prototype.CallRemoteFunc = function (func_name, params) { // 执行远程函数
+	PJYSDK.prototype.CallRemoteFunc = function(func_name, params) { // 执行远程函数
 		let method = "POST";
 		let path = "/v1/af/call_remote_func";
 		let ps = JSON.stringify(params);
@@ -586,7 +587,7 @@ var tabletOperation = require("./Libary/平板操作/tabletOperation.js");
 var pjysdk = new PJYSDK("br9kmn4o6it9d0r0g7tg", "jR912CAWmLvcK4g9P18FgIr2XBSpYcKa");
 pjysdk.debug = false;
 // 监听心跳失败事件
-pjysdk.event.on("heartbeat_failed", function (hret) {
+pjysdk.event.on("heartbeat_failed", function(hret) {
 	toast(hret.message);  // 失败提示信息
 	exit();  // 退出脚本
 })
@@ -601,20 +602,21 @@ var switchAccountEnd;	//换号结束
 
 
 let ViewIdListRegisterListener = require("./Libary/utils/saveUIConfig.js");
+let dataUtils = require("./Libary/utils/dataUtils.js");
 ui.layoutFile("./main.xml");
 // 初始化UI;
 initUI();
 
 //保存配置
 var mainThread = threads.currentThread();
-mainThread.setTimeout(function () {
+mainThread.setTimeout(function() {
 	saveConfig();
 }, 500);
 
 //检查App是否安装
-mainThread.setTimeout(function () {
+mainThread.setTimeout(function() {
 	//勾选快手选项时,检查应用是否安装
-	let downloadThread = threads.start(function () {
+	let downloadThread = threads.start(function() {
 		let kuaiShouUrl = "https://j13.baidupan.com/060313bb/2020/06/03/1a22c52d7a102abfcb82318b981d5042.apk?st=Lsg_T-QxNQbgXr-pVIauwA&e=1591163454&b=VOMLtAijVrUC3lSJUecEnlKGXegHhgOaB7MBhQKNAy8GNQp6BW4_c&fi=24050349&pid=36-148-104-209&up=1."
 		switchEvent(ui.swKuaiShou, kuaiShouUrl, "com.kuaishou.nebula");
 		let weiShiUrl = "https://a13.baidupan.com/060313bb/2020/06/03/c8e3666cc297f43ea462e5a0aeea9569.apk?st=Y64f_qFgqn9ISL5gr834Dw&e=1591163108&b=UuUPsVX7BOlYqlWFAnwPagMmDTo_c&fi=24050370&pid=36-148-104-209&up=1.";
@@ -626,7 +628,7 @@ mainThread.setTimeout(function () {
 uiEvent();
 
 // 初始化权限;
-initPermissionThread = threads.start(function () {
+initPermissionThread = threads.start(function() {
 	initPermission();
 });
 
@@ -638,7 +640,7 @@ initPermissionThread = threads.start(function () {
  */
 function switchEvent(uiobj, url, appPackages) {
 	let is;
-	uiobj.on("check", function (checked) {
+	uiobj.on("check", function(checked) {
 		if (checked) {
 			let filePath = files.getSdcardPath() + "/test.apk";
 			is = appIsInstalled(appPackages);
@@ -736,7 +738,7 @@ function kuaishou() {
 		}
 
 		//开启一个线程检测弹窗
-		let checkPop = threads.start(function () {
+		let checkPop = threads.start(function() {
 			while (true) {
 				//弹窗事件
 				kwaiMain.popUpEvent();
@@ -916,11 +918,23 @@ function saveConfig() {
 }
 
 function uiEvent() {
+	ui.unBindBtn.on("click", () => {
+		toast(pjysdk.CardUnbindDevice().message);
+	});
+	ui.activateBtn.on("click", () => {
+		pjysdk.SetCard(ui.activateCode.text());
+		let loginStat = pjysdk.CardLogin();
+		if (loginStat.code != 0) {
+			toast(loginStat.message);
+		} else if (loginStat.code == 0) {
+			toast("验证成功，欢迎使用!");
+			ui.remainDayText.setText(dataUtils.secondsFormat(pjysdk.GetTimeRemaining()));
+		}
+	});
 	// 点击开始后要做的事
 	ui.runAllBtn.on("click", () => {
 		log("runAllBtn");
-		pjysdk.SetCard(ui.activateCode.text());
-		threads.start(function () {
+		threads.start(function() {
 			let login_ret = pjysdk.CardLogin();
 			if (login_ret.code == 0) {
 				// 登录成功，后面写你的业务代码
@@ -939,7 +953,7 @@ function uiEvent() {
 	});
 
 	//无障碍服务
-	ui.swAccessibility.on("check", function (checked) {
+	ui.swAccessibility.on("check", function(checked) {
 		// 用户勾选无障碍服务的选项时，跳转到页面让用户去开启
 		if (checked && auto.service == null) {
 			app.startActivity({
@@ -951,7 +965,7 @@ function uiEvent() {
 		}
 	});
 	// 当用户回到本界面时，resume事件会被触发
-	ui.emitter.on("resume", function () {
+	ui.emitter.on("resume", function() {
 		// 此时根据无障碍服务的开启情况，同步开关的状态
 		ui.swAccessibility.checked = auto.service != null;
 	});
