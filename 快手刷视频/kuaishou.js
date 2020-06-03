@@ -79,9 +79,9 @@ function run(totalTime, user, pass) {
     let watchTime = 0;
     menuArea();
     for (let i = 1; totalTime > watchTime; i++) {
-        // if (text("拖动滑块").findOne(500)) {
-        //     overSlider(user, pass);
-        // }
+        if (text("拖动滑块").findOne(500)) {
+            overSlider(user, pass);
+        }
         // //判断弹窗事件
         // popUpEvent();
         let waitTime = perVideoWatchTime + random(-2, 4)
@@ -175,16 +175,21 @@ function cleanCache() {
 
 function overSlider(usr, pass) {
     //找到滑块区域控件
-    let sliderArea = className("android.widget.Image").findOne(1000);
+    let sliderArea = className("android.view.View").depth(13).findOne(1000);
     if (sliderArea) {
         //找到滑块验证区域范围
-        sliderArea = sliderArea.bounds();
+        sliderArea = sliderArea.parent().bounds();
         Log(sliderArea);
 
         // 找到积木控件范围
-        let slideBlock = className("android.widget.Image").find().get(1).bounds();
-        Log(slideBlock);
-
+        let slideBlock = className("android.widget.Image").depth(13).find();
+        if(slideBlock){
+            slideBlock = slideBlock.get(1).bounds();
+            Log(slideBlock);
+        }else{
+            return 1;
+        }
+        
         //获取截图
         let p1 = images.captureScreen();
         p1 = images.rotate(p1, 180);
@@ -229,7 +234,6 @@ function overSlider(usr, pass) {
         p2.recycle();
 
     } else {
-
         toastLog("没有找到滑块积木")
     }
 
