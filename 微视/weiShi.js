@@ -84,7 +84,7 @@ function reduceSimilarWorks() {
     x = random((x - 100), (x + 100));
     let y = device.height / 2;
     x = random((x - 150), (x + 150));
-    press(x, y, 1500);
+    press(x, y, 2000);
 
     sleep(1000);
     let reduce = id("kkl").findOne(3000);
