@@ -584,6 +584,7 @@ var tabletOperation = require("./Libary/平板操作/tabletOperation.js");
 
 // 泡椒云网络验证
 var pjysdk = new PJYSDK("br9kmn4o6it9d0r0g7tg", "jR912CAWmLvcK4g9P18FgIr2XBSpYcKa");
+pjysdk.debug = false;
 // 监听心跳失败事件
 pjysdk.event.on("heartbeat_failed", function (hret) {
 	toast(hret.message);  // 失败提示信息
@@ -740,12 +741,12 @@ function kuaishou() {
 				//弹窗事件
 				kwaiMain.popUpEvent();
 				sleep(1000);
-				//滑块验证
-				if (text("拖动滑块").findOne(500)) {
-					kwaiMain.overSlider(_user, _pass);
-
-				}
-				sleep(1000);
+				// //滑块验证
+				// if (text("拖动滑块").findOne(500)) {
+				// 	sleep(1500);
+				// 	kwaiMain.overSlider(_user, _pass);
+				// }
+				// sleep(1000);
 			}
 
 		});
