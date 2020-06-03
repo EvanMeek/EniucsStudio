@@ -124,14 +124,14 @@ function cleanCache() {
 
     if (set_Btn) {
         //滑出侧边栏
-        swipe(10, 500, random(400, 600), random(400, 500), 200);
+        swipe(0, 500, random(400, 600), random(400, 500), 200);
         sleep(500);
 
         Log(1);
         click("设置");
     } else {
         //滑出侧边栏
-        swipe(10, 500, random(400, 600), random(400, 500), 200);
+        swipe(0, 500, random(400, 600), random(400, 500), 200);
         set_Btn = text("设置").findOne(3000);
 
         sleep(500);
@@ -251,12 +251,12 @@ function signIn() {
     let moneyBtn = text("去赚钱").findOne(3000);
     if (moneyBtn) {
         //滑出侧边栏
-        swipe(10, 500, random(400, 600), random(400, 500), 200);
+        swipe(0, 500, random(400, 600), random(400, 500), 200);
         sleep(500);
         moneyBtn.parent().click();
     } else {
         //滑出侧边栏
-        swipe(10, 500, random(400, 600), random(400, 500), 200);
+        swipe(0, 500, random(400, 600), random(400, 500), 200);
         moneyBtn = text("去赚钱").findOne(3000);
         sleep(500);
         if (!moneyBtn) {
