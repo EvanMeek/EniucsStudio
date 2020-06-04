@@ -576,18 +576,21 @@ const PJYSDK = (function() {
 })();
 /* 将PJYSDK.js文件中的代码复制粘贴到上面 */
 // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
-
+let pjyModule = require("./Libary/utils/pjy.js");
+let tabletOperation = require("./Libary/平板操作/tabletOperation.js");
+let ViewIdListRegisterListener = require("./Libary/utils/saveUIConfig.js");
+let dataUtils = require("./Libary/utils/dataUtils.js");
+let checkUpdate = require("./Libary/utils/checkUpdate.js");
 const _user = "yzl178me";
 const _pass = "Yangzelin995;";
 var Apparr = ["Auto.js Pro", "合集"];	//不被清理的应用数组,通用
 var menu_color = "#000000";
-var tabletOperation = require("./Libary/平板操作/tabletOperation.js");
 
 // 泡椒云网络验证
-var pjysdk = new PJYSDK("br9kmn4o6it9d0r0g7tg", "jR912CAWmLvcK4g9P18FgIr2XBSpYcKa");
-pjysdk.debug = false;
+var pjy = new pjyModule("br9kmn4o6it9d0r0g7tg", "jR912CAWmLvcK4g9P18FgIr2XBSpYcKa");
+pjy.debug = false;
 // 监听心跳失败事件
-pjysdk.event.on("heartbeat_failed", function(hret) {
+pjy.event.on("heartbeat_failed", function(hret) {
 	toast(hret.message);  // 失败提示信息
 	exit();  // 退出脚本
 })
@@ -600,9 +603,6 @@ var cleanApp;		//清理App
 var switchAccountBegin;	//换号开始
 var switchAccountEnd;	//换号结束
 
-
-let ViewIdListRegisterListener = require("./Libary/utils/saveUIConfig.js");
-let dataUtils = require("./Libary/utils/dataUtils.js");
 ui.layoutFile("./main.xml");
 // 初始化UI;
 initUI();
@@ -615,9 +615,9 @@ mainThread.setTimeout(function() {
 
 //检查App是否安装
 mainThread.setTimeout(function() {
-	//勾选快手选项时,检查应用是否安装
 	let downloadThread = threads.start(function() {
 		let kuaiShouUrl = "https://j13.baidupan.com/060313bb/2020/06/03/1a22c52d7a102abfcb82318b981d5042.apk?st=Lsg_T-QxNQbgXr-pVIauwA&e=1591163454&b=VOMLtAijVrUC3lSJUecEnlKGXegHhgOaB7MBhQKNAy8GNQp6BW4_c&fi=24050349&pid=36-148-104-209&up=1."
+		//勾选快手选项时,检查应用是否安装
 		switchEvent(ui.swKuaiShou, kuaiShouUrl, "com.kuaishou.nebula");
 		let weiShiUrl = "https://a13.baidupan.com/060313bb/2020/06/03/c8e3666cc297f43ea462e5a0aeea9569.apk?st=Y64f_qFgqn9ISL5gr834Dw&e=1591163108&b=UuUPsVX7BOlYqlWFAnwPagMmDTo_c&fi=24050370&pid=36-148-104-209&up=1.";
 		switchEvent(ui.swWeiShi, weiShiUrl, "com.tencent.weishi");
@@ -900,7 +900,7 @@ function saveConfig() {
 	let storage = storages.create('UIConfigInfo')
 	let 需要备份和还原的控件id列表集合 = [
 		['switchAccountBegin', 'switchAccountEnd', 'kuaiShouTime', 'weiShiTime', 'activateCode'],
-		['swAccessibility', 'swFloatWindow', 'swAutoUpdate', 'swFlyModeBtn', 'swCleanApp', 'swKuaiShou', 'swWeiShi'],
+		['swAccessibility', 'swFloatWindow', 'swFlyModeBtn', 'swCleanApp', 'swKuaiShou', 'swWeiShi'],
 	]
 	需要备份和还原的控件id列表集合.map((viewIdList) => {
 		let inputViewIdListRegisterListener = new ViewIdListRegisterListener(viewIdList, storage, ui);
@@ -918,24 +918,27 @@ function saveConfig() {
 }
 
 function uiEvent() {
+	ui.checkUpdateBtn.on("click",()=>{
+		checkUpdate.checkUpdate();
+	});
 	ui.unBindBtn.on("click", () => {
-		toast(pjysdk.CardUnbindDevice().message);
+		toast(pjy.CardUnbindDevice().message);
 	});
 	ui.activateBtn.on("click", () => {
-		pjysdk.SetCard(ui.activateCode.text());
-		let loginStat = pjysdk.CardLogin();
+		pjy.SetCard(ui.activateCode.text());
+		let loginStat = pjy.CardLogin();
 		if (loginStat.code != 0) {
 			toast(loginStat.message);
 		} else if (loginStat.code == 0) {
 			toast("验证成功，欢迎使用!");
-			ui.remainDayText.setText(dataUtils.secondsFormat(pjysdk.GetTimeRemaining()));
+			ui.remainDayText.setText(dataUtils.secondsFormat(pjy.GetTimeRemaining()));
 		}
 	});
 	// 点击开始后要做的事
 	ui.runAllBtn.on("click", () => {
 		log("runAllBtn");
 		threads.start(function() {
-			let login_ret = pjysdk.CardLogin();
+			let login_ret = pjy.CardLogin();
 			if (login_ret.code == 0) {
 				// 登录成功，后面写你的业务代码
 				toast("脚本即将启动");
@@ -973,7 +976,7 @@ function uiEvent() {
 	//退出脚本
 	ui.exitBtn.on("click", () => {
 		toast("欢迎再次使用");
-		pjysdk.CardLogout();
+		pjy.CardLogout();
 		exit();
 	});
 
