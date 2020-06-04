@@ -234,7 +234,6 @@ function weiShi() {
 			log(appName + "应用不存在");
 			break;
 		}
-
 		//微视刷视频
 		weiShi.run((ui.weiShiTime.text() * 60));
 
