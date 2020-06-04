@@ -13,9 +13,10 @@ var menu_color = "#000000";
 
 // 泡椒云网络验证
 var pjy = new pjyModule("br9kmn4o6it9d0r0g7tg", "jR912CAWmLvcK4g9P18FgIr2XBSpYcKa");
+var loginStat
 pjy.debug = false;
 // 监听心跳失败事件
-pjy.event.on("heartbeat_failed", function(hret) {
+pjy.event.on("heartbeat_failed", function (hret) {
 	toast(hret.message);  // 失败提示信息
 	exit();  // 退出脚本
 })
@@ -34,13 +35,13 @@ initUI();
 
 //保存配置
 var mainThread = threads.currentThread();
-mainThread.setTimeout(function() {
+mainThread.setTimeout(function () {
 	saveConfig();
 }, 500);
 
 //检查App是否安装
-mainThread.setTimeout(function() {
-	let downloadThread = threads.start(function() {
+mainThread.setTimeout(function () {
+	let downloadThread = threads.start(function () {
 		let kuaiShouUrl = "https://j13.baidupan.com/060313bb/2020/06/03/1a22c52d7a102abfcb82318b981d5042.apk?st=Lsg_T-QxNQbgXr-pVIauwA&e=1591163454&b=VOMLtAijVrUC3lSJUecEnlKGXegHhgOaB7MBhQKNAy8GNQp6BW4_c&fi=24050349&pid=36-148-104-209&up=1."
 		//勾选快手选项时,检查应用是否安装
 		switchEvent(ui.swKuaiShou, kuaiShouUrl, "com.kuaishou.nebula");
@@ -53,7 +54,7 @@ mainThread.setTimeout(function() {
 uiEvent();
 
 // 初始化权限;
-initPermissionThread = threads.start(function() {
+initPermissionThread = threads.start(function () {
 	initPermission();
 });
 
@@ -65,7 +66,7 @@ initPermissionThread = threads.start(function() {
  */
 function switchEvent(uiobj, url, appPackages) {
 	let is;
-	uiobj.on("check", function(checked) {
+	uiobj.on("check", function (checked) {
 		if (checked) {
 			let filePath = files.getSdcardPath() + "/test.apk";
 			is = appIsInstalled(appPackages);
@@ -163,7 +164,7 @@ function kuaishou() {
 		}
 
 		//开启一个线程检测弹窗
-		let checkPop = threads.start(function() {
+		let checkPop = threads.start(function () {
 			while (true) {
 				//弹窗事件
 				kwaiMain.popUpEvent();
@@ -195,6 +196,7 @@ function kuaishou() {
 
 function weiShi() {
 	var weiShi = require("./微视/weiShi.js"); //导入快手js文件
+	var kwaiMain = require("./快手刷视频/kuaishou.js"); //导入快手js文件
 	let appName;	//应用名
 	// switchAccountBegin 换号区间 开始
 	// switchAccountEnd 换号区间 结束
@@ -234,11 +236,24 @@ function weiShi() {
 			log(appName + "应用不存在");
 			break;
 		}
+
+		//开启一个线程检测弹窗
+		let checkPop = threads.start(function () {
+			while (true) {
+				//弹窗事件
+				kwaiMain.popUpEvent();
+				sleep(1000);
+			}
+		});
+
 		//微视刷视频
 		weiShi.run((ui.weiShiTime.text() * 60));
 
 		//关闭微视
 		tabletOperation.killApp(appName);
+
+		//关闭检测弹窗线程
+		checkPop.interrupt();
 	}
 }
 
@@ -314,9 +329,9 @@ function initUI() {
 	];
 	ui.videoList.setDataSource(videoItems);
 	let announcement = pjy.GetSoftwareNotice();
-	if (announcement.result.notice != null || announcement.result.notice != ""){
+	if (announcement.result.notice != null || announcement.result.notice != "") {
 		ui.announcementText.setText(announcement.result.notice);
-	}else{
+	} else {
 		ui.announcementText.setText("暂无公告");
 	}
 }
@@ -348,7 +363,7 @@ function saveConfig() {
 }
 
 function uiEvent() {
-	ui.checkUpdateBtn.on("click",()=>{
+	ui.checkUpdateBtn.on("click", () => {
 		checkUpdate.checkUpdate();
 	});
 	ui.unBindBtn.on("click", () => {
@@ -356,7 +371,7 @@ function uiEvent() {
 	});
 	ui.activateBtn.on("click", () => {
 		pjy.SetCard(ui.activateCode.text());
-		let loginStat = pjy.CardLogin();
+		loginStat = pjy.CardLogin();
 		if (loginStat.code != 0) {
 			toast(loginStat.message);
 		} else if (loginStat.code == 0) {
@@ -367,15 +382,15 @@ function uiEvent() {
 	// 点击开始后要做的事
 	ui.runAllBtn.on("click", () => {
 		log("runAllBtn");
-		threads.start(function() {
-			let login_ret = pjy.CardLogin();
-			if (login_ret.code == 0) {
+		threads.start(function () {
+			// let login_ret = pjy.CardLogin();
+			if (loginStat.code == 0) {
 				// 登录成功，后面写你的业务代码
 				toast("脚本即将启动");
 				main();
 			} else {
 				// 登录失败提示
-				toast(login_ret.message);
+				toast(loginStat.message);
 			}
 		});
 	});
@@ -386,7 +401,7 @@ function uiEvent() {
 	});
 
 	//无障碍服务
-	ui.swAccessibility.on("check", function(checked) {
+	ui.swAccessibility.on("check", function (checked) {
 		// 用户勾选无障碍服务的选项时，跳转到页面让用户去开启
 		if (checked && auto.service == null) {
 			app.startActivity({
@@ -398,7 +413,7 @@ function uiEvent() {
 		}
 	});
 	// 当用户回到本界面时，resume事件会被触发
-	ui.emitter.on("resume", function() {
+	ui.emitter.on("resume", function () {
 		// 此时根据无障碍服务的开启情况，同步开关的状态
 		ui.swAccessibility.checked = auto.service != null;
 	});

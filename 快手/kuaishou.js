@@ -379,6 +379,10 @@ function popUpEvent() {
         sleep(1000);
         click("等待");
     }
+    else if (text("知道了".findOnce())){
+        sleep(300);
+        click("知道了");
+    }
 }
 
 /**
