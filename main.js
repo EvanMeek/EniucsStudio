@@ -121,7 +121,7 @@ function main() {
  * 功能参数: 刷视频时间-kwaiRunTimeInput 飞行模式-kWaiFlyModeBtn 签到-kWaiSignInBtn 清理缓存-kWaiCleanCacheBtn
  */
 function kuaishou() {
-	var kwaiMain = require("./快手刷视频/kuaishou.js"); //导入快手js文件
+	var kwaiMain = require("./快手/kuaishou.js"); //导入快手js文件
 	let appName;	//应用名
 	// switchAccountBegin 换号区间 开始
 	// switchAccountEnd 换号区间 结束
@@ -196,7 +196,7 @@ function kuaishou() {
 
 function weiShi() {
 	var weiShi = require("./微视/weiShi.js"); //导入快手js文件
-	var kwaiMain = require("./快手刷视频/kuaishou.js"); //导入快手js文件
+	var kwaiMain = require("./快手/kuaishou.js"); //导入快手js文件
 	let appName;	//应用名
 	// switchAccountBegin 换号区间 开始
 	// switchAccountEnd 换号区间 结束
