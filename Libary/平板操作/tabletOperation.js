@@ -219,6 +219,16 @@ function isNetwork() {
     }
 }
 
+/**
+ * 关机
+ */
+function powerOff(){
+    powerDialog();
+    if (text("关机").findOne(3000)){
+        click("关机");
+    }
+}
+
 //需要调用时取消注释
 module.exports = {
     openApp: openApp,                    //打开app
@@ -230,5 +240,6 @@ module.exports = {
     closeSplitScreen: closeSplitScreen,  //关闭分屏  
     Log: Log,                            //加强日志
     isNetwork:isNetwork,                 //判断网络是否可用
+    powerOff:powerOff,                   //关机
     // clearAppPro:clearAppPro
 }
