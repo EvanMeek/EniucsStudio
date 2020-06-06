@@ -112,11 +112,21 @@
                                 <text text="视频播放类" textSize="18p" textStyle="bold" layout_gravity="center_horizontal"
                                       w="auto"/>
                                 <list id="videoList" w="*">
+                                    <!-- 快手 -->
                                     <horizontal w="*">
-                                        <Switch tag="Switch" id="{{this.appSwitchBtn}}"/>
-                                        <text text="{{appName}}" textColor="{{appNameColor}}" textStyle="bold"
+                                        <Switch tag="Switch" id="swKuaiShou"/>
+                                        <text text="快手视频" textColor="#000000" textStyle="bold"
                                               width="70"/>
-                                        <input tag="EditText" id="{{this.appRunTimeInput}}" inputType="number" text="10"
+                                        <input tag="EditText" id="kuaiShouTime" inputType="number" text="10"
+                                               w="80" gravity="center"/>
+                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="*"/>
+                                    </horizontal>
+                                    <!-- 微视 -->
+                                    <horizontal w="*">
+                                        <Switch tag="Switch" id="swWeiShi"/>
+                                        <text text="微视视频" textColor="#000000" textStyle="bold"
+                                              width="70"/>
+                                        <input tag="EditText" id="weiShiTime" inputType="number" text="10"
                                                w="80" gravity="center"/>
                                         <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="*"/>
                                     </horizontal>

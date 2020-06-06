@@ -36,7 +36,7 @@ initUI();
 //保存配置
 var mainThread = threads.currentThread();
 mainThread.setTimeout(function () {
-	saveConfig();
+	// saveConfig();
 }, 500);
 
 //检查App是否安装
@@ -306,28 +306,34 @@ function initUI() {
 	// 	    break;
 	// 	}
 	// });
-	ui.viewpager.setTitles(["基础设置", "功能管理", "参数设置"]);
-	ui.appTypeViewPager.setTitles(["视频播放类", "新闻阅读类"]);
-	var videoItems = [
-		{ appName: "快手视频", appNameColor: "#000000", appSwitchBtn: "swKuaiShou", appRunTimeInput: "kuaiShouTime" },
-		{ appName: "微视视频", appNameColor: "#000000", appSwitchBtn: "swWeiShi", appRunTimeInput: "weiShiTime" },
-		{ appName: "抖呱呱", appNameColor: "#CDC5BF", appSwitchBtn: "swDouGuaGua", appRunTimeInput: "douGuaGuaTime" },
-		{ appName: "鲤刷刷", appNameColor: "#CDC5BF", appSwitchBtn: "swLiShuaShua", appRunTimeInput: "liShuaShuaTime" },
-		{ appName: "趣铃声", appNameColor: "#CDC5BF", appSwitchBtn: "swQuLingSheng", appRunTimeInput: "quLingShengTime" },
-		{ appName: "酷铃声", appNameColor: "#CDC5BF", appSwitchBtn: "swKuLingSheng", appRunTimeInput: "kuLingShengTime" },
-		{ appName: "小糖糕", appNameColor: "#CDC5BF", appSwitchBtn: "swXiaoTangGao", appRunTimeInput: "xiaoTangGaoTime" },
-		{ appName: "刷宝视频", appNameColor: "#CDC5BF", appSwitchBtn: "shuaBao", appRunTimeInput: "shuaBaoTime" },
-		{ appName: "快逗视频", appNameColor: "#CDC5BF", appSwitchBtn: "kuaiDou", appRunTimeInput: "kuaiDouTime" },
-		{ appName: "花生视频", appNameColor: "#CDC5BF", appSwitchBtn: "huaSheng", appRunTimeInput: "huaShengTime" },
-		{ appName: "抖音视频", appNameColor: "#CDC5BF", appSwitchBtn: "douYin", appRunTimeInput: "douYinTime" },
-		{ appName: "火山视频", appNameColor: "#CDC5BF", appSwitchBtn: "huoShan", appRunTimeInput: "huoShanTime" },
-		{ appName: "闪电视频", appNameColor: "#CDC5BF", appSwitchBtn: "shanDian", appRunTimeInput: "shanDianTime" },
-		{ appName: "闪鸭视频", appNameColor: "#CDC5BF", appSwitchBtn: "shanYa", appRunTimeInput: "shanYaTime" },
-		{ appName: "彩蛋视频", appNameColor: "#CDC5BF", appSwitchBtn: "caiDan", appRunTimeInput: "caiDanTime" },
-		{ appName: "天天清理", appNameColor: "#CDC5BF", appSwitchBtn: "tianTian", appRunTimeInput: "tianTianTime" },
-		{ appName: "网赚红包", appNameColor: "#CDC5BF", appSwitchBtn: "wangZhuan", appRunTimeInput: "wangZhuanTime" },
-	];
-	ui.videoList.setDataSource(videoItems);
+	/*
+	================================================视频播放类-BEGIN================================================
+	 */
+	// ui.viewpager.setTitles(["基础设置", "功能管理", "参数设置"]);
+	// ui.appTypeViewPager.setTitles(["视频播放类", "新闻阅读类"]);
+	// var videoItems = [
+	// 	{ appName: "快手视频", appNameColor: "#000000", appSwitchBtn: "swKuaiShou", appRunTimeInput: "kuaiShouTime" },
+	// 	{ appName: "微视视频", appNameColor: "#000000", appSwitchBtn: "swWeiShi", appRunTimeInput: "weiShiTime" },
+	// 	{ appName: "抖呱呱", appNameColor: "#CDC5BF", appSwitchBtn: "swDouGuaGua", appRunTimeInput: "douGuaGuaTime" },
+	// 	{ appName: "鲤刷刷", appNameColor: "#CDC5BF", appSwitchBtn: "swLiShuaShua", appRunTimeInput: "liShuaShuaTime" },
+	// 	{ appName: "趣铃声", appNameColor: "#CDC5BF", appSwitchBtn: "swQuLingSheng", appRunTimeInput: "quLingShengTime" },
+	// 	{ appName: "酷铃声", appNameColor: "#CDC5BF", appSwitchBtn: "swKuLingSheng", appRunTimeInput: "kuLingShengTime" },
+	// 	{ appName: "小糖糕", appNameColor: "#CDC5BF", appSwitchBtn: "swXiaoTangGao", appRunTimeInput: "xiaoTangGaoTime" },
+	// 	{ appName: "刷宝视频", appNameColor: "#CDC5BF", appSwitchBtn: "shuaBao", appRunTimeInput: "shuaBaoTime" },
+	// 	{ appName: "快逗视频", appNameColor: "#CDC5BF", appSwitchBtn: "kuaiDou", appRunTimeInput: "kuaiDouTime" },
+	// 	{ appName: "花生视频", appNameColor: "#CDC5BF", appSwitchBtn: "huaSheng", appRunTimeInput: "huaShengTime" },
+	// 	{ appName: "抖音视频", appNameColor: "#CDC5BF", appSwitchBtn: "douYin", appRunTimeInput: "douYinTime" },
+	// 	{ appName: "火山视频", appNameColor: "#CDC5BF", appSwitchBtn: "huoShan", appRunTimeInput: "huoShanTime" },
+	// 	{ appName: "闪电视频", appNameColor: "#CDC5BF", appSwitchBtn: "shanDian", appRunTimeInput: "shanDianTime" },
+	// 	{ appName: "闪鸭视频", appNameColor: "#CDC5BF", appSwitchBtn: "shanYa", appRunTimeInput: "shanYaTime" },
+	// 	{ appName: "彩蛋视频", appNameColor: "#CDC5BF", appSwitchBtn: "caiDan", appRunTimeInput: "caiDanTime" },
+	// 	{ appName: "天天清理", appNameColor: "#CDC5BF", appSwitchBtn: "tianTian", appRunTimeInput: "tianTianTime" },
+	// 	{ appName: "网赚红包", appNameColor: "#CDC5BF", appSwitchBtn: "wangZhuan", appRunTimeInput: "wangZhuanTime" },
+	// ];
+	// ui.videoList.setDataSource(videoItems);
+	/*
+	================================================视频播放类-END================================================
+	 */
 	let announcement = pjy.GetSoftwareNotice();
 	if (announcement.result.notice != null || announcement.result.notice != "") {
 		ui.announcementText.setText(announcement.result.notice);
