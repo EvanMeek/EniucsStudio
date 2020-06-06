@@ -26,8 +26,10 @@ pjy.event.on("heartbeat_failed", function (hret) {
 // var accessibility;	//无障碍
 var flightMode;		//飞行模式
 var cleanApp;		//清理App
-var switchAccountBegin;	//换号开始
-var switchAccountEnd;	//换号结束
+var kuaiShouswitchAccountBegin;	//快手换号开始
+var kuaiShouSwitchAccountEnd;	//快手换号结束
+var weiShiSwitchAccountBegin;
+var weiShiSwitchAccountEnd;
 
 ui.layoutFile("./main.xml");
 // 初始化UI;
@@ -99,8 +101,10 @@ function main() {
 	accessibility = ui.swAccessibility.isChecked();
 	flightMode = ui.swFlyModeBtn.isChecked();
 	cleanApp = ui.swCleanApp.isChecked();
-	switchAccountBegin = ui.switchAccountBegin.text();
-	switchAccountEnd = ui.switchAccountEnd.text();
+	kuaiShouswitchAccountBegin = ui.kuaishouSwitchAccountBegin.text();
+	kuaiShouSwitchAccountEnd = ui.kuaishouswitchAccountEnd.text();
+	weiShiSwitchAccountBegin = ui.weiShiSwitchAccountBegin.text();
+	weiShiSwitchAccountEnd = ui.weiShiSwitchAccountEnd.text();
 	while (true) {
 		//快手极速版
 		if (ui.swKuaiShou.isChecked()) {
@@ -130,7 +134,7 @@ function kuaishou() {
 	let appName;	//应用名
 	// switchAccountBegin 换号区间 开始
 	// switchAccountEnd 换号区间 结束
-	for (var i = switchAccountBegin; i <= switchAccountEnd; i++) {
+	for (var i = kuaiShouswitchAccountBegin; i <= kuaiShouSwitchAccountEnd; i++) {
 
 		//清理后台App(平台专属)
 		if (cleanApp) {
@@ -205,8 +209,7 @@ function weiShi() {
 	let appName;	//应用名
 	// switchAccountBegin 换号区间 开始
 	// switchAccountEnd 换号区间 结束
-	for (var i = switchAccountBegin; i <= switchAccountEnd; i++) {
-
+	for (var i = weiShiSwitchAccountBegin; i <= weiShiSwitchAccountEnd; i++) {
 		//清理后台App(平台专属)
 		if (cleanApp) {
 			tabletOperation.clearApp(Apparr);
@@ -353,8 +356,8 @@ function saveConfig() {
 	let initStorage = storages.create("InitConfig")
 	let storage = storages.create('UIConfigInfo')
 	let 需要备份和还原的控件id列表集合 = [
-		['switchAccountBegin', 'switchAccountEnd', 'kuaiShouTime', 'weiShiTime', 'activateCode'],
-		['swAccessibility', 'swFloatWindow', 'swFlyModeBtn', 'swCleanApp', 'swKuaiShou', 'swWeiShi'],
+		['kuaishouSwitchAccountBegin', 'kuaishouswitchAccountEnd','weiShiSwitchAccountBegin','weiShiSwitchAccountEnd', 'kuaiShouTime', 'weiShiTime', 'activateCode'],
+		['swFloatWindow', 'swFloatWindow', 'swFlyModeBtn', 'swCleanApp','swSignIn','swTaskCycle', 'swKuaiShou', 'swWeiShi'],
 	]
 	需要备份和还原的控件id列表集合.map((viewIdList) => {
 		let inputViewIdListRegisterListener = new ViewIdListRegisterListener(viewIdList, storage, ui);

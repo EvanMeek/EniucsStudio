@@ -59,15 +59,7 @@
                                 <!-- 基础设置 -->
                             <card layout_widget="2">
                                 <vertical padding="10">
-                                    <!-- 换号区间 -->
-                                    <horizontal>
-
-                                    </horizontal>
-                                    <!-- 执行完任务自动关机 -->
-                                    <horizontal>
-                                        <Switch tag="Switch" id="swPowerOff" textStyle="bold"/>
-                                        <text text="执行完所有任务之后自动关机(ps:不能与任务循环一起使用)" textColor="#000000" textStyle="bold" textSize="16sp"/>
-                                    </horizontal>
+                                    
                                     <!-- 各种权限 -->
                                     <horizontal w="auto" h="auto">
                                         <vertical>
@@ -96,6 +88,11 @@
                                             <Switch tag="Switch" id="swTaskCycle" text="任务循环" textSize="16sp" textStyle="bold" checked="true" />
                                             <Switch text="自动优化" textSize="16sp" textStyle="bold" checked="true" />
                                         </vertical>
+                                    </horizontal>
+                                    <!-- 执行完任务自动关机 -->
+                                    <horizontal>
+                                        <Switch tag="Switch" id="swPowerOff" text="执行完所有任务之后自动关机(ps:不能与任务循环一起使用)" textStyle="bold"/>
+                                        <!-- <text text="执行完所有任务之后自动关机(ps:不能与任务循环一起使用)" textColor="#000000" textStyle="bold" textSize="16sp"/> -->
                                     </horizontal>
                                 </vertical>
                             </card>
