@@ -110,6 +110,11 @@ function main() {
 		if (ui.swWeiShi.isChecked()) {
 			weiShi();
 		}
+
+		//是否开启循环
+		if(!ui.swTaskCycle.isChecked()){
+			break;
+		}
 	}
 }
 
@@ -278,14 +283,12 @@ function appIsInstalled(appPackages) {
  */
 function downloadApp(filePath, url) {
 	let res = http.get(url);
-	log(111);
 	if (res.statusCode != 200) {
 		toastLog("请求失败");
 		return false;
 	}
-	log(222);
 	files.writeBytes(filePath, res.body.bytes());
-	toast("下载成功");
+	toastLog("下载成功");
 	app.viewFile(filePath);
 	return true;
 }
@@ -418,6 +421,16 @@ function uiEvent() {
 			auto.service.disableSelf();
 		}
 	});
+	//悬浮窗服务
+	ui.swFloatWindow.on("check", function (checked) {
+		// 用户勾选无障碍服务的选项时，跳转到页面让用户去开启
+		if (checked) {
+			app.startActivity({
+				action: "android.settings.action.MANAGE_OVERLAY_PERMISSION"
+			});
+		}
+	});
+
 	// 当用户回到本界面时，resume事件会被触发
 	ui.emitter.on("resume", function () {
 		// 此时根据无障碍服务的开启情况，同步开关的状态
