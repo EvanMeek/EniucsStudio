@@ -8,7 +8,7 @@ let dataUtils = require("./Libary/utils/dataUtils.js");
 let checkUpdate = require("./Libary/utils/checkUpdate.js");
 const _user = "yzl178me";
 const _pass = "Yangzelin995;";
-var Apparr = ["Auto.js Pro", "合集"];	//不被清理的应用数组,通用
+var Apparr = ["Auto.js Pro", "掘金时代"];	//不被清理的应用数组,通用
 var menu_color = "#000000";
 
 // 泡椒云网络验证
@@ -366,9 +366,9 @@ function uiEvent() {
 	ui.checkUpdateBtn.on("click", () => {
 		checkUpdate.checkUpdate();
 	});
-	ui.unBindBtn.on("click", () => {
-		toast(pjy.CardUnbindDevice().message);
-	});
+	// ui.unBindBtn.on("click", () => {
+	// 	toast(pjy.CardUnbindDevice().message);
+	// });
 	ui.activateBtn.on("click", () => {
 		pjy.SetCard(ui.activateCode.text());
 		loginStat = pjy.CardLogin();

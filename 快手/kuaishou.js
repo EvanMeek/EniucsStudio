@@ -78,10 +78,15 @@ function run(totalTime, user, pass) {
     log("计划时长：" + totalTime)
     let watchTime = 0;
     menuArea();
-    for (let i = 1; totalTime > watchTime; i++) {
-        if (text("拖动滑块").findOne(500)) {
-            overSlider(user, pass);
+    let overSliderThred = threads.start(function () {
+        while (true) {
+            if (text("拖动滑块").findOne(500)) {
+                overSlider(user, pass);
+            }
+            sleep(3000);
         }
+    });
+    for (let i = 1; totalTime > watchTime; i++) {
         // //判断弹窗事件
         // popUpEvent();
         let waitTime = perVideoWatchTime + random(-2, 4)
@@ -95,6 +100,7 @@ function run(totalTime, user, pass) {
         swipeVideo(i);
         skipAtlas();
     }
+    overSliderThred.interrupt();
     Log("本次观看时长" + watchTime + "秒");
 }
 
@@ -183,13 +189,13 @@ function overSlider(usr, pass) {
 
         // 找到积木控件范围
         let slideBlock = className("android.widget.Image").depth(13).find();
-        if(slideBlock){
+        if (slideBlock.get(1)) {
             slideBlock = slideBlock.get(1).bounds();
             Log(slideBlock);
-        }else{
+        } else {
             return 1;
         }
-        
+
         //获取截图
         let p1 = images.captureScreen();
         p1 = images.rotate(p1, 180);
@@ -379,9 +385,12 @@ function popUpEvent() {
         sleep(1000);
         click("等待");
     }
-    else if (text("知道了".findOnce())){
+    else if (text("知道了").findOnce()) {
         sleep(300);
         click("知道了");
+    }else if (text("立即更新").findOnce()){
+        sleep(300);
+        back();
     }
 }
 
