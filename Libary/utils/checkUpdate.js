@@ -1,10 +1,11 @@
 var pjyModule = require("./pjy.js");
 let pjy = new pjyModule("br9kmn4o6it9d0r0g7tg", "jR912CAWmLvcK4g9P18FgIr2XBSpYcKa");
+pjy.debug = false;
 /**
  * 检查更新
  */
 function checkUpdate(){
-    let currentVer = "V1.0.0";
+    let currentVer = "V1.0.1";
     let latestVer = pjy.GetSoftwareLatestVersion(currentVer);
 
     if (latestVer.code !== 10304){
