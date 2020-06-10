@@ -1,14 +1,14 @@
 // // 快手刷视频
 
-// const _user = "yzl178me";
-// const _pass = "Yangzelin995;";
+const _user = "yzl178me";
+const _pass = "Yangzelin995;";
 
-// //请求截图权限
-// if (!requestScreenCapture()) {
-//     toast("过滑块需要截图权限支持");
-//     exit();
-// };
-// test();
+//请求截图权限
+if (!requestScreenCapture()) {
+    toast("过滑块需要截图权限支持");
+    exit();
+};
+test();
 
 // ////// 当调用moudle.export时,以上代码全部注释 //////
 // ////////////////////////////////////////////////////
@@ -18,7 +18,8 @@ function test() {
     // swipeVideo();
     // run(120, _user, _pass);
     // reduceSimilarWorks();
-    Log(click("关注"));
+    // overSlider(_user,_pass);
+    run(120,_user,_pass);
 
 }
 
@@ -75,13 +76,17 @@ function reduceSimilarWorks() {
 
 function run(totalTime, user, pass) {
     const perVideoWatchTime = 5;//每隔视频观看10秒
+    totalTime += random(-60, 180);
     log("计划时长：" + totalTime)
     let watchTime = 0;
+    let overSliderCount = 0;
     menuArea();
     let overSliderThred = threads.start(function () {
         while (true) {
-            if (text("拖动滑块").findOne(500)) {
+            if (text("拖动滑块").findOne(500) && overSliderCount < 10) {
+                sleep(1500);
                 overSlider(user, pass);
+                overSliderCount++;
             }
             sleep(3000);
         }
@@ -125,24 +130,16 @@ function cleanCache() {
     //回到主界面
     menuArea();
     Log("开始清理缓存");
+
+    //滑出侧边栏
+    swipe(0, 500, random(400, 600), random(400, 500), 200);
     //判断侧边栏是否打开
     let set_Btn = text("设置").findOne(3000);
-
     if (set_Btn) {
-        //滑出侧边栏
-        swipe(0, 500, random(400, 600), random(400, 500), 200);
         sleep(500);
-
-        Log(1);
         click("设置");
     } else {
-        //滑出侧边栏
-        swipe(0, 500, random(400, 600), random(400, 500), 200);
-        set_Btn = text("设置").findOne(3000);
-
-        sleep(500);
-        // set_Btn.parent().click();
-        click("设置");
+        return 1;
     }
     sleep(1000);
     //找到清理缓存并点击
@@ -189,7 +186,7 @@ function overSlider(usr, pass) {
 
         // 找到积木控件范围
         let slideBlock = className("android.widget.Image").depth(13).find();
-        if (slideBlock.get(1)) {
+        if (slideBlock.length == 2) {
             slideBlock = slideBlock.get(1).bounds();
             Log(slideBlock);
         } else {
@@ -206,7 +203,7 @@ function overSlider(usr, pass) {
 
         //对接联众
         let pointData = getCode(usr, pass, p2);
-        if (pointData.data) {
+        if (pointData.data.res) {
 
             pointData = pointData.data.res;
             Log(pointData);
@@ -232,7 +229,7 @@ function overSlider(usr, pass) {
         Log(x);
 
         //滑动滑块
-        swipe(160, (500 + random(0, 10)), x, (500 + random(-100, 100)), 1000);
+        swipe(160, (500 + random(0, 10)), x-5, (500 + random(0, 10)), 1000);
 
         //回收图片
         sleep(2000);
@@ -258,21 +255,14 @@ function signIn() {
     menuArea();
     Log("开始签到");
     //判断侧边栏是否打开
+    //滑出侧边栏
+    swipe(0, 500, random(400, 600), random(400, 500), 200);
     let moneyBtn = text("去赚钱").findOne(3000);
     if (moneyBtn) {
-        //滑出侧边栏
-        swipe(0, 500, random(400, 600), random(400, 500), 200);
         sleep(500);
-        moneyBtn.parent().click();
+        click("去赚钱");
     } else {
-        //滑出侧边栏
-        swipe(0, 500, random(400, 600), random(400, 500), 200);
-        moneyBtn = text("去赚钱").findOne(3000);
-        sleep(500);
-        if (!moneyBtn) {
-            return 0;
-        }
-        moneyBtn.parent().click();
+        return 1;
     }
 
     //进入签到界面 正常情况
@@ -311,7 +301,6 @@ function signIn() {
         Log("检测超时,退出签到");
         menuArea();
     }
-
 }
 
 /**
@@ -323,7 +312,7 @@ function menuArea() {
     let timeCount = 0;
     while (timeCount <= 10) {
         if (id("slide_right_btn").findOne(1500)) {
-            Log("找到主界面");
+            // Log("找到主界面");
             break;
         } else {
             back();
@@ -388,8 +377,13 @@ function popUpEvent() {
     else if (text("知道了").findOnce()) {
         sleep(300);
         click("知道了");
-    }else if (text("立即更新").findOnce()){
+    }
+    else if (text("立即更新").findOnce()) {
         sleep(300);
+        back();
+    }
+    else if (textContains("升级").findOnce()) {
+        sleep(1000);
         back();
     }
 }
@@ -410,7 +404,7 @@ function likeAndFollow(range) {
         click(width, height);
         sleep(50);
         click(width, height);
-        log("双击喜欢")
+        log("双击喜欢");
         let isFollow = random(-1 * range, range);
         if (isFollow == 0) {
             let follow = text("关注").find();
@@ -587,12 +581,12 @@ function bezierCurves(cp, t) {
     return result;
 };
 
-// 需要调用时取消注释
-module.exports = {
-    run: run,    //快手刷视频
-    signIn: signIn,  //快手签到
-    cleanCache: cleanCache,  //快手清理缓存
-    popUpEvent: popUpEvent,  //快手弹窗
-    overSlider: overSlider   //滑块验证
-}
+// // 需要调用时取消注释
+// module.exports = {
+//     run: run,    //快手刷视频
+//     signIn: signIn,  //快手签到
+//     cleanCache: cleanCache,  //快手清理缓存
+//     popUpEvent: popUpEvent,  //快手弹窗
+//     overSlider: overSlider   //滑块验证
+// }
 

@@ -83,9 +83,12 @@ function clearApp(runAppRetain) {
 	    
             for (let j = 0; j <= runAppRetain.length; j++) {
                 //当前任务和保存任务比较 true 跳过
-                currentText = runAppList[i].findOne(className("TextView")).text();
+                currentText = runAppList[i].findOne(className("TextView"));
+                if(currentText){
+                    currentText = currentText.text();
+                }
                 if (currentText == runAppRetain[j]) {
-                    Log("跳过");
+                    // Log("跳过");
                     isDelete = false;
                     break;
                 }
@@ -93,24 +96,23 @@ function clearApp(runAppRetain) {
             }
             //true 清除任务
             if (isDelete) {
-                Log("清除任务");
+                // Log("清除任务");
                 searchDelete = runAppList[i].findOne(descContains("移除"));
                 // Log(search_delete);
                 if (searchDelete){
-                    sleep(1500);
+                    sleep(500);
                     searchDelete.click();
                 }else{
                     break;
                 }
+                sleep(300);
                 x = runAppList[i].bounds().centerX();
-		
                 y1 = runAppList[i].bounds().top;
-		
                 y2 = runAppList[i].bounds().bottom;
                 swipe(x, y1, x, y2, 300);
                 break;
             } else {
-                Log("需要保留的任务");
+                // Log("需要保留的任务");
             }
         }
         sleep(100);

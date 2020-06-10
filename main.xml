@@ -10,14 +10,19 @@
                         <text id="titleBeg" text="掘金" textSize="25sp" textStyle="bold" textColor="#FFD700"
                             marginTop="10" layout_gravity="top" h="auto"/>
                         <text id="titleEnd" text="时代" textSize="25SP" textStyle="bold" textColor="#00FA9A"
-                            marginTop="10" layout_gravity="top" h="auto" w="399"/>
-                        <button id="logBtn" text="查看日志"
-                            style="Widget.AppCompat.Button.Borderless.Colored" layout_gravity="right"/>
+                            marginTop="10" layout_gravity="top" h="auto" w="85"/>
+                        <text text="掘    金    时   代    让    您    的    时    间    更    有    价    值  !" textStyle="bold" textSize="15sp" padding="10sp" gravity="left" textColor="#FFB90F" w="auto" layout_gravity="bottom"/>
                             <!-- <button id="unBindBtn" text="解绑卡密"
                             style="Widget.AppCompat.Button.Borderless.Colored" layout_gravity="center_vertical"/> -->
                         </horizontal>
-                        <text text="掘    金    时   代    让    您    的    时    间    更    有    价    值  !" textStyle="bold" textSize="15sp" padding="10sp" gravity="left" textColor="#FFB90F" w="auto" layout_gravity="center"/>
-                            <!--                    <text text="本软件目前仅支持安卓系统7.0及以上系统使用." textStyle="italic" textSize="12sp" marginLeft="50" textColor="#CDC5BF" gravity="left"/>-->
+
+                        <horizontal w="*" gravity="left">
+                        <text text="本软件目前仅支持安卓系统7.0及以上系统使用." textStyle="italic" textSize="12sp" marginLeft="50" textColor="#CDC5BF" gravity="left"/>
+                        <text text=" " w="225" />
+                        <button id="logBtn" text="查看日志"
+                            style="Widget.AppCompat.Button.Borderless.Colored" layout_gravity="right"/>
+                        </horizontal>
+                                                                       
                         </vertical>
                     </card>
                 </vertical>
@@ -41,7 +46,6 @@
                                         <text text="激活码: " textStyle="bold" textSize="16sp"/>
                                         <input tag="EditText" id="activateCode" w="*" inputType="textVisiblePassword"/>
                                     </horizontal>
-
                                     <horizontal alpha="1">
                                         <text text="剩余时间: " textSize="16sp" textStyle="bold" textColor="#EE2C2C"
                                             layout_gravity="left|center_vertical" w="auto"/>
@@ -62,36 +66,35 @@
                                     
                                     <!-- 各种权限 -->
                                     <horizontal w="auto" h="auto">
-                                        <vertical>
-                                            <Switch tag="Switch" id="swAccessibility" text="无障碍" textSize="16sp"
+                                        <vertical w="128">
+                                            <Switch tag="Switch" id="swAccessibility" text="无障碍" textSize="16sp" h="35" 
                                                 textStyle="bold" checked="{{auto.service!=null}}"/>
-                                            <Switch tag="Switch" id="swFloatWindow" text="悬浮窗" textSize="16sp"
-                                                textStyle="bold"/>
-                                            <Switch tag="Switch" id="swFlyModeBtn" text="换IP" textSize="16sp"
-                                                textStyle="bold"/>
+                                            <Switch tag="Switch" id="swFloatWindow" text="悬浮窗" textSize="16sp" h="35" 
+                                                textStyle="bold" checked="true"/>     
+                                            <Switch tag="Switch" id="swRoot" text="Root" textSize="16sp" h="35"
+                                                textStyle="bold" checked="true"/>
                                         </vertical>
-                                        <vertical layout_gravity="right" marginLeft="20">
-                                            <Switch tag="Switch" id="swFlyModeBtn" text="防封号" textSize="16sp"
-                                                checked="true" textStyle="bold"/>
-                                            <Switch tag="Switch" id="swCleanApp" text="清理后台" textSize="16sp" textStyle="bold" checked="true" />
-                                            <Switch tag="Swtich" id="swSignIn" text="开启签到" textSize="16sp" textStyle="bold" checked="true" />
+                                        <vertical layout_gravity="right" marginLeft="20" w="128">
+                                            <Switch tag="Switch" id="swFlyModeBtn" text="换IP" textSize="16sp" h="35"
+                                                textStyle="bold"/>
+                                            <Switch tag="Switch" id="swCleanApp" text="清理后台" textSize="16sp" textStyle="bold" checked="true"  h="35"/>
+                                            <Switch tag="Swtich" id="swSignIn" text="开启签到" textSize="16sp" textStyle="bold" checked="true"  h="35"/>
                                         </vertical>
-                                        <vertical layout_gravity="right" marginLeft="20">
-                                            <Switch text="虚拟定位" textSize="16sp" textStyle="bold"/>
-                                            <Switch text="滑块验证" textSize="16sp" textStyle="bold" checked="true" />
-                                            <Switch text="随机关注" textSize="16sp" textStyle="bold" checked="true" />
+                                        <vertical layout_gravity="right" marginLeft="20" w="128">
+                                            <Switch text="虚拟定位" textSize="16sp" textStyle="bold" checked="true" h="35"/>
+                                            <Switch text="滑块验证" textSize="16sp" textStyle="bold" checked="true" h="35"/>
+                                            <Switch text="随机关注" textSize="16sp" textStyle="bold" checked="true" h="35" />
 
                                         </vertical>
-                                        <vertical layout_gravity="right" marginLeft="20">
-
-                                            <Switch text="随机点赞" textSize="16sp" textStyle="bold" checked="true" />
-                                            <Switch tag="Switch" id="swTaskCycle" text="任务循环" textSize="16sp" textStyle="bold" checked="true" />
-                                            <Switch text="自动优化" textSize="16sp" textStyle="bold" checked="true" />
+                                        <vertical layout_gravity="right" marginLeft="20" w="128">
+                                            <Switch text="随机点赞" textSize="16sp" textStyle="bold" checked="true" h="35" />
+                                            <Switch tag="Switch" id="swTaskCycle" text="任务循环" textSize="16sp" textStyle="bold" checked="true" h="35" />
+                                            <Switch text="自动优化" textSize="16sp" textStyle="bold" checked="true" h="35" />
                                         </vertical>
                                     </horizontal>
                                     <!-- 执行完任务自动关机 -->
                                     <horizontal>
-                                        <Switch tag="Switch" id="swPowerOff" text="执行完所有任务之后自动关机(ps:不能与任务循环一起使用)" textStyle="bold"/>
+                                        <Switch tag="Switch" id="swPowerOff" text="执行完所有任务之后自动关机(ps:不能与任务循环一起使用)" textStyle="bold" h="35" w="*"/>
                                         <!-- <text text="执行完所有任务之后自动关机(ps:不能与任务循环一起使用)" textColor="#000000" textStyle="bold" textSize="16sp"/> -->
                                     </horizontal>
                                 </vertical>
@@ -282,9 +285,9 @@
                     <vertical h="50" w="*">
                         <card h="50" bg="#D3D3D3">
                             <horizontal>
-                                <button id="runAllBtn" text="启动脚本" typeSize="18sp" style="Widget.AppCompat.Button.Colored"
+                                <button id="runAllBtn" text="启动掘金" typeSize="18sp" style="Widget.AppCompat.Button.Colored"
                                     layout_weight="1"/>
-                                <button id="exitBtn" text="退出脚本" typeSize="18sp" style="Widget.AppCompat.Button.Colored"
+                                <button id="exitBtn" text="退出掘金" typeSize="18sp" style="Widget.AppCompat.Button.Colored"
                                     layout_weight="1"/>
                                 <button id="checkUpdateBtn" text="检查更新" typeSize="18sp" style="Widget.AppCompat.Button.Colored" layout_weight="1"/>
                             </horizontal>
