@@ -29,6 +29,8 @@ var kuaiShouswitchAccountBegin;	//快手换号开始
 var kuaiShouSwitchAccountEnd;	//快手换号结束
 var weiShiSwitchAccountBegin;
 var weiShiSwitchAccountEnd;
+var shuaBaoSwitchAccountBegin;
+var shuaBaoSwitchAccountEnd;
 
 ui.layoutFile("./main.xml");
 // 初始化UI;
@@ -39,17 +41,17 @@ var mainThread = threads.currentThread();
 mainThread.setTimeout(function () {
 	saveConfig();
 	//解决第一次读取ui配置为空的bug
-	if (ui.kuaiShouTime.text() == "") {
-		let uiSwitchAccountData =
-			[
-				ui.kuaishouSwitchAccountBegin, ui.kuaishouswitchAccountEnd, ui.kuaishouSwitchAccountBegin, ui.weiShiSwitchAccountBegin, ui.weiShiSwitchAccountEnd,
-			];
-		let uiTime =
-			[
-				ui.kuaiShouTime, ui.weiShiTime,
-			]
-		checkIniData(uiSwitchAccountData, uiTime);
-	}
+	let uiSwitchAccountData =
+		[
+			ui.kuaishouSwitchAccountBegin, ui.kuaishouswitchAccountEnd, ui.weiShiSwitchAccountBegin, ui.weiShiSwitchAccountEnd,
+			ui.shuaBaoSwitchAccountBegin, ui.shuaBaoSwitchAccountEnd,
+		];
+	let uiTime =
+		[
+			ui.kuaiShouTime, ui.weiShiTime, ui.shuaBaoTime
+		]
+	checkIniData(uiSwitchAccountData, uiTime);
+
 }, 500);
 
 //检查App是否安装
@@ -65,11 +67,13 @@ mainThread.setTimeout(function () {
 	}
 
 	let downloadThread = threads.start(function () {
-		let kuaiShouUrl = "https://j13.baidupan.com/060313bb/2020/06/03/1a22c52d7a102abfcb82318b981d5042.apk?st=Lsg_T-QxNQbgXr-pVIauwA&e=1591163454&b=VOMLtAijVrUC3lSJUecEnlKGXegHhgOaB7MBhQKNAy8GNQp6BW4_c&fi=24050349&pid=36-148-104-209&up=1."
+		let kuaiShouUrl = "https://178me.lanzous.com/i3i0edagc8j"
 		//勾选快手选项时,检查应用是否安装
 		switchEvent(ui.swKuaiShou, kuaiShouUrl, "com.kuaishou.nebula");
-		let weiShiUrl = "https://a13.baidupan.com/060313bb/2020/06/03/c8e3666cc297f43ea462e5a0aeea9569.apk?st=Y64f_qFgqn9ISL5gr834Dw&e=1591163108&b=UuUPsVX7BOlYqlWFAnwPagMmDTo_c&fi=24050370&pid=36-148-104-209&up=1.";
+		let weiShiUrl = "https://178me.lanzous.com/iRyTddagcta";
 		switchEvent(ui.swWeiShi, weiShiUrl, "com.tencent.weishi");
+		let shuaBaoUrl = "https://178me.lanzous.com/iaxHRdlcs9i";
+		switchEvent(ui.swShuaBao, shuaBaoUrl, "com.jm.video");
 	});
 }, 500);
 
@@ -126,6 +130,8 @@ function main() {
 	kuaiShouSwitchAccountEnd = ui.kuaishouswitchAccountEnd.text();
 	weiShiSwitchAccountBegin = ui.weiShiSwitchAccountBegin.text();
 	weiShiSwitchAccountEnd = ui.weiShiSwitchAccountEnd.text();
+	shuaBaoSwitchAccountBegin = ui.shuaBaoSwitchAccountBegin.text();
+	shuaBaoSwitchAccountEnd = ui.shuaBaoSwitchAccountEnd.text();
 	while (true) {
 		//快手极速版
 		if (ui.swKuaiShou.isChecked()) {
@@ -136,6 +142,11 @@ function main() {
 		if (ui.swWeiShi.isChecked()) {
 			log("微视");
 			weiShi();
+		}
+		//刷宝短视频
+		if (ui.swShuaBao.isChecked()) {
+			log("刷宝");
+			shuaBao();
 		}
 
 		//是否开启循环
@@ -156,7 +167,7 @@ function main() {
  * 功能参数: 刷视频时间-kwaiRunTimeInput 飞行模式-kWaiFlyModeBtn 签到-kWaiSignInBtn 清理缓存-kWaiCleanCacheBtn
  */
 function kuaishou() {
-	var kwaiMain = require("./快手/kuaishou.js"); //导入快手js文件
+	var kwaiMain = require("./快手/kuaiShou.js"); //导入快手js文件
 	let appName;	//应用名
 	// switchAccountBegin 换号区间 开始
 	// switchAccountEnd 换号区间 结束
@@ -231,7 +242,7 @@ function kuaishou() {
 
 function weiShi() {
 	var weiShi = require("./微视/weiShi.js"); //导入快手js文件
-	var kwaiMain = require("./快手/kuaishou.js"); //导入快手js文件
+	var kwaiMain = require("./快手/kuaiShou.js"); //导入快手js文件
 	let appName;	//应用名
 	// switchAccountBegin 换号区间 开始
 	// switchAccountEnd 换号区间 结束
@@ -282,6 +293,69 @@ function weiShi() {
 
 		//微视刷视频
 		weiShi.run((ui.weiShiTime.text() * 60));
+
+		//关闭微视
+		tabletOperation.killApp(appName);
+
+		//关闭检测弹窗线程
+		checkPop.interrupt();
+	}
+}
+
+function shuaBao() {
+	var shuaBao = require("./刷宝/shuaBao.js"); //导入快手js文件
+	var kwaiMain = require("./快手/kuaiShou.js"); //导入快手js文件
+	let appName;	//应用名
+	// switchAccountBegin 换号区间 开始
+	// switchAccountEnd 换号区间 结束
+	for (var i = shuaBaoSwitchAccountBegin; i <= shuaBaoSwitchAccountEnd; i++) {
+		// log(1);
+		//清理后台App(平台专属)
+		if (cleanApp) {
+			tabletOperation.clearApp(Apparr);
+			sleep(1000);
+		}
+
+		//飞行模式
+		if (flightMode) {
+			tabletOperation.openFlightMode();
+			log("开启飞行模式");
+			sleep(3000);
+			tabletOperation.closeFlightMode();
+			log("关闭飞行模式");
+			//检查网络
+			tabletOperation.isNetwork();
+		}
+		// log(2);
+		//第0个默认为原版快手,其他的按这个顺序来
+		if (i == 0) {
+			appName = "刷宝短视频";
+		} else {
+			appName = "刷宝短视频" + i;
+		}
+		if (app.getPackageName(appName)) {
+			//判断是否开启成功,不成功重启一次
+			if (tabletOperation.openApp(appName) == false) {
+				tabletOperation.killApp(appName);
+				sleep(3000);
+				tabletOperation.openApp(appName);
+			};
+		} else {
+			log(appName + "应用不存在");
+			break;
+		}
+
+		//开启一个线程检测弹窗
+		let checkPop = threads.start(function () {
+			while (true) {
+				//弹窗事件
+				kwaiMain.popUpEvent();
+				sleep(1000);
+			}
+		});
+
+		//刷视频
+		shuaBao.run((ui.shuaBaoTime.text() * 60));
 
 		//关闭微视
 		tabletOperation.killApp(appName);
@@ -391,6 +465,9 @@ function initUI() {
 	} else {
 		ui.announcementText.setText("暂无公告");
 	}
+
+	ui.precautions.setText(
+		"\n1. 请确保已授权无障碍服务\n\n2. 请确保设备系统 >= Android 7.0\n\n3. 请确保已授权悬浮窗权限（第一次使用需先关后开）\n\n4. 请确保已授权截图权限（每次都会询问，可以选择不再询问）\n\n5. 请确保已授权Root权限（第一次使用需先关后开）");
 }
 
 /**
@@ -401,8 +478,12 @@ function saveConfig() {
 	// let initStorage = storages.create("InitConfig")
 	let storage = storages.create('UIConfigInfo')
 	let 需要备份和还原的控件id列表集合 = [
-		['kuaishouSwitchAccountBegin', 'kuaishouswitchAccountEnd', 'weiShiSwitchAccountBegin', 'weiShiSwitchAccountEnd', 'kuaiShouTime', 'weiShiTime', 'activateCode'],
-		['swFloatWindow', 'swFloatWindow', 'swFlyModeBtn', 'swCleanApp', 'swSignIn', 'swTaskCycle', 'swKuaiShou', 'swWeiShi'],
+		['kuaishouSwitchAccountBegin', 'kuaishouswitchAccountEnd', 'weiShiSwitchAccountBegin', 'weiShiSwitchAccountEnd'
+			, 'shuaBaoSwitchAccountBegin', 'shuaBaoSwitchAccountEnd'
+			, 'kuaiShouTime', 'weiShiTime', 'shuaBaoTime'
+			, 'activateCode'],
+		['swFloatWindow', 'swFloatWindow', 'swFlyModeBtn', 'swCleanApp', 'swSignIn', 'swTaskCycle'
+			, 'swKuaiShou', 'swWeiShi', 'swShuaBao'],
 	]
 	需要备份和还原的控件id列表集合.map((viewIdList) => {
 		let inputViewIdListRegisterListener = new ViewIdListRegisterListener(viewIdList, storage, ui);
@@ -427,7 +508,7 @@ function uiEvent() {
 	// 	toast(pjy.CardUnbindDevice().message);
 	// });
 	ui.activateBtn.on("click", () => {
-		pjy.SetCard(ui.activateCode.text());
+		pjy.SetCard(ui.activateCode.text().trim());
 		loginStat = pjy.CardLogin();
 		if (loginStat.code != 0) {
 			toast(loginStat.message);
@@ -483,7 +564,7 @@ function uiEvent() {
 	ui.swRoot.on("check", function (checked) {
 		// 用户勾选Root的选项时，
 		if (checked) {
-			shell("ls",true);
+			shell("ls", true);
 		}
 	});
 
