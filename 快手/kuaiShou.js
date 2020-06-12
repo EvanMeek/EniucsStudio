@@ -1,14 +1,14 @@
 // // 快手刷视频
 
-const _user = "yzl178me";
-const _pass = "Yangzelin995;";
+// const _user = "yzl178me";
+// const _pass = "Yangzelin995;";
 
-//请求截图权限
-if (!requestScreenCapture()) {
-    toast("过滑块需要截图权限支持");
-    exit();
-};
-test();
+// //请求截图权限
+// if (!requestScreenCapture()) {
+//     toast("过滑块需要截图权限支持");
+//     exit();
+// };
+// test();
 
 // ////// 当调用moudle.export时,以上代码全部注释 //////
 // ////////////////////////////////////////////////////
@@ -19,7 +19,7 @@ function test() {
     // run(120, _user, _pass);
     // reduceSimilarWorks();
     // overSlider(_user,_pass);
-    run(120,_user,_pass);
+    run(1200, _user, _pass);
 
 }
 
@@ -48,14 +48,6 @@ function reduceSimilarWorks() {
     } else {
         click("作品引起不适");
     }
-    // let reduceWork = text("减少类似作品").findOne(1500);
-    // if (reduceWork) {
-    //     reduceWork = reduceWork.parent().children();
-    //     sleep(2000);
-    //     reduceWork[random(1, 4)].click();
-    // } else {
-    //     Log("没有找到减少类似作品");
-    // }
 
 }
 
@@ -80,20 +72,26 @@ function run(totalTime, user, pass) {
     log("计划时长：" + totalTime)
     let watchTime = 0;
     let overSliderCount = 0;
+    let overSliderthread;
     menuArea();
-    let overSliderThred = threads.start(function () {
-        while (true) {
-            if (text("拖动滑块").findOne(500) && overSliderCount < 10) {
-                sleep(1500);
-                overSlider(user, pass);
-                overSliderCount++;
-            }
-            sleep(3000);
-        }
-    });
+
     for (let i = 1; totalTime > watchTime; i++) {
+
         // //判断弹窗事件
         // popUpEvent();
+        if (text("拖动滑块").findOne(500) && overSliderCount < 8) {
+            overSliderthread = threads.start(function () {
+                sleep(3000);
+                overSlider(user, pass);
+                overSliderCount++;
+            })
+            overSliderthread.join(30000)
+            overSliderthread.interrupt();
+        }
+        else if (overSliderCount >= 10) {
+            back();
+        }
+        blackScreenBrushVideo(i);
         let waitTime = perVideoWatchTime + random(-2, 4)
         // log("本视频观看时长" + waitTime);
         sleep(waitTime / 2 * 1000);
@@ -102,18 +100,30 @@ function run(totalTime, user, pass) {
         sleep(waitTime / 2 * 1000);
         watchTime += waitTime;
         // log("已看：" + i + "个视频 " + watchTime + "秒");
-        swipeVideo(i);
-        skipAtlas();
     }
-    overSliderThred.interrupt();
+    // overSliderThred.interrupt();
     Log("本次观看时长" + watchTime + "秒");
+}
+
+function blackScreenBrushVideo(i) {
+    let node;
+    node =
+        id("com.kuaishou.nebula:id/slide_play_view_pager").findOne(1000);
+    if (node) {
+        swipeVideo(i);
+        sleep(1000);
+        node.scrollForward();
+    } else {
+        log("滑动");
+        swipeVideo(1);
+    }
 }
 
 /**
  * 跳过图集
  */
 function skipAtlas() {
-    if (textContains("点击打开").findOne(500)) {
+    if (textContains("点击打开").findOne(1000)) {
         Log("跳过图片");
         swipeVideo(1);
     }
@@ -229,7 +239,7 @@ function overSlider(usr, pass) {
         Log(x);
 
         //滑动滑块
-        swipe(160, (500 + random(0, 10)), x-5, (500 + random(0, 10)), 1000);
+        swipe(160, (500 + random(0, 10)), x - 5, (500 + random(0, 10)), 1000);
 
         //回收图片
         sleep(2000);
@@ -346,10 +356,14 @@ function swipeVideo(swipeCount) {
     //     smlMove(width + random(-50, 50), height + offSet,
     //         width + random(-50, 50), height + offSet + (videoSwipeDistance / 2), 30);
     // }
-    else {
-        //单数下滑
+    else if (swipeCount == 1) {
         smlMove((width - random(-50, 50)), (height + offSet + (videoSwipeDistance / 2)),
             (width + random(-50, 50)), (height + offSet - (videoSwipeDistance / 2)), 30);
+    }
+    else {
+        //单数下滑
+        // smlMove((width - random(-50, 50)), (height + offSet + (videoSwipeDistance / 2)),
+        //     (width + random(-50, 50)), (height + offSet - (videoSwipeDistance / 2)), 30);
     }
 
 }
@@ -401,12 +415,16 @@ function likeAndFollow(range) {
     let isLike = random(-1 * range, range);
     let isreduceSimilarWorks = random(0, 30);
     if (isLike == 0) {
+        swipeVideo(1);
+        sleep(1000);
         click(width, height);
         sleep(50);
         click(width, height);
         log("双击喜欢");
         let isFollow = random(-1 * range, range);
         if (isFollow == 0) {
+            swipeVideo(1);
+            sleep(1000);
             let follow = text("关注").find();
             if (follow) {
                 click("关注");
@@ -415,14 +433,20 @@ function likeAndFollow(range) {
         } else {
             // log("不是点关注的概率:"+isFollow)
         }
+        blackScreenBrushVideo(1);
     }
     else if (isreduceSimilarWorks == 4) {
         //减少类似作品
+        swipeVideo(1);
+        sleep(1000);
         reduceSimilarWorks();
+        sleep(1000);
+        blackScreenBrushVideo(1);
     }
     else {
         // log("不是点喜欢的概率:"+isLike)
     }
+
 
 }
 
@@ -581,12 +605,12 @@ function bezierCurves(cp, t) {
     return result;
 };
 
-// // 需要调用时取消注释
-// module.exports = {
-//     run: run,    //快手刷视频
-//     signIn: signIn,  //快手签到
-//     cleanCache: cleanCache,  //快手清理缓存
-//     popUpEvent: popUpEvent,  //快手弹窗
-//     overSlider: overSlider   //滑块验证
-// }
+// 需要调用时取消注释
+module.exports = {
+    run: run,    //快手刷视频
+    signIn: signIn,  //快手签到
+    cleanCache: cleanCache,  //快手清理缓存
+    popUpEvent: popUpEvent,  //快手弹窗
+    overSlider: overSlider   //滑块验证
+}
 

@@ -52,20 +52,11 @@ function likeAndFollow(range) {
         log("双击喜欢")
         let isFollow = random(-1 * range, range);
         if (isFollow == 0) {
-            let follow = depth(19).className("android.widget.ImageView").drawingOrder(2).find()[0];
-            if (follow) {
-                let x = follow.bounds().centerX();
-                let y = follow.bounds().centerY();
-                click(x, y);
-            }
+            click("关注", 0);
             log("点了关注");
         } else {
             // log("不是点关注的概率:"+isFollow)
         }
-    }
-    else if (isreduceSimilarWorks == 4) {
-        //减少类似作品
-        reduceSimilarWorks();
     }
     else {
         // log("不是点喜欢的概率:"+isLike)
@@ -78,31 +69,6 @@ function likeAndFollow(range) {
  * 获取设备高度
  */
 
-function reduceSimilarWorks() {
-    Log("开始减少类似作品");
-    //获取获取坐标然后长按
-    let x = device.width / 2;
-    x = random((x - 100), (x + 100));
-    let y = device.height / 2;
-    x = random((x - 150), (x + 150));
-    press(x, y, 2000);
-
-    sleep(1000);
-    let reduce = id("kkl").findOne(3000);
-    if(reduce){
-        reduce.click();
-    }
-    
-    // let reduceWork = text("减少类似作品").findOne(1500);
-    // if (reduceWork) {
-    //     reduceWork = reduceWork.parent().children();
-    //     sleep(2000);
-    //     reduceWork[random(1, 4)].click();
-    // } else {
-    //     Log("没有找到减少类似作品");
-    // }
-
-}
 
 /**
  * 滑动视频
@@ -219,5 +185,5 @@ function bezierCurves(cp, t) {
 
 // 需要调用时取消注释
 module.exports = {
-    run: run,    //快手刷视频
+    run: run,    //刷视频
 }

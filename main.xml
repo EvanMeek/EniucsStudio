@@ -6,177 +6,294 @@
                 <vertical>
                     <horizontal w="*" gravity="top">
                         <img id="logo" src="data:image/jpg;base64,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" w="60"
-                             h="50sp"  padding="5sp"/>
+                            h="50sp"  padding="5sp"/>
                         <text id="titleBeg" text="掘金" textSize="25sp" textStyle="bold" textColor="#FFD700"
-                              marginTop="10" layout_gravity="top" h="auto"/>
+                            marginTop="10" layout_gravity="top" h="auto"/>
                         <text id="titleEnd" text="时代" textSize="25SP" textStyle="bold" textColor="#00FA9A"
-                              marginTop="10" layout_gravity="top" h="auto" w="399"/>
+                            marginTop="10" layout_gravity="top" h="auto" w="85"/>
+                        <text text="掘    金    时   代    让    您    的    时    间    更    有    价    值  !" textStyle="bold" textSize="15sp" padding="10sp" gravity="left" textColor="#FFB90F" w="auto" layout_gravity="bottom"/>
+                            <!-- <button id="unBindBtn" text="解绑卡密"
+                            style="Widget.AppCompat.Button.Borderless.Colored" layout_gravity="center_vertical"/> -->
+                        </horizontal>
+
+                        <horizontal w="*" gravity="left">
+                        <text text="本软件目前仅支持安卓系统7.0及以上系统使用." textStyle="italic" textSize="12sp" marginLeft="50" textColor="#CDC5BF" gravity="left"/>
+                        <text text=" " w="225" />
                         <button id="logBtn" text="查看日志"
-                                style="Widget.AppCompat.Button.Borderless.Colored" layout_gravity="right"/>
-                        <!-- <button id="unBindBtn" text="解绑卡密"
-                                style="Widget.AppCompat.Button.Borderless.Colored" layout_gravity="center_vertical"/> -->
-                    </horizontal>
-                    <text text="掘    金    时   代    让    您    的    时    间    更    有    价    值  !" textStyle="bold" textSize="15sp" padding="10sp" gravity="left" textColor="#FFB90F" w="auto" layout_gravity="right"/>
-<!--                    <text text="本软件目前仅支持安卓系统7.0及以上系统使用." textStyle="italic" textSize="12sp" marginLeft="50" textColor="#CDC5BF" gravity="left"/>-->
+                            style="Widget.AppCompat.Button.Borderless.Colored" layout_gravity="right"/>
+                        </horizontal>
+                                                                       
+                        </vertical>
+                    </card>
                 </vertical>
-            </card>
-        </vertical>
-        <!-- 应用体 -->
-        <vertical w="*" layout_weight="5">
-            <!-- 可上下滚动 -->
-            <viewpager id="viewpager">
-                <vertical>
-                    <!-- 软件公告 -->
-                    <card layout_widget="2">
-                        <vertical padding="10" w="*">
-                            <text text="公告" textSize="16sp" textStyle="bold" layout_gravity="center" w="auto"/>
-                            <text id="announcementText" textColor="blue" layout_gravity="center" w="auto"/>
-                        </vertical>
-                    </card>
-                    <button h="5" w="*"/>
-                    <!-- 激活码 -->
-                    <card layout_widget="1" w="*">
-                        <vertical padding="10" w="*">
-                            <horizontal>
-                                <text text="激活码: " textStyle="bold" textSize="16sp"/>
-                                <input tag="EditText" id="activateCode" w="*" inputType="textPassword"/>
-                            </horizontal>
-                            
-                            <horizontal alpha="1" w="*">
-                                <text text="剩余时间: " textSize="16sp" textStyle="bold" textColor="#EE2C2C"
-                                      layout_gravity="left|center_vertical" w="auto"/>
-                                <text text="-1 天" id="remainDayText" textSize="16sp" textStyle="bold"
-                                      textColor="#EE00EE" layout_gravity="left|center_vertical" w="420"/>
-                                      
-                                <button id="activateBtn" style="Widget.AppCompat.Button.Colored" text="登录验证"
-                                        textSize="16sp" textStyle="bold" w="auto"/>
-                                      
-                            </horizontal>
-                            
-                            
-                            <text text="激活码一旦激活无法在其他设备上二次激活，请谨慎激活！" textSize="12sp" textColor="#CDC5BF" w="auto"/>
-                        </vertical>
-                    </card>
-                    <button h="5" w="*"/>
-                    <!-- 基础设置 -->
-                    <card layout_widget="2">
-                        <vertical padding="10">
-                            <!-- 换号区间 -->
-                            <horizontal>
-                                <text text="换号区间: " textStyle="bold" textSize="16sp"/>
-                                <input tag="EditText" inputType="number" id="switchAccountBegin" w="80" text="0"
-                                       gravity="center"/>
-                                <text text="到" textStyle="bold" textSize="16sp"/>
-                                <input tag="EditText" inputType="number" id="switchAccountEnd" w="80" text="0"
-                                       gravity="center"/>
-                                <text text="之间" textStyle="bold" textSize="16sp"/>
-                            </horizontal>
-                            <!-- 各种权限 -->
-                            <horizontal w="auto" h="auto">
-                                <vertical>
-                                    <Switch tag="Switch" id="swAccessibility" text="无障碍" textSize="16sp"
-                                            textStyle="bold" checked="{{auto.service!=null}}"/>
-                                    <Switch tag="Switch" id="swFloatWindow" text="悬浮窗" textSize="16sp"
-                                            textStyle="bold"/>
-                                    <Switch tag="Switch" id="swFlyModeBtn" text="换IP" textSize="16sp"
-                                            textStyle="bold"/>
-                                    
+                <!-- 应用体 -->
+                <vertical w="*" layout_weight="5">
+                    <!-- 可上下滚动 -->
+                    <viewpager id="viewpager">
+                        <vertical>
+                            <!-- 软件公告 -->
+                            <card layout_widget="2">
+                                <vertical padding="10" w="*">
+                                    <text text="公告" textSize="16sp" textStyle="bold" layout_gravity="center" w="auto"/>
+                                    <text id="announcementText" textColor="blue" layout_gravity="center" w="auto"/>
                                 </vertical>
-                                <vertical layout_gravity="right" marginLeft="20">
-                                    <Switch tag="Switch" id="swFlyModeBtn" text="防封号" textSize="16sp"
-                                            checked="true" textStyle="bold"/>
-                                    <Switch tag="Switch" id="swCleanApp" text="清理后台" textSize="16sp" textStyle="bold" checked="true" />
-                                    <Switch tag="Swtich" id="swSignIn" text="开启签到" textSize="16sp" textStyle="bold" checked="true" />
-                                    
-                                </vertical>
-                                <vertical layout_gravity="right" marginLeft="20">
-                                    <Switch text="虚拟定位" textSize="16sp" textStyle="bold"/>
-                                    <Switch text="滑块验证" textSize="16sp" textStyle="bold" checked="true" />
-                                    <Switch text="随机关注" textSize="16sp" textStyle="bold" checked="true" />
-                  
-                                </vertical>
-                                <vertical layout_gravity="right" marginLeft="20">
-                
-                                    <Switch text="随机点赞" textSize="16sp" textStyle="bold" checked="true" />
-                                    <Switch text="任务循环" textSize="16sp" textStyle="bold" checked="true" />
-                                    <Switch text="自动优化" textSize="16sp" textStyle="bold" checked="true" />
-                                </vertical>
-                            </horizontal>
-                        </vertical>
-                    </card>
-                    <button h="5" w="*"/>
-                    <card layout_widget="3">
-                        <viewpager id="appTypeViewPager">
-                            <!-- 视频播放类 -->
-                            <vertical>
-                                <text text="视频播放类" textSize="18p" textStyle="bold" layout_gravity="center_horizontal"
-                                      w="auto"/>
-                                <list id="videoList" w="*">
-                                    <!-- 快手 -->
-                                    <horizontal w="*">
-                                        <Switch tag="Switch" id="swKuaiShou"/>
-                                        <text text="快手视频" textColor="#000000" textStyle="bold"
-                                              width="70"/>
-                                        <input tag="EditText" id="kuaiShouTime" inputType="number" text="10"
-                                               w="80" gravity="center"/>
-                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="*"/>
-                                    </horizontal>
-                                    <!-- 微视 -->
-                                    <horizontal w="*">
-                                        <Switch tag="Switch" id="swWeiShi"/>
-                                        <text text="微视视频" textColor="#000000" textStyle="bold"
-                                              width="70"/>
-                                        <input tag="EditText" id="weiShiTime" inputType="number" text="10"
-                                               w="80" gravity="center"/>
-                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="*"/>
-                                    </horizontal>
-                                </list>
-                            </vertical>
-                            <!-- 新闻阅读类 -->
-                            <vertical>
-                                <text text="新闻阅读类" textSize="18p" textStyle="bold" layout_gravity="center_horizontal"
-                                      w="auto"/>
-                                <list id="newsList">
+                            </card>
+                            <button h="5" w="*"/>
+                                <!-- 激活码 -->
+                            <card layout_widget="1">
+                                <vertical padding="10">
                                     <horizontal>
-                                        <Switch tag="Switch" id="{{appSwitchBtn}}"/>
-                                        <text text="{{appName}}" textColor="{{appNameColor}}" textStyle="bold"
-                                              width="70"/>
-                                        <text text=" 单次: "/>
-                                        <input tag="EditText" inputType="number" w="30"/>
-                                        <text text=" 上限: "/>
-                                        <input tag="EditText" inputType="number" w="30"/>
-                                        <button text="假装这个按钮有用" w="*" layout_gravity="right"/>
+                                        <text text="激活码: " textStyle="bold" textSize="16sp"/>
+                                        <input tag="EditText" id="activateCode" w="*" inputType="textVisiblePassword"/>
                                     </horizontal>
-                                </list>
+                                    <horizontal alpha="1">
+                                        <text text="剩余时间: " textSize="16sp" textStyle="bold" textColor="#EE2C2C"
+                                            layout_gravity="left|center_vertical" w="auto"/>
+                                        <text text="-1 天" id="remainDayText" textSize="16sp" textStyle="bold"
+                                            textColor="#EE00EE" layout_gravity="left|center_vertical" w="420"/>
+                                        <button id="activateBtn" style="Widget.AppCompat.Button.Colored" text="登录验证"
+                                            textSize="16sp" textStyle="bold" w="auto"/>
+
+                                    </horizontal>
+
+                                    <text text="激活码一旦激活无法在其他设备上二次激活，请谨慎激活！" textSize="12sp" textColor="#CDC5BF" w="auto"/>
+                                </vertical>
+                            </card>
+                            <button h="5" w="*"/>
+                                <!-- 基础设置 -->
+                            <card layout_widget="2">
+                                <vertical padding="10">
+                                    
+                                    <!-- 各种权限 -->
+                                    <horizontal w="auto" h="auto">
+                                        <vertical w="128">
+                                            <Switch tag="Switch" id="swAccessibility" text="无障碍" textSize="16sp" h="35" 
+                                                textStyle="bold" checked="{{auto.service!=null}}"/>
+                                            <Switch tag="Switch" id="swFloatWindow" text="悬浮窗" textSize="16sp" h="35" 
+                                                textStyle="bold" checked="true"/>     
+                                            <Switch tag="Switch" id="swRoot" text="Root" textSize="16sp" h="35"
+                                                textStyle="bold" checked="true"/>
+                                        </vertical>
+                                        <vertical layout_gravity="right" marginLeft="20" w="128">
+                                            <Switch tag="Switch" id="swFlyModeBtn" text="换IP" textSize="16sp" h="35"
+                                                textStyle="bold"/>
+                                            <Switch tag="Switch" id="swCleanApp" text="清理后台" textSize="16sp" textStyle="bold" checked="true"  h="35"/>
+                                            <Switch tag="Swtich" id="swSignIn" text="开启签到" textSize="16sp" textStyle="bold" checked="true"  h="35"/>
+                                        </vertical>
+                                        <vertical layout_gravity="right" marginLeft="20" w="128">
+                                            <Switch text="虚拟定位" textSize="16sp" textStyle="bold" checked="true" h="35"/>
+                                            <Switch text="滑块验证" textSize="16sp" textStyle="bold" checked="true" h="35"/>
+                                            <Switch text="随机关注" textSize="16sp" textStyle="bold" checked="true" h="35" />
+
+                                        </vertical>
+                                        <vertical layout_gravity="right" marginLeft="20" w="128">
+                                            <Switch text="随机点赞" textSize="16sp" textStyle="bold" checked="true" h="35" />
+                                            <Switch tag="Switch" id="swTaskCycle" text="任务循环" textSize="16sp" textStyle="bold" checked="true" h="35" />
+                                            <Switch text="自动优化" textSize="16sp" textStyle="bold" checked="true" h="35" />
+                                        </vertical>
+                                    </horizontal>
+                                    <!-- 执行完任务自动关机 -->
+                                    <horizontal>
+                                        <Switch tag="Switch" id="swPowerOff" text="执行完所有任务之后自动关机(ps:不能与任务循环一起使用)" textStyle="bold" h="35" w="*"/>
+                                        <!-- <text text="执行完所有任务之后自动关机(ps:不能与任务循环一起使用)" textColor="#000000" textStyle="bold" textSize="16sp"/> -->
+                                    </horizontal>
+                                </vertical>
+                            </card>
+                            <button h="5" w="*"/>
+                            <card layout_widget="3">
+                                <viewpager id="appTypeViewPager">
+                                    <!-- 视频播放类 -->
+                                    <scroll>
+                                        <vertical>
+                                            <text text="视频播放类" textSize="18p" textStyle="bold" layout_gravity="center_horizontal"
+                                                w="auto"/>
+                                                <!-- <list id="videoList" w="*"> -->
+                                                    <!-- 快手 -->
+                                                    <horizontal w="*">
+                                                        <Switch tag="Switch" id="swKuaiShou"/>
+                                                        <text text="快手视频" textColor="#000000" textStyle="bold"
+                                                            width="70"/>
+                                                        <input tag="EditText" id="kuaiShouTime" inputType="number" text="60"
+                                                            w="80" gravity="center"/>
+                                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
+
+                                                        <text text="换号区间: " textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number" id="kuaishouSwitchAccountBegin" w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="到" textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number" id="kuaishouswitchAccountEnd" w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="之间" textStyle="bold" textSize="16sp"/>
+                                                    </horizontal>
+                                                    <!-- 微视 -->
+                                                    <horizontal w="*">
+                                                        <Switch tag="Switch" id="swWeiShi"/>
+                                                        <text text="微视视频" textColor="#000000" textStyle="bold"
+                                                            width="70"/>
+                                                        <input tag="EditText" id="weiShiTime" inputType="number" text="60"
+                                                            w="80" gravity="center"/>
+                                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
+
+                                                        <text text="换号区间: " textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number" id="weiShiSwitchAccountBegin" w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="到" textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number" id="weiShiSwitchAccountEnd" w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="之间" textStyle="bold" textSize="16sp"/>
+                                                    </horizontal>
+                                                    <!-- 刷宝视频 -->
+                                                    <horizontal w="*">
+                                                        <Switch tag="Switch" id="swShuaBao"/>
+                                                        <text text="刷宝视频" textColor="#000000" textStyle="bold"
+                                                            width="70"/>
+                                                        <input tag="EditText" id="shuaBaoTime" inputType="number" text="60"
+                                                            w="80" gravity="center"/>
+                                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
+
+                                                       <text text="换号区间: " textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number" id="shuaBaoSwitchAccountBegin" w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="到" textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number" id="shuaBaoSwitchAccountEnd" w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="之间" textStyle="bold" textSize="16sp"/>
+                                                    </horizontal>
+                                                    <!-- 抖呱呱 -->
+                                                    <horizontal w="*">
+                                                        <Switch />
+                                                        <text text="抖呱呱" textColor="#CDC5BF" textStyle="bold"
+                                                            width="70"/>
+                                                        <input inputType="number" text="60"
+                                                            w="80" gravity="center"/>
+                                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
+
+                                                        <text text="换号区间: " textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number"  w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="到" textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number"  w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="之间" textStyle="bold" textSize="16sp"/>
+                                                    </horizontal>
+                                                    <!-- 鲤刷刷 -->
+                                                    <horizontal w="*">
+                                                        <Switch />
+                                                        <text text="鲤刷刷" textColor="#CDC5BF" textStyle="bold"
+                                                            width="70"/>
+                                                        <input inputType="number" text="60"
+                                                            w="80" gravity="center"/>
+                                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
+
+                                                        <text text="换号区间: " textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number"  w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="到" textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number"  w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="之间" textStyle="bold" textSize="16sp"/>
+                                                    </horizontal>
+                                                    
+                                                    <!-- 抖音视频 -->
+                                                    <horizontal w="*">
+                                                        <Switch />
+                                                        <text text="抖音视频" textColor="#CDC5BF" textStyle="bold"
+                                                            width="70"/>
+                                                        <input inputType="number" text="60"
+                                                            w="80" gravity="center"/>
+                                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
+
+                                                        <text text="换号区间: " textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number"  w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="到" textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number"  w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="之间" textStyle="bold" textSize="16sp"/>
+                                                    </horizontal>
+                                                    <!-- 火山视频 -->
+                                                    <horizontal w="*">
+                                                        <Switch />
+                                                        <text text="火山视频" textColor="#CDC5BF" textStyle="bold"
+                                                            width="70"/>
+                                                        <input inputType="number" text="60"
+                                                            w="80" gravity="center"/>
+                                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
+
+                                                        <text text="换号区间: " textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number"  w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="到" textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number"  w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="之间" textStyle="bold" textSize="16sp"/>
+                                                    </horizontal>
+                                                    <!-- 花生视频 -->
+                                                    <horizontal w="*">
+                                                        <Switch />
+                                                        <text text="花生视频" textColor="#CDC5BF" textStyle="bold"
+                                                            width="70"/>
+                                                        <input inputType="number" text="60"
+                                                            w="80" gravity="center"/>
+                                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
+
+                                                        <text text="换号区间: " textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number"  w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="到" textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number"  w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="之间" textStyle="bold" textSize="16sp"/>
+                                                    </horizontal>
+                                                    <!-- </list> -->
+                                            </vertical>
+                                        </scroll>
+                                        <!-- 新闻阅读类 -->
+                                        <vertical>
+                                            <text text="新闻阅读类" textSize="18p" textStyle="bold" layout_gravity="center_horizontal"
+                                                w="auto"/>
+                                            <list id="newsList">
+                                                <horizontal>
+                                                    <Switch tag="Switch" id="{{appSwitchBtn}}"/>
+                                                    <text text="{{appName}}" textColor="{{appNameColor}}" textStyle="bold"
+                                                        width="70"/>
+                                                    <text text=" 单次: "/>
+                                                    <input tag="EditText" inputType="number" w="30"/>
+                                                    <text text=" 上限: "/>
+                                                    <input tag="EditText" inputType="number" w="30"/>
+                                                    <button text="假装这个按钮有用" w="*" layout_gravity="right"/>
+                                                </horizontal>
+                                            </list>
+                                        </vertical>
+                                    </viewpager>
+                                </card>
+                                <button h="5" w="*"/>
                             </vertical>
+                            <scroll>
+                                <vertical>
+                                    <text textSize="50" layout_gravity="center_horizontal" text="使用须知" gravity="center"/>
+                                    <text id="precautions" textSize="30" layout_gravity="center_horizontal" gravity="left" h="*"/>
+                                </vertical>
+                            </scroll>
+                            <!-- 功能 -->
+                            <!-- <scroll>
+                                <vertical>
+                                    <text text="pageThree"/>
+                                </vertical>
+                            </scroll> -->
                         </viewpager>
-                    </card>
-                    <button h="5" w="*"/>
-                </vertical>
-                <scroll>
-                    <vertical>
-                        <text text="pageTwo"/>
                     </vertical>
-                </scroll>
-                <!-- 功能 -->
-                <scroll>
-                    <vertical>
-                        <text text="pageThree"/>
+                    <!-- 应用脚 -->
+                    <vertical h="50" w="*">
+                        <card h="50" bg="#D3D3D3">
+                            <horizontal>
+                                <button id="runAllBtn" text="启动掘金" typeSize="18sp" style="Widget.AppCompat.Button.Colored"
+                                    layout_weight="1"/>
+                                <button id="exitBtn" text="退出掘金" typeSize="18sp" style="Widget.AppCompat.Button.Colored"
+                                    layout_weight="1"/>
+                                <button id="checkUpdateBtn" text="检查更新" typeSize="18sp" style="Widget.AppCompat.Button.Colored" layout_weight="1"/>
+                            </horizontal>
+                        </card>
                     </vertical>
-                </scroll>
-            </viewpager>
-        </vertical>
-        <!-- 应用脚 -->
-        <vertical h="50" w="*">
-            <card h="50" bg="#D3D3D3">
-                <horizontal>
-                    <button id="runAllBtn" text="启动脚本" typeSize="18sp" style="Widget.AppCompat.Button.Colored"
-                            layout_weight="1"/>
-                    <button id="exitBtn" text="退出脚本" typeSize="18sp" style="Widget.AppCompat.Button.Colored"
-                            layout_weight="1"/>
-                    <button id="checkUpdateBtn" text="检查更新" typeSize="18sp" style="Widget.AppCompat.Button.Colored" layout_weight="1"/>
-                </horizontal>
-            </card>
-        </vertical>
-    </linear>
-</drawer>
+                </linear>
+            </drawer>
