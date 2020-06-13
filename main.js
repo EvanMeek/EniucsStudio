@@ -21,6 +21,7 @@ pjy.event.on("heartbeat_failed", function (hret) {
 	exit();  // 退出脚本
 })
 
+
 //ui
 // var accessibility;	//无障碍
 var flightMode;		//飞行模式
@@ -31,6 +32,24 @@ var weiShiSwitchAccountBegin;
 var weiShiSwitchAccountEnd;
 var shuaBaoSwitchAccountBegin;
 var shuaBaoSwitchAccountEnd;
+
+// 初始化权限;
+initPermissionThread = threads.start(function () {
+	initPermission();
+});
+
+var initFloatWindowThread = threads.start(function(){
+	var initFloatWindow = floaty.rawWindow(
+		<vertical w="*" h="*" bg="#ffffff">
+			<img src="https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png"/>
+			<text>掘金时代推广版</text>
+		</vertical>
+	);
+	initFloatWindow.setSize(-1,-1);
+	setTimeout(()=>{
+		initFloatWindow.close();
+	},5000)
+});
 
 ui.layoutFile("./main.xml");
 // 初始化UI;
@@ -80,10 +99,7 @@ mainThread.setTimeout(function () {
 //UI事件
 uiEvent();
 
-// 初始化权限;
-initPermissionThread = threads.start(function () {
-	initPermission();
-});
+
 
 /**
  * App开关事件
