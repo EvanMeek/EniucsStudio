@@ -4,29 +4,29 @@ pjy.debug = false;
 /**
  * 检查更新
  */
-function checkUpdate(){
-    let currentVer = "V1.0.4";
+function checkUpdate() {
+    let currentVer = "V1.0.6";
     let latestVer = pjy.GetSoftwareLatestVersion(currentVer);
     // log(latestVer.code);
-    if (latestVer.code !== 10304){
-        toast();
-        dialogs.confirm("最新版本为:"+latestVer.result.version+"，立即更新?", "不更新可能会有问题!", function(isCheck){
-            if(isCheck){
-                threads.start(function () {
-                    // toastLog("下载文件中,请勿进行其他操作!");
-                    // download(files.getSdcardPath()+"/"+latestVer.result.version.toString()+"掘金时代.apk",latestVer.result.url.toString());
-                    app.openUrl(latestVer.result.url.toString());
-                });
-            }else{
-                toast("更新呀!");
-            }
-        });
-    }else{
+    if (latestVer.code !== 10304) {
+        var releaseNotes = latestVer.result.notice;
+        dialogs.build({
+            title: "发现新版本"+ latestVer.result.version,
+            content: releaseNotes,
+            negative: "取消",
+            neutral: "到浏览器下载"
+        })
+            .on("neutral", () => {
+                app.openUrl(latestVer.result.url.toString());
+            })
+            .show();
+   
+    } else {
         toast(latestVer.message);
     }
 }
 
-function download(filePath,url) {
+function download(filePath, url) {
     importClass('java.io.FileOutputStream');
     importClass('java.io.IOException');
     importClass('java.io.InputStream');
@@ -90,5 +90,5 @@ function download(filePath,url) {
 
 
 module.exports = {
-    checkUpdate:checkUpdate
+    checkUpdate: checkUpdate
 };
