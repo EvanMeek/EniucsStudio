@@ -214,7 +214,6 @@ function overSlider(usr, pass) {
         //对接联众
         let pointData = getCode(usr, pass, p2);
         if (pointData.data.res) {
-
             pointData = pointData.data.res;
             Log(pointData);
 
@@ -380,7 +379,7 @@ function popUpEvent() {
         sleep(300);
         click("我知道了");
     }
-    else if (text("立即邀请").findOnce()) {
+    else if (textContains("邀请").findOnce()) {
         sleep(300);
         back();
     }
