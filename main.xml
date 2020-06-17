@@ -63,7 +63,6 @@
                                 <!-- 基础设置 -->
                             <card layout_widget="2">
                                 <vertical padding="10">
-                                    
                                     <!-- 各种权限 -->
                                     <horizontal w="auto" h="auto">
                                         <vertical w="128">
