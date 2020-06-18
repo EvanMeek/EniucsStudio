@@ -2,30 +2,39 @@
 test();
 
 function test() {
-
-    
-    // let tt =id("a0o").findOne(1000)
-    // // click("领取");
-    // log(tt);
-    // drawRedPacket();
-    run(30*60);
-
+//    goldenEgg();
+    run(1200);
 }
 
-function drawRedPacket(){
-    if(id("a0p").findOne(1500)){
-        swipeVideo(1);
-        let temp = id("a0o").findOne(1500);
-        if(temp){
-            log("红包");
-            sleep(15000);
-            click("领取");
-            back();
-            sleep(1000);      
-            swipeVideo(1);
-        }
+function goldenEgg(){
+    if(text("金蛋大奖").findOne(1000)){
+        clickCenter(text("金蛋大奖").findOne(1000));
+        clickCenter(id("ki").findOne(3000));
     }
-  
+}
+
+function Pop(){
+    if(text("赚钱小技巧").findOne(1000)){
+        back();
+    }
+}
+
+
+function signIn() {
+    let is;
+    clickCenter(text("刷新").findOne(3000));
+    is = clickCenter(textContains("看视频").findOne(3000));
+    if(!is){
+        return;
+    }
+    is = clickCenter(textContains("金币翻倍").findOne(3000));
+    if(!is){
+        return;
+    }
+    if (text("点击重播").findOne(65000)) {
+        back();
+    }
+    clickCenter(id("ki").findOne(3000));
 }
 
 function run(totalTime) {
@@ -33,27 +42,20 @@ function run(totalTime) {
     totalTime += random(-60, 180);
     log("计划时长：" + totalTime)
     let watchTime = 0;
-    //跳过广告
-    // skip();
+    clickCenter(text("小视频").findOne(3000));
     for (let i = 1; totalTime > watchTime; i++) {
         let waitTime = perVideoWatchTime + random(-2, 4)
         // log("本视频观看时长" + waitTime);
         sleep(waitTime / 2 * 1000);
         likeAndFollow(20);
+        goldenEgg();
+        Pop();
         sleep(waitTime / 2 * 1000);
         watchTime += waitTime;
-        // log("已看：" + i + "个视频 " + watchTime + "秒");
+        // log("已看：" + i + "个视频 " + watchTime + "秒");  
         swipeVideo(i);
-        drawRedPacket();
     }
     Log("本次观看时长" + watchTime + "秒");
-}
-
-function skip() {
-    let skipText = textContains("跳过").findOne(10000);
-    if (skipText) {
-        skipText.click();
-    }
 }
 
 /**
@@ -205,6 +207,20 @@ function bezierCurves(cp, t) {
     result.y = (ay * tCubed) + (by * tSquared) + (cy * t) + cp[0].y;
     return result;
 };
+
+
+
+function clickCenter(node) {
+    if (node) {
+        let rect = node.bounds();
+        click(rect.centerX(), rect.centerY());
+        return true;
+    }
+    else {
+        log("没有找到控件!");
+        return false;
+    }
+}
 
 // 需要调用时取消注释
 // module.exports = {

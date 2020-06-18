@@ -1,31 +1,10 @@
 
 test();
 
+
 function test() {
 
-    
-    // let tt =id("a0o").findOne(1000)
-    // // click("领取");
-    // log(tt);
-    // drawRedPacket();
-    run(30*60);
-
-}
-
-function drawRedPacket(){
-    if(id("a0p").findOne(1500)){
-        swipeVideo(1);
-        let temp = id("a0o").findOne(1500);
-        if(temp){
-            log("红包");
-            sleep(15000);
-            click("领取");
-            back();
-            sleep(1000);      
-            swipeVideo(1);
-        }
-    }
-  
+   run(120);
 }
 
 function run(totalTime) {
@@ -33,41 +12,59 @@ function run(totalTime) {
     totalTime += random(-60, 180);
     log("计划时长：" + totalTime)
     let watchTime = 0;
-    //跳过广告
-    // skip();
+   
+    start();
     for (let i = 1; totalTime > watchTime; i++) {
         let waitTime = perVideoWatchTime + random(-2, 4)
         // log("本视频观看时长" + waitTime);
+
         sleep(waitTime / 2 * 1000);
+
         likeAndFollow(20);
         sleep(waitTime / 2 * 1000);
         watchTime += waitTime;
         // log("已看：" + i + "个视频 " + watchTime + "秒");
         swipeVideo(i);
-        drawRedPacket();
     }
-    Log("本次观看时长" + watchTime + "秒");
+    log("本次观看时长" + watchTime + "秒");
 }
 
-function skip() {
-    let skipText = textContains("跳过").findOne(10000);
-    if (skipText) {
-        skipText.click();
+function popUp() {
+    if (textContains("升级")) {
+        clickCenter(desc("关闭"));
     }
 }
 
-/**
- * 随机点赞或者关注和或者减少类似作品
- * @param {点赞概率} range 有range*2+1分之一的概率点喜欢,range*4+1分之一的概率点关注,关注必定喜欢
- * 1. 获取需要双击喜欢的坐标点
- * 2. 判断随机数 如果喜欢了再判断关注
- */
+function mainArea(){
+    let timeCount = 0;
+    while (timeCount <= 10) {
+        if (id("bf2").text("我的").findOne(1500)) {
+            // Log("找到主界面");
+            break;
+        } else {
+            back();
+            sleep(1000);
+            timeCount++;
+            // toastLog("检测不到主界面");
+        }
+    }
+}
+
+function start() {
+    mainArea();
+    clickCenter(text("好看视频"));
+
+    clickCenter(text("小视频"));
+
+    clickCenter(id("avp"));
+
+}
+
 function likeAndFollow(range) {
     //获取
     const height = (device.height / 2) + random(20, 50);
     const width = (device.width / 2) + random(20, 50);
     let isLike = random(-1 * range, range);
-    let isreduceSimilarWorks = random(0, 50);
     if (isLike == 0) {
         click(width, height);
         sleep(50);
@@ -87,16 +84,6 @@ function likeAndFollow(range) {
 
 }
 
-/**
- * 减少类似作品
- * 获取设备高度
- */
-
-
-/**
- * 滑动视频
- * @param {滑动次数} swipeCount 
- */
 function swipeVideo(swipeCount) {
     const height = device.height / 2;
     const width = device.width / 2;
@@ -123,22 +110,6 @@ function swipeVideo(swipeCount) {
 
 }
 
-/**
- * 日志加强
- * @param {任意对象} obj 带箭头输出任何变量
- */
-function Log(obj) {
-    log("--->" + obj);
-}
-
-/**
- * 仿真随机带曲线滑动  (视频滑动)
- * @param {起点x} qx 
- * @param {起点y} qy 
- * @param {终点x} zx 
- * @param {终点y} zy 
- * @param {过程耗时单位毫秒} time 
- */
 function smlMove(qx, qy, zx, zy, time) {
     var xxy = [time];
 
@@ -206,7 +177,20 @@ function bezierCurves(cp, t) {
     return result;
 };
 
-// 需要调用时取消注释
-// module.exports = {
-//     run: run,    //刷视频
-// }
+function clickCenter(node, time) {
+
+    if (time == undefined) {
+        time = 1000;
+    }
+    node = node.findOne(time);
+
+    if (node) {
+        let rect = node.bounds();
+        click(rect.centerX(), rect.centerY());
+        return true;
+    }
+    else {
+        log("没有找到控件!");
+        return false;
+    }
+}

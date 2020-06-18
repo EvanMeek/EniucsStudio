@@ -3,57 +3,111 @@ test();
 
 function test() {
 
-    
-    // let tt =id("a0o").findOne(1000)
-    // // click("领取");
-    // log(tt);
-    // drawRedPacket();
-    run(30*60);
+    //请求截图权限
+    if (!requestScreenCapture()) {
+        toast("过滑块需要截图权限支持");
+        exit();
+    };
+    run(1200)
 
 }
 
-function drawRedPacket(){
-    if(id("a0p").findOne(1500)){
-        swipeVideo(1);
-        let temp = id("a0o").findOne(1500);
-        if(temp){
-            log("红包");
-            sleep(15000);
-            click("领取");
-            back();
-            sleep(1000);      
-            swipeVideo(1);
+function openBox() {
+    let img = images.captureScreen();
+    img = images.rotate(img, 180);
+    let is = nodeFindColor(img, "#FF1F46", id("iv_coin"), 1000);
+    if (!is) {
+        if(is == true){
+            clickCenter(id("iv_coin"));
+            clickCenter(text("立即领取"));
+            sleep(1500);
         }
     }
-  
+    img.recycle();
+}
+
+
+/**
+ * 区域找色(节点版)
+ * @param {图片} img 屏幕截图
+ * @param {颜色} color 需要找的颜色
+ * @param {选择器} selector 例如id("xxxx"),可以级联
+ * @param {时间} time 找色的时间
+ */
+function nodeFindColor(img, color, selector, time) {
+    let searchTime = 0;
+    let node = selector.findOne(1500);
+    let returnValue;
+    if (node) {
+        let rect = node.bounds();
+        for (let i = 0; searchTime <= time; i++) {
+            returnValue = images.findColor(img, color, {
+                region: [rect.left, rect.top, rect.width(), rect.height()],
+                threshold: 0.8
+            });
+            if (returnValue) {
+                return returnValue;
+            }
+            sleep(100);
+            searchTime += 100;
+        }
+        log("找色超时");
+        return returnValue;
+    } else {
+        log("失败");
+        return false;
+    }
+}
+
+function Pop() {
+    if (text("继续观看").findOne(1000)) {
+        back();
+    }
+}
+
+function signIn() {
+    clickCenter(id("iv_not_sign"),3000);
+    sleep(1500);
+    back();
+}
+
+function clickCenter(node, time) {
+
+    if (time == undefined) {
+        time = 1000;
+    }
+    node = node.findOne(time);
+    if (node) {
+        let rect = node.bounds();
+        click(rect.centerX(), rect.centerY());
+        return true;
+    }
+    else {
+        log("没有找到控件!");
+        return false;
+    }
 }
 
 function run(totalTime) {
-    const perVideoWatchTime = 5;//每隔视频观看10秒
+    const perVideoWatchTime = 10;//每隔视频观看10秒
     totalTime += random(-60, 180);
     log("计划时长：" + totalTime)
     let watchTime = 0;
-    //跳过广告
-    // skip();
+    clickCenter(id("iv_tab_1"),3000);
     for (let i = 1; totalTime > watchTime; i++) {
         let waitTime = perVideoWatchTime + random(-2, 4)
         // log("本视频观看时长" + waitTime);
+
         sleep(waitTime / 2 * 1000);
         likeAndFollow(20);
+        openBox();
+        Pop();
         sleep(waitTime / 2 * 1000);
         watchTime += waitTime;
         // log("已看：" + i + "个视频 " + watchTime + "秒");
         swipeVideo(i);
-        drawRedPacket();
     }
     Log("本次观看时长" + watchTime + "秒");
-}
-
-function skip() {
-    let skipText = textContains("跳过").findOne(10000);
-    if (skipText) {
-        skipText.click();
-    }
 }
 
 /**
@@ -205,6 +259,8 @@ function bezierCurves(cp, t) {
     result.y = (ay * tCubed) + (by * tSquared) + (cy * t) + cp[0].y;
     return result;
 };
+
+
 
 // 需要调用时取消注释
 // module.exports = {
