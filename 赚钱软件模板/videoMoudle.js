@@ -1,16 +1,3 @@
-var debugBool = true;
-test();
-
-function test() {
-    //请求截图权限
-    if (!requestScreenCapture()) {
-        toast("过滑块需要截图权限支持");
-        exit();
-    };
-    run(5);
-    // signIn();
-}
-
 /**
  * 整个视频流程(核心) 
  * @param {总时间} totalTime 刷视频的时长,单位分钟
@@ -22,14 +9,12 @@ function run(totalTime, boolLikeAndFollow) {
     totalTime += random(-60, 180);//随机加减总时间
     Log("计划时长：" + totalTime);
     let watchTime = 0;
-    clickCenter(id("iv_tab_1"), 3000);//确定在刷视频界面
+    // brushVideoArea();//确定在刷视频界面
     for (let i = 1; totalTime > watchTime; i++) {
         let waitTime = perVideoWatchTime + random(-2, 4)
         // Log("本视频观看时长" + waitTime);
         sleep(waitTime / 2 * 1000);
         likeAndFollow(20, boolLikeAndFollow);
-        openBox();
-        Pop();
         sleep(waitTime / 2 * 1000);
         watchTime += waitTime;
         // Log("已看：" + i + "个视频 " + watchTime + "秒");
@@ -38,36 +23,11 @@ function run(totalTime, boolLikeAndFollow) {
     Log("本次观看时长" + watchTime + "秒");
 }
 
-function Pop() {
-    if (text("继续观看").findOnce()) {
-        back();
-    }
-}
-
-function openBox() {
-    let img = images.captureScreen();
-    img = images.rotate(img, 180);
-    let is = nodeFindColor(img, "#FF1F46", id("iv_coin"), 1000);
-    if (!is) {
-        if(is != false){
-            clickCenter(id("iv_coin"));
-            sleep(1500);
-            clickCenter(text("立即领取"));
-        }
-    }
-    img.recycle();
-}
-
 /**
  * 签到
  */
 function signIn() {
-    if(clickCenter(id("iv_not_sign"), 3000)){
-        sleep(1500);
-        back();
-        sleep(1000);
-        back();
-    }
+    //重写
 }
 
 /**
@@ -78,13 +38,6 @@ function popUpEvent() {
         sleep(1000);
         click("等待");
     }
-    else if (text("立即领取").findOnce()) {
-        clickCenter(text("立即领取"));
-    }
-    else if (text("继续观看").findOnce()) {
-        clickCenter(text("继续观看"));
-    }
-
 }
 
 /**
@@ -104,7 +57,7 @@ function menuArea(mainSelector, time) {
         } else {
             back();
             sleep(1000);
-            searchTime += 3000;
+            searchTime += 1000;
         }
     }
     return false;
@@ -266,6 +219,7 @@ function clickCenter(selector, time) {
  * @param {颜色} color 需要找的颜色
  * @param {选择器} selector 例如id("xxxx"),可以级联
  * @param {时间} time 找色的时间
+ * 调用前确保已经获取截图权限
  */
 function nodeFindColor(img, color, selector, time) {
     let searchTime = 0;
