@@ -9,7 +9,7 @@ function run(totalTime, boolLikeAndFollow) {
     totalTime += random(-60, 180);//随机加减总时间
     Log("计划时长：" + totalTime);
     let watchTime = 0;
-    // brushVideoArea();//确定在刷视频界面
+    brushVideoArea();//确定在刷视频界面
     for (let i = 1; totalTime > watchTime; i++) {
         let waitTime = perVideoWatchTime + random(-2, 4)
         // Log("本视频观看时长" + waitTime);
@@ -21,6 +21,14 @@ function run(totalTime, boolLikeAndFollow) {
         swipeVideo(i);
     }
     Log("本次观看时长" + watchTime + "秒");
+}
+
+/**
+ * 进入刷视频界面
+ */
+function brushVideoArea(){
+    // menuArea(xxx,xxx);
+
 }
 
 /**

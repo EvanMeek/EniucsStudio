@@ -1,8 +1,9 @@
 var debugBool = true;
 
-test();
+// test();
 
 function test() {
+    // signIn();
     run(2);
 
 }
@@ -12,18 +13,18 @@ function test() {
  * @param {总时间} totalTime 刷视频的时长,单位分钟
  * 适用于类似快手极速版刷视频界面
  */
-function run(totalTime,boolLikeAndFollow) {
+function run(totalTime, boolLikeAndFollow) {
     const perVideoWatchTime = 5;//每隔视频观看10秒
     totalTime = totalTime * 60; //把分钟转换为秒数
     totalTime += random(-60, 180);//随机加减总时间
     Log("计划时长：" + totalTime);
     let watchTime = 0;
-    // brushVideoArea();//确定在刷视频界面
+    brushVideoArea();//确定在刷视频界面
     for (let i = 1; totalTime > watchTime; i++) {
         let waitTime = perVideoWatchTime + random(-2, 4)
         // Log("本视频观看时长" + waitTime);
         sleep(waitTime / 2 * 1000);
-        likeAndFollow(20,boolLikeAndFollow);
+        likeAndFollow(20, boolLikeAndFollow);
         drawRedPacket();
         sleep(waitTime / 2 * 1000);
         watchTime += waitTime;
@@ -34,24 +35,30 @@ function run(totalTime,boolLikeAndFollow) {
     Log("本次观看时长" + watchTime + "秒");
 }
 
+function brushVideoArea() {
+    if (menuArea(text("我的"), 15000)) {
+        clickCenter(text("首页"));
+    }
+}
+
 /**
  * 领取广告红包
  */
-function drawRedPacket(){
-    if(id("a3b").findOne(1500)){
-            Log("红包");
-            // sleep(15000);
-            // clic(k("领取");
-            clickCenter(id("a3b").text("领取"),15000);
-            // back();
+function drawRedPacket() {
+    if (id("a3b").findOne(1500)) {
+        Log("红包");
+        // sleep(15000);
+        // clic(k("领取");
+        clickCenter(id("a3b").text("领取"), 15000);
+        // back();
     }
 }
 
 /**
  * 误操作bug(暂时无法根治)
  */
-function misoperationDetection(){
-    if(text("开宝箱得金币").findOnce() && !id("ve").findOnce()){
+function misoperationDetection() {
+    if (text("开宝箱得金币").findOnce() && !id("ve").findOnce()) {
         Log("bug");
         back();
         sleep(1000);
@@ -64,13 +71,16 @@ function misoperationDetection(){
  */
 function signIn() {
     //重写
+    if (menuArea(text("我的"), 15000)) {
+        clickCenter(text("红包"));
+    }
 }
 
 /**
  * 处理弹窗
  */
 function popUpEvent() {
-if (textContains("没有响应").findOnce()) {
+    if (textContains("没有响应").findOnce()) {
         sleep(1000);
         click("等待");
     }
@@ -118,7 +128,7 @@ function swipeVideo(swipeCount) {
         smlMove((width - random(-50, 50)), (height + offSet + (videoSwipeDistance / 2)),
             (width + random(-50, 50)), (height + offSet - (videoSwipeDistance / 2)), 30);
     }
-    else{
+    else {
         smlMove((width - random(-50, 50)), (height + offSet + (videoSwipeDistance / 2)),
             (width + random(-50, 50)), (height + offSet - (videoSwipeDistance / 2)), 30);
     }
@@ -130,11 +140,11 @@ function swipeVideo(swipeCount) {
  * 1. 获取需要双击喜欢的坐标点
  * 2. 判断随机数 如果喜欢了再判断关注
  */
-function likeAndFollow(range,bool) {
-    if(bool == undefined){
+function likeAndFollow(range, bool) {
+    if (bool == undefined) {
         bool = true;
     }
-    if(!bool){
+    if (!bool) {
         return;
     }
     //获取设备宽高
@@ -289,18 +299,18 @@ function nodeFindColor(img, color, selector, time) {
  * @param {debugBool} debugBool 在使用前确定已经声明全局变量 debugBool
  */
 function Log(obj) {
-    if(debugBool == undefined){
+    if (debugBool == undefined) {
         debugBool = false;
     }
     if (debugBool) {
-        log("debug-->"+obj);
+        log("debug-->" + obj);
     }
 }
 
 
 // 需要调用时取消注释
-// module.exports = {
-//     run: run,    //刷视频
-// signIn:signIn,//签到
-// popUpEvent:popUpEvent,//弹窗事件
-// }
+module.exports = {
+    run: run,    //刷视频
+    signIn: signIn,//签到
+    popUpEvent: popUpEvent,//弹窗事件
+}
