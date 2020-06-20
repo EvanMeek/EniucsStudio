@@ -1,13 +1,3 @@
-var debugBool = true;
-
-// test();
-
-function test() {
-    // signIn();
-    run(2);
-
-}
-
 /**
  * 整个视频流程(核心) 
  * @param {总时间} totalTime 刷视频的时长,单位分钟
@@ -25,55 +15,27 @@ function run(totalTime, boolLikeAndFollow) {
         // Log("本视频观看时长" + waitTime);
         sleep(waitTime / 2 * 1000);
         likeAndFollow(20, boolLikeAndFollow);
-        drawRedPacket();
         sleep(waitTime / 2 * 1000);
         watchTime += waitTime;
-        misoperationDetection();
-        Log("已看：" + i + "个视频 " + watchTime + "秒");
+        // Log("已看：" + i + "个视频 " + watchTime + "秒");
         swipeVideo(i);
     }
     Log("本次观看时长" + watchTime + "秒");
 }
 
-function brushVideoArea() {
-    if (menuArea(text("我的"), 15000)) {
-        clickCenter(text("首页"));
-    }
-}
-
 /**
- * 领取广告红包
+ * 进入刷视频界面
  */
-function drawRedPacket() {
-    if (id("a3b").findOne(1500)) {
-        Log("红包");
-        // sleep(15000);
-        // clic(k("领取");
-        clickCenter(id("a3b").text("领取"), 15000);
-        // back();
-    }
-}
+function brushVideoArea(){
+    // menuArea(xxx,xxx);
 
-/**
- * 误操作bug(暂时无法根治)
- */
-function misoperationDetection() {
-    if (text("开宝箱得金币").findOnce() && !id("ve").findOnce()) {
-        Log("bug");
-        back();
-        sleep(1000);
-    }
 }
-
 
 /**
  * 签到
  */
 function signIn() {
     //重写
-    if (menuArea(text("我的"), 15000)) {
-        clickCenter(text("红包"));
-    }
 }
 
 /**
@@ -103,7 +65,7 @@ function menuArea(mainSelector, time) {
         } else {
             back();
             sleep(1000);
-            searchTime += 3000;
+            searchTime += 1000;
         }
     }
     return false;
@@ -137,8 +99,6 @@ function swipeVideo(swipeCount) {
 /**
  * 随机点赞或者关注和或者减少类似作品
  * @param {点赞概率} range 有range*2+1分之一的概率点喜欢,range*4+1分之一的概率点关注,关注必定喜欢
- * 1. 获取需要双击喜欢的坐标点
- * 2. 判断随机数 如果喜欢了再判断关注
  */
 function likeAndFollow(range, bool) {
     if (bool == undefined) {
@@ -267,6 +227,7 @@ function clickCenter(selector, time) {
  * @param {颜色} color 需要找的颜色
  * @param {选择器} selector 例如id("xxxx"),可以级联
  * @param {时间} time 找色的时间
+ * 调用前确保已经获取截图权限
  */
 function nodeFindColor(img, color, selector, time) {
     let searchTime = 0;
@@ -307,10 +268,9 @@ function Log(obj) {
     }
 }
 
-
 // 需要调用时取消注释
-module.exports = {
-    run: run,    //刷视频
-    signIn: signIn,//签到
-    popUpEvent: popUpEvent,//弹窗事件
-}
+// module.exports = {
+//     run: run,    //刷视频
+// signIn:signIn,//签到
+// popUpEvent:popUpEvent,//弹窗事件
+// }

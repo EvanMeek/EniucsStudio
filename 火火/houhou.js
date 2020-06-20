@@ -1,10 +1,10 @@
 var debugBool = true;
-
 // test();
 
 function test() {
-    // signIn();
-    run(2);
+
+    signIn();
+    run(1);
 
 }
 
@@ -25,54 +25,71 @@ function run(totalTime, boolLikeAndFollow) {
         // Log("本视频观看时长" + waitTime);
         sleep(waitTime / 2 * 1000);
         likeAndFollow(20, boolLikeAndFollow);
-        drawRedPacket();
+        goldenEgg();
         sleep(waitTime / 2 * 1000);
         watchTime += waitTime;
-        misoperationDetection();
-        Log("已看：" + i + "个视频 " + watchTime + "秒");
+        // Log("已看：" + i + "个视频 " + watchTime + "秒");
         swipeVideo(i);
     }
     Log("本次观看时长" + watchTime + "秒");
 }
 
+/**
+ * 砸金蛋
+ */
+function goldenEgg() {
+    let is;
+    if (text("金蛋大奖").findOnce()) {
+        clickCenter(text("金蛋大奖"));
+        is = clickCenter(id("ki"));
+        if (!is) {
+            back();
+        }
+    }
+}
+
+/**
+ * 进入刷视频界面
+ */
 function brushVideoArea() {
-    if (menuArea(text("我的"), 15000)) {
-        clickCenter(text("首页"));
+    if (menuArea(text("首页").id("agm"), 30000)) {
+        clickCenter(text("小视频"));
     }
 }
-
-/**
- * 领取广告红包
- */
-function drawRedPacket() {
-    if (id("a3b").findOne(1500)) {
-        Log("红包");
-        // sleep(15000);
-        // clic(k("领取");
-        clickCenter(id("a3b").text("领取"), 15000);
-        // back();
-    }
-}
-
-/**
- * 误操作bug(暂时无法根治)
- */
-function misoperationDetection() {
-    if (text("开宝箱得金币").findOnce() && !id("ve").findOnce()) {
-        Log("bug");
-        back();
-        sleep(1000);
-    }
-}
-
 
 /**
  * 签到
  */
 function signIn() {
-    //重写
-    if (menuArea(text("我的"), 15000)) {
-        clickCenter(text("红包"));
+    let is;
+    if (menuArea(text("首页").depth(9), 30000)) {
+        if (clickCenter(textContains("看视频")) || clickCenter(text("任务"))) {
+            clickCenter(id("ki"));
+        }
+        else if (clickCenter(textContains("领取红包"))) {
+            clickCenter(id("mo"));
+        }
+        else {
+            return;
+        }
+
+        // is = clickCenter(textContains("金币翻倍"),3000);
+        // if (!is) {
+        //     return;
+        // }
+        // if (text("点击重播").findOne(65000)) {
+        //     clickCenter(id("tt_video_ad_close"),65000);
+        //     back();
+        // }
+        // sleep(20000);
+        // for (let i = 0; i < 10; i++) {
+        //     if (id("tt_video_ad_close").findOnce() || text("点击重播").findOnce()) {
+        //         break;
+        //     }
+        //     sleep(5000);
+        // }
+        // back();
+        // clickCenter(id("ki"));
     }
 }
 
@@ -83,6 +100,15 @@ function popUpEvent() {
     if (textContains("没有响应").findOnce()) {
         sleep(1000);
         click("等待");
+    }
+    else if (text("立即去提现").findOnce()) {
+        clickCenter(id("gn").findOne(1000));
+    }
+    else if (text("看视频").depth(6)) {
+        clickCenter(id("mo"));
+    }
+    else if (text("立即查看").depth(5)) {
+        clickCenter(id("gn"));
     }
 }
 
@@ -168,7 +194,6 @@ function likeAndFollow(range, bool) {
         // Log("不是点喜欢的概率:"+isLike)
     }
 }
-
 
 /**
  * 仿真随机带曲线滑动  (视频滑动)
@@ -306,7 +331,6 @@ function Log(obj) {
         log("debug-->" + obj);
     }
 }
-
 
 // 需要调用时取消注释
 module.exports = {

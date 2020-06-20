@@ -1,10 +1,11 @@
 var debugBool = true;
-
 // test();
 
+
 function test() {
-    // signIn();
-    run(2);
+
+    signIn();
+    run(1);
 
 }
 
@@ -25,54 +26,31 @@ function run(totalTime, boolLikeAndFollow) {
         // Log("本视频观看时长" + waitTime);
         sleep(waitTime / 2 * 1000);
         likeAndFollow(20, boolLikeAndFollow);
-        drawRedPacket();
         sleep(waitTime / 2 * 1000);
         watchTime += waitTime;
-        misoperationDetection();
-        Log("已看：" + i + "个视频 " + watchTime + "秒");
+        // Log("已看：" + i + "个视频 " + watchTime + "秒");
         swipeVideo(i);
     }
     Log("本次观看时长" + watchTime + "秒");
 }
 
+/**
+ * 进入刷视频界面
+ */
 function brushVideoArea() {
-    if (menuArea(text("我的"), 15000)) {
-        clickCenter(text("首页"));
+    if (menuArea(text("我的").depth(8), 30000)) {
+        clickCenter(text("好看视频"));
+        clickCenter(text("小视频"));
+        clickCenter(id("avp"));
     }
 }
-
-/**
- * 领取广告红包
- */
-function drawRedPacket() {
-    if (id("a3b").findOne(1500)) {
-        Log("红包");
-        // sleep(15000);
-        // clic(k("领取");
-        clickCenter(id("a3b").text("领取"), 15000);
-        // back();
-    }
-}
-
-/**
- * 误操作bug(暂时无法根治)
- */
-function misoperationDetection() {
-    if (text("开宝箱得金币").findOnce() && !id("ve").findOnce()) {
-        Log("bug");
-        back();
-        sleep(1000);
-    }
-}
-
 
 /**
  * 签到
  */
 function signIn() {
-    //重写
-    if (menuArea(text("我的"), 15000)) {
-        clickCenter(text("红包"));
+    if (menuArea(text("我的").depth(8), 30000)) {
+        clickCenter(text("去签到"));
     }
 }
 
@@ -83,6 +61,9 @@ function popUpEvent() {
     if (textContains("没有响应").findOnce()) {
         sleep(1000);
         click("等待");
+    }
+    else if (textContains("升级")) {
+        clickCenter(desc("关闭"));
     }
 }
 
@@ -102,7 +83,7 @@ function menuArea(mainSelector, time) {
             return true;
         } else {
             back();
-            sleep(1000);
+            sleep(3000);
             searchTime += 3000;
         }
     }
@@ -137,8 +118,6 @@ function swipeVideo(swipeCount) {
 /**
  * 随机点赞或者关注和或者减少类似作品
  * @param {点赞概率} range 有range*2+1分之一的概率点喜欢,range*4+1分之一的概率点关注,关注必定喜欢
- * 1. 获取需要双击喜欢的坐标点
- * 2. 判断随机数 如果喜欢了再判断关注
  */
 function likeAndFollow(range, bool) {
     if (bool == undefined) {
@@ -267,6 +246,7 @@ function clickCenter(selector, time) {
  * @param {颜色} color 需要找的颜色
  * @param {选择器} selector 例如id("xxxx"),可以级联
  * @param {时间} time 找色的时间
+ * 调用前确保已经获取截图权限
  */
 function nodeFindColor(img, color, selector, time) {
     let searchTime = 0;
@@ -306,7 +286,6 @@ function Log(obj) {
         log("debug-->" + obj);
     }
 }
-
 
 // 需要调用时取消注释
 module.exports = {

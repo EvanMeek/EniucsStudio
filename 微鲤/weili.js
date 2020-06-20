@@ -1,11 +1,14 @@
 var debugBool = true;
-
 // test();
 
 function test() {
+    //请求截图权限
+    if (!requestScreenCapture()) {
+        toast("过滑块需要截图权限支持");
+        exit();
+    };
+    run(5);
     // signIn();
-    run(2);
-
 }
 
 /**
@@ -19,60 +22,51 @@ function run(totalTime, boolLikeAndFollow) {
     totalTime += random(-60, 180);//随机加减总时间
     Log("计划时长：" + totalTime);
     let watchTime = 0;
-    brushVideoArea();//确定在刷视频界面
+    clickCenter(id("iv_tab_1"), 3000);//确定在刷视频界面
     for (let i = 1; totalTime > watchTime; i++) {
         let waitTime = perVideoWatchTime + random(-2, 4)
         // Log("本视频观看时长" + waitTime);
         sleep(waitTime / 2 * 1000);
         likeAndFollow(20, boolLikeAndFollow);
-        drawRedPacket();
+        openBox();
+        Pop();
         sleep(waitTime / 2 * 1000);
         watchTime += waitTime;
-        misoperationDetection();
-        Log("已看：" + i + "个视频 " + watchTime + "秒");
+        // Log("已看：" + i + "个视频 " + watchTime + "秒");
         swipeVideo(i);
     }
     Log("本次观看时长" + watchTime + "秒");
 }
 
-function brushVideoArea() {
-    if (menuArea(text("我的"), 15000)) {
-        clickCenter(text("首页"));
-    }
-}
-
-/**
- * 领取广告红包
- */
-function drawRedPacket() {
-    if (id("a3b").findOne(1500)) {
-        Log("红包");
-        // sleep(15000);
-        // clic(k("领取");
-        clickCenter(id("a3b").text("领取"), 15000);
-        // back();
-    }
-}
-
-/**
- * 误操作bug(暂时无法根治)
- */
-function misoperationDetection() {
-    if (text("开宝箱得金币").findOnce() && !id("ve").findOnce()) {
-        Log("bug");
+function Pop() {
+    if (text("继续观看").findOnce()) {
         back();
-        sleep(1000);
     }
 }
 
+function openBox() {
+    let img = images.captureScreen();
+    img = images.rotate(img, 180);
+    let is = nodeFindColor(img, "#FF1F46", id("iv_coin"), 1000);
+    if (!is) {
+        if (is != false) {
+            clickCenter(id("iv_coin"));
+            sleep(1500);
+            clickCenter(text("立即领取"));
+        }
+    }
+    img.recycle();
+}
 
 /**
  * 签到
  */
 function signIn() {
-    //重写
-    if (menuArea(text("我的"), 15000)) {
-        clickCenter(text("红包"));
+    if (clickCenter(id("iv_not_sign"), 3000)) {
+        sleep(1500);
+        back();
+        sleep(1000);
+        back();
     }
 }
 
@@ -84,6 +78,13 @@ function popUpEvent() {
         sleep(1000);
         click("等待");
     }
+    else if (text("立即领取").findOnce()) {
+        clickCenter(text("立即领取"));
+    }
+    else if (text("继续观看").findOnce()) {
+        clickCenter(text("继续观看"));
+    }
+
 }
 
 /**
@@ -137,8 +138,6 @@ function swipeVideo(swipeCount) {
 /**
  * 随机点赞或者关注和或者减少类似作品
  * @param {点赞概率} range 有range*2+1分之一的概率点喜欢,range*4+1分之一的概率点关注,关注必定喜欢
- * 1. 获取需要双击喜欢的坐标点
- * 2. 判断随机数 如果喜欢了再判断关注
  */
 function likeAndFollow(range, bool) {
     if (bool == undefined) {
@@ -306,7 +305,6 @@ function Log(obj) {
         log("debug-->" + obj);
     }
 }
-
 
 // 需要调用时取消注释
 module.exports = {

@@ -1,6 +1,11 @@
 
 // test(); 
 
+//弹窗
+// else if(text("知道了").findOnce()){
+//     clickCenter(text("知道了"),3000);
+// }
+
 function test() {
 
     run(12000);
