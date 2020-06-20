@@ -3,9 +3,10 @@
  * @param selector 选择器
  * @param time 寻找时间(ms)
  * @param delay 延迟(s)
+ * @param ignoreLog 是否忽略延迟(true/false)
  * @returns {boolean}
  */
-function clickCenterBySelector(selector, time, delay) {
+function clickCenterBySelector(selector, time, delay, ignoreLog ) {
     if (time == undefined || time == 0 || delay == undefined) {
         time = 1000;
         delay = 0.2;
@@ -17,7 +18,9 @@ function clickCenterBySelector(selector, time, delay) {
         sleep(delay * 1000);
         return true;
     } else {
-        log("没有找到" + selector.toString() + "控件!");
+        if (ignoreLog) {
+            log("没有找到" + selector.toString() + "控件!");
+        }
         return false;
     }
 }
@@ -27,9 +30,10 @@ function clickCenterBySelector(selector, time, delay) {
  * @param node 节点
  * @param time 寻找时间(ms)
  * @param delay 延迟(s)
+ * @param ignoreLog 是否忽略延迟(true/false)，默认为true
  * @returns {boolean}
  */
-function clickCenterByNode(node, time, delay) {
+function clickCenterByNode(node, time, delay, ignoreLog) {
     if (time == undefined || time == 0 || delay == undefined) {
         time = 1000;
         delay = 0.2;
@@ -40,7 +44,9 @@ function clickCenterByNode(node, time, delay) {
         sleep(delay * 1000);
         return true;
     } else {
-        log("没有找到" + node.toString() + "控件!");
+        if (ignoreLog) {
+            log("没有找到" + node.toString() + "控件!");
+        }
         return false;
     }
 }
