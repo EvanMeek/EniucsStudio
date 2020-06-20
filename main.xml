@@ -102,6 +102,23 @@
                             <card layout_widget="3">
                                 <viewpager id="appTypeViewPager">
                                     <!-- 视频播放类 -->
+                                    <!-- 添加UI模板 -->
+                                    <!-- 某某视频
+                                                    <horizontal w="*">
+                                                        <Switch tag="Switch" id="swXxxXxx"/>
+                                                        <text text="某某视频" textColor="#000000" textStyle="bold"
+                                                            width="70"/>
+                                                        <input tag="EditText" id="XxxXxxTime" inputType="number" text="60"
+                                                            w="80" gravity="center"/>
+                                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
+                                                       <text text="换号区间: " textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number" id="XxxXxxSwitchAccountBegin" w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="到" textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number" id="XxxXxxSwitchAccountEnd" w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="之间" textStyle="bold" textSize="16sp"/>
+                                                    </horizontal> -->
                                     <scroll>
                                         <vertical>
                                             <text text="视频播放类" textSize="18p" textStyle="bold" layout_gravity="center_horizontal"
@@ -117,10 +134,10 @@
                                                         <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
 
                                                         <text text="换号区间: " textStyle="bold" textSize="16sp"/>
-                                                        <input tag="EditText" inputType="number" id="kuaishouSwitchAccountBegin" w="80" text="0"
+                                                        <input tag="EditText" inputType="number" id="kuaiShouSwitchAccountBegin" w="80" text="0"
                                                             gravity="center"/>
                                                         <text text="到" textStyle="bold" textSize="16sp"/>
-                                                        <input tag="EditText" inputType="number" id="kuaishouswitchAccountEnd" w="80" text="0"
+                                                        <input tag="EditText" inputType="number" id="kuaiShouswitchAccountEnd" w="80" text="0"
                                                             gravity="center"/>
                                                         <text text="之间" textStyle="bold" textSize="16sp"/>
                                                     </horizontal>
@@ -149,7 +166,6 @@
                                                         <input tag="EditText" id="shuaBaoTime" inputType="number" text="60"
                                                             w="80" gravity="center"/>
                                                         <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
-
                                                        <text text="换号区间: " textStyle="bold" textSize="16sp"/>
                                                         <input tag="EditText" inputType="number" id="shuaBaoSwitchAccountBegin" w="80" text="0"
                                                             gravity="center"/>
@@ -158,79 +174,58 @@
                                                             gravity="center"/>
                                                         <text text="之间" textStyle="bold" textSize="16sp"/>
                                                     </horizontal>
-                                                    <!-- 抖呱呱 -->
+                                                    <!-- 火山视频 -->
                                                     <horizontal w="*">
-                                                        <Switch />
-                                                        <text text="抖呱呱" textColor="#CDC5BF" textStyle="bold"
+                                                        <Switch tag="Switch" id="swHouShan"/>
+                                                        <text text="火山视频" textColor="#000000" textStyle="bold"
                                                             width="70"/>
-                                                        <input inputType="number" text="60"
+                                                        <input tag="EditText" id="houShanTime" inputType="number" text="60"
                                                             w="80" gravity="center"/>
                                                         <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
-
-                                                        <text text="换号区间: " textStyle="bold" textSize="16sp"/>
-                                                        <input tag="EditText" inputType="number"  w="80" text="0"
+                                                       <text text="换号区间: " textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number" id="houShanSwitchAccountBegin" w="80" text="0"
                                                             gravity="center"/>
                                                         <text text="到" textStyle="bold" textSize="16sp"/>
-                                                        <input tag="EditText" inputType="number"  w="80" text="0"
+                                                        <input tag="EditText" inputType="number" id="houShanSwitchAccountEnd" w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="之间" textStyle="bold" textSize="16sp"/>
+                                                    </horizontal>            
+                                                    <!-- 火火视频 -->
+                                                    <horizontal w="*">
+                                                        <Switch tag="Switch" id="swHouHou"/>
+                                                        <text text="火火视频" textColor="#000000" textStyle="bold"
+                                                            width="70"/>
+                                                        <input tag="EditText" id="houHouTime" inputType="number" text="60"
+                                                            w="80" gravity="center"/>
+                                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
+                                                       <text text="换号区间: " textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number" id="houHouSwitchAccountBegin" w="80" text="0"
+                                                            gravity="center"/>
+                                                        <text text="到" textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number" id="houHouSwitchAccountEnd" w="80" text="0"
                                                             gravity="center"/>
                                                         <text text="之间" textStyle="bold" textSize="16sp"/>
                                                     </horizontal>
-                                                    <!-- 鲤刷刷 -->
+                                                    <!-- 百度视频 -->
                                                     <horizontal w="*">
-                                                        <Switch />
-                                                        <text text="鲤刷刷" textColor="#CDC5BF" textStyle="bold"
+                                                        <Switch tag="Switch" id="swBaiDu"/>
+                                                        <text text="百度视频" textColor="#000000" textStyle="bold"
                                                             width="70"/>
-                                                        <input inputType="number" text="60"
+                                                        <input tag="EditText" id="baiDuTime" inputType="number" text="60"
                                                             w="80" gravity="center"/>
                                                         <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
-
-                                                        <text text="换号区间: " textStyle="bold" textSize="16sp"/>
-                                                        <input tag="EditText" inputType="number"  w="80" text="0"
+                                                       <text text="换号区间: " textStyle="bold" textSize="16sp"/>
+                                                        <input tag="EditText" inputType="number" id="baiDuSwitchAccountBegin" w="80" text="0"
                                                             gravity="center"/>
                                                         <text text="到" textStyle="bold" textSize="16sp"/>
-                                                        <input tag="EditText" inputType="number"  w="80" text="0"
+                                                        <input tag="EditText" inputType="number" id="baiDuSwitchAccountEnd" w="80" text="0"
                                                             gravity="center"/>
                                                         <text text="之间" textStyle="bold" textSize="16sp"/>
                                                     </horizontal>
-                                                    
                                                     <!-- 抖音视频 -->
                                                     <horizontal w="*">
                                                         <Switch />
                                                         <text text="抖音视频" textColor="#CDC5BF" textStyle="bold"
-                                                            width="70"/>
-                                                        <input inputType="number" text="60"
-                                                            w="80" gravity="center"/>
-                                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
-
-                                                        <text text="换号区间: " textStyle="bold" textSize="16sp"/>
-                                                        <input tag="EditText" inputType="number"  w="80" text="0"
-                                                            gravity="center"/>
-                                                        <text text="到" textStyle="bold" textSize="16sp"/>
-                                                        <input tag="EditText" inputType="number"  w="80" text="0"
-                                                            gravity="center"/>
-                                                        <text text="之间" textStyle="bold" textSize="16sp"/>
-                                                    </horizontal>
-                                                    <!-- 火山视频 -->
-                                                    <horizontal w="*">
-                                                        <Switch />
-                                                        <text text="火山视频" textColor="#CDC5BF" textStyle="bold"
-                                                            width="70"/>
-                                                        <input inputType="number" text="60"
-                                                            w="80" gravity="center"/>
-                                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
-
-                                                        <text text="换号区间: " textStyle="bold" textSize="16sp"/>
-                                                        <input tag="EditText" inputType="number"  w="80" text="0"
-                                                            gravity="center"/>
-                                                        <text text="到" textStyle="bold" textSize="16sp"/>
-                                                        <input tag="EditText" inputType="number"  w="80" text="0"
-                                                            gravity="center"/>
-                                                        <text text="之间" textStyle="bold" textSize="16sp"/>
-                                                    </horizontal>
-                                                    <!-- 花生视频 -->
-                                                    <horizontal w="*">
-                                                        <Switch />
-                                                        <text text="花生视频" textColor="#CDC5BF" textStyle="bold"
                                                             width="70"/>
                                                         <input inputType="number" text="60"
                                                             w="80" gravity="center"/>
