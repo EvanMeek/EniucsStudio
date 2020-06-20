@@ -1,3 +1,5 @@
+let uiBaseClick = require("/Libary/uiBase/CLICK.js");
+
 function test() {
     // let watchVideoGetMoney = textContains("看完视频");
     // log("hello");
@@ -14,7 +16,7 @@ function monitorLivePush() {
             let livePushWindow = text("即时推送").findOne(1000);
             if (livePushWindow != undefined) {
                 let livePushWindow = livePushWindow.parent();
-                clickCenterBySelector(text("忽略").depth(4).drawingOrder(5).className("android.widget.TextView").clickable(true), 2000);
+                uiBaseClick.clickCenterBySelector(text("忽略").depth(4).drawingOrder(5).className("android.widget.TextView").clickable(true), 2000);
             }
             log("未监测到即时推送");
             // 一分钟监测一次
@@ -34,13 +36,13 @@ function openTreasureChest() {
     if (treasureChest != undefined) {
         treasureChest = treasureChest.findOnce().parent();
         // 点击宝箱
-        clickCenterByNode(treasureChest, 0, 20);
+        uiBaseClick.clickCenterByNode(treasureChest, 0, 20);
         sleep(2000);
         // 看视频领金币
         let watchVideoGetMoney = textContains("看完视频再领");
-        clickCenterBySelector(watchVideoGetMoney, 0, 2);
+        uiBaseClick.clickCenterBySelector(watchVideoGetMoney, 0, 2);
         let closeADVideo = text("关闭广告");
-        clickCenterBySelector(closeADVideo, 0, 30);
+        uiBaseClick.clickCenterBySelector(closeADVideo, 0, 30);
     } else {
         log("今日头条---点击宝箱模块失效，请联系上游修复。")
     }
@@ -57,7 +59,7 @@ function taskPapge() {
     let inviteCode = textContains("点击填写邀请码");
     if (inviteCode != undefined) {
         // 进入输入邀请码界面
-        clickCenterBySelector(inviteCode, 2000,2000);
+        uiBaseClick.clickCenterBySelector(inviteCode, 2000,2000);
         // 然后返回;
         back();
     }
@@ -75,7 +77,7 @@ function readArticle() {
     swipe(520, 1920, 528, 320, 100);
     // 从任务页找到阅读文章入口
     let taskReadArticleOrVideo = className("android.view.View").depth(15).clickable(true).indexInParent(23);
-    if (clickCenterBySelector(taskReadArticleOrVideo, 2000)) {
+    if (uiBaseClick.clickCenterBySelector(taskReadArticleOrVideo, 2000)) {
         swipe(520, 500, 520, 1920, 2000);
         sleep(1000);
         swipe(520, 500, 520, 1920, 2000);
@@ -91,7 +93,7 @@ function readArticle() {
             } else {
                 log(art.bounds());
                 // 进入文章
-                clickCenterByNode(art,1000,1);
+                uiBaseClick.clickCenterByNode(art,1000,1);
                 // 开始阅读
                 swipePapge();
                 // 返回上个页面
@@ -155,61 +157,14 @@ function taskSignIn() {
     if (isSignIn != undefined) {
         // 看视频得金币
         let watchVideoGetMoney = textContains("看视频再领");
-        clickCenterBySelector(watchVideoGetMoney);
+        uiBaseClick.clickCenterBySelector(watchVideoGetMoney);
         sleep(1000);
         // 关闭广告视频
         let closeADVideo = text("关闭广告");
-        clickCenterBySelector(closeADVideo, 0, 30);
+        uiBaseClick.clickCenterBySelector(closeADVideo, 0, 30);
         sleep(1000);
     } else {
         log("今日头条----今日已签到。");
-    }
-}
-
-/**
- * 点击选择器中心
- * @param node 节点
- * @param time 寻找时间(ms)
- * @param delay 延迟(s)
- * @returns {boolean}
- */
-function clickCenterBySelector(selector, time, delay) {
-    if (time == undefined || time == 0 || delay == undefined) {
-        time = 1000;
-        delay = 0.2;
-    }
-    node = selector.findOne(time);
-    if (node) {
-        let rect = node.bounds();
-        click(rect.centerX(), rect.centerY());
-        sleep(delay * 1000);
-        return true;
-    } else {
-        log("没有找到" + selector.toString() + "控件!");
-        return false;
-    }
-}
-
-/**
- * 点击节点中心
- * @param node 节点
- * @param time 寻找时间(ms)
- * @param delay 延迟(s)
- * @returns {boolean}
- */
-function clickCenterByNode(node, time, delay) {
-    if (time == undefined || time == 0 || delay == undefined) {
-        time = 1000;
-        delay = 0.2;
-    }
-    if (node) {
-        let rect = node.bounds();
-        click(rect.centerX(), rect.centerY());
-        sleep(delay * 1000);
-        return true;
-    } else {
-        log("没有找到" + node.toString() + "控件!");
-        return false;
     }
 }
 
