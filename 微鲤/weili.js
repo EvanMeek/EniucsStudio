@@ -1,5 +1,5 @@
 var debugBool = true;
-test();
+// test();
 
 function test() {
     //请求截图权限
@@ -49,7 +49,7 @@ function openBox() {
     img = images.rotate(img, 180);
     let is = nodeFindColor(img, "#FF1F46", id("iv_coin"), 1000);
     if (!is) {
-        if(is != false){
+        if (is != false) {
             clickCenter(id("iv_coin"));
             sleep(1500);
             clickCenter(text("立即领取"));
@@ -62,7 +62,7 @@ function openBox() {
  * 签到
  */
 function signIn() {
-    if(clickCenter(id("iv_not_sign"), 3000)){
+    if (clickCenter(id("iv_not_sign"), 3000)) {
         sleep(1500);
         back();
         sleep(1000);
@@ -307,8 +307,8 @@ function Log(obj) {
 }
 
 // 需要调用时取消注释
-// module.exports = {
-//     run: run,    //刷视频
-// signIn:signIn,//签到
-// popUpEvent:popUpEvent,//弹窗事件
-// }
+module.exports = {
+    run: run,    //刷视频
+    signIn: signIn,//签到
+    popUpEvent: popUpEvent,//弹窗事件
+}

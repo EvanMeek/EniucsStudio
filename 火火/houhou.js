@@ -1,9 +1,10 @@
 var debugBool = true;
-test();
+// test();
 
 function test() {
+
+    signIn();
     run(1);
-    // signIn();
 
 }
 
@@ -18,7 +19,7 @@ function run(totalTime, boolLikeAndFollow) {
     totalTime += random(-60, 180);//随机加减总时间
     Log("计划时长：" + totalTime);
     let watchTime = 0;
-    clickCenter(text("小视频"));//确定在刷视频界面
+    brushVideoArea();//确定在刷视频界面
     for (let i = 1; totalTime > watchTime; i++) {
         let waitTime = perVideoWatchTime + random(-2, 4)
         // Log("本视频观看时长" + waitTime);
@@ -48,36 +49,48 @@ function goldenEgg() {
 }
 
 /**
+ * 进入刷视频界面
+ */
+function brushVideoArea() {
+    if (menuArea(text("首页").id("agm"), 30000)) {
+        clickCenter(text("小视频"));
+    }
+}
+
+/**
  * 签到
  */
 function signIn() {
     let is;
-    menuArea(text("首页").id("agm"),30000);
-    if (clickCenter(textContains("看视频"))) {
-
-    } else if (clickCenter(textContains("领取红包"))) {
-        clickCenter(id("mo"));
-    } else {
-        return;
-    }
-
-    is = clickCenter(textContains("金币翻倍"),3000);
-    if (!is) {
-        return;
-    }
-    if (text("点击重播").findOne(65000)) {
-        clickCenter(id("tt_video_ad_close"),65000);
-        back();
-    }
-    sleep(20000);
-    for (let i = 0; i < 10; i++) {
-        if (id("tt_video_ad_close").findOnce() || text("点击重播").findOnce()) {
-            break;
+    if (menuArea(text("首页").depth(9), 30000)) {
+        if (clickCenter(textContains("看视频")) || clickCenter(text("任务"))) {
+            clickCenter(id("ki"));
         }
-        sleep(5000);
+        else if (clickCenter(textContains("领取红包"))) {
+            clickCenter(id("mo"));
+        }
+        else {
+            return;
+        }
+
+        // is = clickCenter(textContains("金币翻倍"),3000);
+        // if (!is) {
+        //     return;
+        // }
+        // if (text("点击重播").findOne(65000)) {
+        //     clickCenter(id("tt_video_ad_close"),65000);
+        //     back();
+        // }
+        // sleep(20000);
+        // for (let i = 0; i < 10; i++) {
+        //     if (id("tt_video_ad_close").findOnce() || text("点击重播").findOnce()) {
+        //         break;
+        //     }
+        //     sleep(5000);
+        // }
+        // back();
+        // clickCenter(id("ki"));
     }
-    back();
-    clickCenter(id("ki"));
 }
 
 /**
@@ -90,6 +103,12 @@ function popUpEvent() {
     }
     else if (text("立即去提现").findOnce()) {
         clickCenter(id("gn").findOne(1000));
+    }
+    else if (text("看视频").depth(6)) {
+        clickCenter(id("mo"));
+    }
+    else if (text("立即查看").depth(5)) {
+        clickCenter(id("gn"));
     }
 }
 
@@ -314,8 +333,8 @@ function Log(obj) {
 }
 
 // 需要调用时取消注释
-// module.exports = {
-//     run: run,    //刷视频
-// signIn:signIn,//签到
-// popUpEvent:popUpEvent,//弹窗事件
-// }
+module.exports = {
+    run: run,    //刷视频
+    signIn: signIn,//签到
+    popUpEvent: popUpEvent,//弹窗事件
+}

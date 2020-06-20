@@ -1,9 +1,12 @@
-var debugBool;
-test();
+var debugBool = true;
+// test();
 
 
 function test() {
-//    run(120);
+
+    signIn();
+    run(1);
+
 }
 
 /**
@@ -35,17 +38,20 @@ function run(totalTime, boolLikeAndFollow) {
  * 进入刷视频界面
  */
 function brushVideoArea() {
-    mainArea(text("我的"),30000);
-    clickCenter(text("好看视频"));
-    clickCenter(text("小视频"));
-    clickCenter(id("avp"));
+    if (menuArea(text("我的").depth(8), 30000)) {
+        clickCenter(text("好看视频"));
+        clickCenter(text("小视频"));
+        clickCenter(id("avp"));
+    }
 }
 
 /**
  * 签到
  */
 function signIn() {
-    //重写
+    if (menuArea(text("我的").depth(8), 30000)) {
+        clickCenter(text("去签到"));
+    }
 }
 
 /**
@@ -282,8 +288,8 @@ function Log(obj) {
 }
 
 // 需要调用时取消注释
-// module.exports = {
-//     run: run,    //刷视频
-// signIn:signIn,//签到
-// popUpEvent:popUpEvent,//弹窗事件
-// }
+module.exports = {
+    run: run,    //刷视频
+    signIn: signIn,//签到
+    popUpEvent: popUpEvent,//弹窗事件
+}
