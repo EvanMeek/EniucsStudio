@@ -17,15 +17,22 @@ threads.start(function () {
 })
 
 // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
-let pjyModule = require("./Libary/utils/pjy.js");
-let tabletOperation = require("./Libary/平板操作/tabletOperation.js");
-let ViewIdListRegisterListener = require("./Libary/utils/saveUIConfig.js");
-let dataUtils = require("./Libary/utils/dataUtils.js");
-let checkUpdate = require("./Libary/utils/checkUpdate.js");
+var pjyModule = require("./Libary/utils/pjy.js");
+var tabletOperation = require("./Libary/平板操作/tabletOperation.js");
+var ViewIdListRegisterListener = require("./Libary/utils/saveUIConfig.js");
+var dataUtils = require("./Libary/utils/dataUtils.js");
+var checkUpdate = require("./Libary/utils/checkUpdate.js");
 const _user = "yzl178me";
 const _pass = "Yangzelin995;";
 var Apparr = ["Auto.js Pro", "掘金时代"];	//不被清理的应用数组,通用
-var menu_color = "#000000";
+
+//UI
+var kuaiShou;
+var weiShi;
+var shuaBao;
+var houShan;
+var houHou;
+var baiDuJiSu;
 
 // 泡椒云网络验证
 var pjy = new pjyModule("br9kmn4o6it9d0r0g7tg", "jR912CAWmLvcK4g9P18FgIr2XBSpYcKa");
@@ -37,18 +44,6 @@ pjy.event.on("heartbeat_failed", function (hret) {
 	exit();  // 退出脚本
 })
 
-
-//ui
-// var accessibility;	//无障碍
-var flightMode;		//飞行模式
-var cleanApp;		//清理App
-var kuaiShouswitchAccountBegin;	//快手换号开始
-var kuaiShouSwitchAccountEnd;	//快手换号结束
-var weiShiSwitchAccountBegin;
-var weiShiSwitchAccountEnd;
-var shuaBaoSwitchAccountBegin;
-var shuaBaoSwitchAccountEnd;
-
 setTimeout(() => {
 	ui.layoutFile("./main.xml");
 	// 初始化UI;
@@ -57,18 +52,26 @@ setTimeout(() => {
 	var mainThread = threads.currentThread();
 	mainThread.setTimeout(function () {
 		saveConfig();
+		kuaiShou = [ui.kuaiShouSwitchAccountBegin, ui.kuaiShouswitchAccountEnd, ui.kuaiShouTime, ui.swKuaiShou];
+		weiShi = [ui.weiShiSwitchAccountBegin, ui.weiShiSwitchAccountEnd, ui.weiShiTime, ui.swWeiShi];
+		shuaBao = [ui.shuaBaoSwitchAccountBegin, ui.shuaBaoSwitchAccountBegin, ui.shuaBaoTime, ui.swShuaBao];
+		houShan = [ui.houShanSwitchAccountBegin, ui.houShanSwitchAccountEnd, ui.houShanTime, ui.swHouShan];
+		houHou = [ui.houHouSwitchAccountBegin, ui.houHouSwitchAccountEnd, ui.houHouTime, ui.swHouHou];
+		baiDuJiSu = [ui.baiDuSwitchAccountBegin, ui.baiDuSwitchAccountEnd, ui.baiDuTime, ui.swBaiDu];
 		//解决第一次读取ui配置为空的bug
-		let uiSwitchAccountData =
-			[
-				ui.kuaishouSwitchAccountBegin, ui.kuaishouswitchAccountEnd, ui.weiShiSwitchAccountBegin, ui.weiShiSwitchAccountEnd,
-				ui.shuaBaoSwitchAccountBegin, ui.shuaBaoSwitchAccountEnd,
-			];
-		let uiTime =
-			[
-				ui.kuaiShouTime, ui.weiShiTime, ui.shuaBaoTime
-			]
+		let uiSwitchAccountData = [
+			kuaiShou[0], kuaiShou[1], weiShi[0], weiShi[1],
+			shuaBao[0], shuaBao[1], houShan[0], houShan[1],
+			houHou[0], houHou[1], baiDuJiSu[0], baiDuJiSu[1],
+		];
+		let uiTime = [
+			kuaiShou[2], weiShi[2], shuaBao[2], houShan[2], houHou[2], baiDuJiSu[2],
+		]
+		// for (let i = 0; i < houShan.length-1; i++) {
+		// 	log(baiDuJiSu[i].text());
+			
+		// }
 		checkIniData(uiSwitchAccountData, uiTime);
-
 	}, 500);
 	//检查App是否安装
 	mainThread.setTimeout(function () {
@@ -140,32 +143,46 @@ function main() {
 	initPermissionThread.join(60000);
 	initPermissionThread.interrupt();
 
-	//初始化信息
-	accessibility = ui.swAccessibility.isChecked();
-	flightMode = ui.swFlyModeBtn.isChecked();
-	cleanApp = ui.swCleanApp.isChecked();
-	kuaiShouswitchAccountBegin = ui.kuaishouSwitchAccountBegin.text();
-	kuaiShouSwitchAccountEnd = ui.kuaishouswitchAccountEnd.text();
-	weiShiSwitchAccountBegin = ui.weiShiSwitchAccountBegin.text();
-	weiShiSwitchAccountEnd = ui.weiShiSwitchAccountEnd.text();
-	shuaBaoSwitchAccountBegin = ui.shuaBaoSwitchAccountBegin.text();
-	shuaBaoSwitchAccountEnd = ui.shuaBaoSwitchAccountEnd.text();
+	let appNameArr = ["快手极速版", "微视", "刷宝短视频", "火山极速版", "火火视频极速版", "百度极速版"];
+	let pathArr = [
+		"./快手/kuaiShou.js", "./微视/weiShi.js", "./刷宝/shuaBao.js", "./火山/houShan.js", "./火火/houHou.js",
+		"./百度/baiDuJiSu.js"
+	];
+	let videoArr = [
+		kuaiShou, weiShi, shuaBao, houShan, houHou, baiDuJiSu,
+	];
+
 	while (true) {
-		//快手极速版
-		if (ui.swKuaiShou.isChecked()) {
-			log("快手极速版");
-			kuaishou();
+		// //快手极速版
+		// if (ui.swKuaiShou.isChecked()) {
+		// 	log("快手极速版");
+		// 	kuaishou();
+		// }
+		// //抖音短视频
+		// if (ui.swWeiShi.isChecked()) {
+		// 	log("微视");
+		// 	weiShi();
+		// }
+		// //刷宝短视频
+		// if (ui.swShuaBao.isChecked()) {
+		// 	log("刷宝");
+		// 	shuaBao();
+		// }
+
+		for (let i = 3; i < appNameArr.length; i++) {
+			log(videoArr[i][3].isChecked());
+			if (videoArr[i][3].isChecked()) {
+				log(appNameArr[i]);
+				brushVideo(pathArr[i], appNameArr[i], videoArr[i]);
+			}
 		}
-		//抖音短视频
-		if (ui.swWeiShi.isChecked()) {
-			log("微视");
-			weiShi();
-		}
-		//刷宝短视频
-		if (ui.swShuaBao.isChecked()) {
-			log("刷宝");
-			shuaBao();
-		}
+
+		//百度极速版
+		// if(ui.swBaiDu.isChecked()){
+		// 	log("百度极速版");
+		// 	videoArr = [ui.baiDuSwitchAccountBegin,ui.baiDuSwitchAccountEnd,ui.baiDuTime];
+		// 	brushVideo("./百度/baiDuJiSu.js","百度极速版",videoArr);
+		// }
 
 		//是否开启循环
 		if (!ui.swTaskCycle.isChecked()) {
@@ -184,158 +201,218 @@ function main() {
  * 功能管理: 快手刷视频-swBtn 抖音刷视频-swBtn2
  * 功能参数: 刷视频时间-kwaiRunTimeInput 飞行模式-kWaiFlyModeBtn 签到-kWaiSignInBtn 清理缓存-kWaiCleanCacheBtn
  */
-function kuaishou() {
-	var kwaiMain = require("./快手/kuaiShou.js"); //导入快手js文件
+// function kuaishou() {
+// 	var kwaiMain = require("./快手/kuaiShou.js"); //导入快手js文件
+// 	let appName;	//应用名
+// 	// switchAccountBegin 换号区间 开始
+// 	// switchAccountEnd 换号区间 结束
+// 	for (var i = ui.kuaishouSwitchAccountBegin.text(); i <= ui.kuaishouswitchAccountEnd.text(); i++) {
+
+// 		//清理后台App(平台专属)
+// 		if (ui.swCleanApp.isChecked()) {
+// 			tabletOperation.clearApp(Apparr);
+// 			sleep(1000);
+// 		}
+
+// 		//飞行模式
+// 		if (ui.swFlyModeBtn.isChecked()) {
+// 			tabletOperation.openFlightMode();
+// 			log("开启飞行模式");
+// 			sleep(3000);
+// 			tabletOperation.closeFlightMode();
+// 			log("关闭飞行模式");
+// 			//检查网络
+// 			tabletOperation.isNetwork();
+// 		}
+
+// 		//第0个默认为原版快手,其他的按这个顺序来
+// 		if (i == 0) {
+// 			appName = "快手极速版";
+// 		} else {
+// 			appName = "快手" + i;
+// 		}
+// 		if (app.getPackageName(appName)) {
+// 			//判断是否开启成功,不成功重启一次
+// 			if (tabletOperation.openApp(appName) == false) {
+// 				tabletOperation.killApp(appName);
+// 				sleep(3000);
+// 				tabletOperation.openApp(appName);
+// 			};
+// 		} else {
+// 			log(appName + "应用不存在");
+
+// 			break;
+// 		}
+
+// 		//开启一个线程检测弹窗
+// 		let checkPop = threads.start(function () {
+// 			while (true) {
+// 				//弹窗事件
+// 				kwaiMain.popUpEvent();
+// 				sleep(1000);
+// 				// //滑块验证
+// 				// if (text("拖动滑块").findOne(500)) {
+// 				// 	sleep(1500);
+// 				// 	kwaiMain.overSlider(_user, _pass);
+// 				// }
+// 				// sleep(1000);
+// 			}
+
+// 		});
+// 		//快手签到
+// 		kwaiMain.signIn();
+
+// 		//快手清理缓存
+// 		kwaiMain.cleanCache();
+
+// 		//快手刷视频
+// 		kwaiMain.run((ui.kuaiShouTime.text() * 60), _user, _pass);
+
+// 		//关闭快手
+// 		tabletOperation.killApp(appName);
+// 		//关闭检测弹窗线程
+// 		checkPop.interrupt();
+// 	}
+// }
+
+// function weiShi() {
+// 	var weiShi = require("./微视/weiShi.js"); //导入快手js文件
+// 	var kwaiMain = require("./快手/kuaiShou.js"); //导入快手js文件
+// 	let appName;	//应用名
+// 	// switchAccountBegin 换号区间 开始
+// 	// switchAccountEnd 换号区间 结束
+// 	for (var i = ui.weiShiSwitchAccountBegin.text(); i <= ui.weiShiSwitchAccountEnd.text(); i++) {
+// 		//清理后台App(平台专属)
+// 		if (ui.swCleanApp.isChecked()) {
+// 			tabletOperation.clearApp(Apparr);
+// 			sleep(1000);
+// 		}
+
+// 		//飞行模式
+// 		if (ui.swFlyModeBtn.isChecked()) {
+// 			tabletOperation.openFlightMode();
+// 			log("开启飞行模式");
+// 			sleep(3000);
+// 			tabletOperation.closeFlightMode();
+// 			log("关闭飞行模式");
+// 			//检查网络
+// 			tabletOperation.isNetwork();
+// 		}
+
+// 		//第0个默认为原版快手,其他的按这个顺序来
+// 		if (i == 0) {
+// 			appName = "微视";
+// 		} else {
+// 			appName = "微视" + i;
+// 		}
+// 		if (app.getPackageName(appName)) {
+// 			//判断是否开启成功,不成功重启一次
+// 			if (tabletOperation.openApp(appName) == false) {
+// 				tabletOperation.killApp(appName);
+// 				sleep(3000);
+// 				tabletOperation.openApp(appName);
+// 			};
+// 		} else {
+// 			log(appName + "应用不存在");
+// 			break;
+// 		}
+
+// 		//开启一个线程检测弹窗
+// 		let checkPop = threads.start(function () {
+// 			while (true) {
+// 				//弹窗事件
+// 				kwaiMain.popUpEvent();
+// 				sleep(1000);
+// 			}
+// 		});
+
+// 		//微视刷视频
+// 		weiShi.run((ui.weiShiTime.text() * 60));
+
+// 		//关闭微视
+// 		tabletOperation.killApp(appName);
+
+// 		//关闭检测弹窗线程
+// 		checkPop.interrupt();
+// 	}
+// }
+
+// function shuaBao() {
+// 	var shuaBao = require("./刷宝/shuaBao.js"); //导入快手js文件
+// 	var kwaiMain = require("./快手/kuaiShou.js"); //导入快手js文件
+// 	let appName;	//应用名
+// 	// switchAccountBegin 换号区间 开始
+// 	// switchAccountEnd 换号区间 结束
+// 	for (var i = ui.shuaBaoSwitchAccountBegin.text(); i <= ui.shuaBaoSwitchAccountEnd.text(); i++) {
+// 		// log(1);
+// 		//清理后台App(平台专属)
+// 		if (ui.swCleanApp.isChecked()) {
+// 			tabletOperation.clearApp(Apparr);
+// 			sleep(1000);
+// 		}
+
+// 		//飞行模式
+// 		if (ui.swFlyModeBtn.isChecked()) {
+// 			tabletOperation.openFlightMode();
+// 			log("开启飞行模式");
+// 			sleep(3000);
+// 			tabletOperation.closeFlightMode();
+// 			log("关闭飞行模式");
+// 			//检查网络
+// 			tabletOperation.isNetwork();
+// 		}
+// 		// log(2);
+// 		//第0个默认为原版快手,其他的按这个顺序来
+// 		if (i == 0) {
+// 			appName = "刷宝短视频";
+// 		} else {
+// 			appName = "刷宝短视频" + i;
+// 		}
+// 		if (app.getPackageName(appName)) {
+// 			//判断是否开启成功,不成功重启一次
+// 			if (tabletOperation.openApp(appName) == false) {
+// 				tabletOperation.killApp(appName);
+// 				sleep(3000);
+// 				tabletOperation.openApp(appName);
+// 			};
+// 		} else {
+// 			log(appName + "应用不存在");
+// 			break;
+// 		}
+
+// 		//开启一个线程检测弹窗
+// 		let checkPop = threads.start(function () {
+// 			while (true) {
+// 				//弹窗事件
+// 				kwaiMain.popUpEvent();
+// 				sleep(1000);
+// 			}
+// 		});
+
+// 		//刷视频
+// 		shuaBao.run((ui.shuaBaoTime.text() * 60));
+
+// 		//关闭微视
+// 		tabletOperation.killApp(appName);
+
+// 		//关闭检测弹窗线程
+// 		checkPop.interrupt();
+// 	}
+// }
+
+function brushVideo(path, appNameStr, uiObjArr) {
+	var video = require(path); //导入快手js文件
 	let appName;	//应用名
-	// switchAccountBegin 换号区间 开始
-	// switchAccountEnd 换号区间 结束
-	for (var i = kuaiShouswitchAccountBegin; i <= kuaiShouSwitchAccountEnd; i++) {
-
-		//清理后台App(平台专属)
-		if (cleanApp) {
-			tabletOperation.clearApp(Apparr);
-			sleep(1000);
-		}
-
-		//飞行模式
-		if (flightMode) {
-			tabletOperation.openFlightMode();
-			log("开启飞行模式");
-			sleep(3000);
-			tabletOperation.closeFlightMode();
-			log("关闭飞行模式");
-			//检查网络
-			tabletOperation.isNetwork();
-		}
-
-		//第0个默认为原版快手,其他的按这个顺序来
-		if (i == 0) {
-			appName = "快手极速版";
-		} else {
-			appName = "快手" + i;
-		}
-		if (app.getPackageName(appName)) {
-			//判断是否开启成功,不成功重启一次
-			if (tabletOperation.openApp(appName) == false) {
-				tabletOperation.killApp(appName);
-				sleep(3000);
-				tabletOperation.openApp(appName);
-			};
-		} else {
-			log(appName + "应用不存在");
-
-			break;
-		}
-
-		//开启一个线程检测弹窗
-		let checkPop = threads.start(function () {
-			while (true) {
-				//弹窗事件
-				kwaiMain.popUpEvent();
-				sleep(1000);
-				// //滑块验证
-				// if (text("拖动滑块").findOne(500)) {
-				// 	sleep(1500);
-				// 	kwaiMain.overSlider(_user, _pass);
-				// }
-				// sleep(1000);
-			}
-
-		});
-		//快手签到
-		kwaiMain.signIn();
-
-		//快手清理缓存
-		kwaiMain.cleanCache();
-
-		//快手刷视频
-		kwaiMain.run((ui.kuaiShouTime.text() * 60), _user, _pass);
-
-		//关闭快手
-		tabletOperation.killApp(appName);
-		//关闭检测弹窗线程
-		checkPop.interrupt();
-	}
-}
-
-function weiShi() {
-	var weiShi = require("./微视/weiShi.js"); //导入快手js文件
-	var kwaiMain = require("./快手/kuaiShou.js"); //导入快手js文件
-	let appName;	//应用名
-	// switchAccountBegin 换号区间 开始
-	// switchAccountEnd 换号区间 结束
-	for (var i = weiShiSwitchAccountBegin; i <= weiShiSwitchAccountEnd; i++) {
-		//清理后台App(平台专属)
-		if (cleanApp) {
-			tabletOperation.clearApp(Apparr);
-			sleep(1000);
-		}
-
-		//飞行模式
-		if (flightMode) {
-			tabletOperation.openFlightMode();
-			log("开启飞行模式");
-			sleep(3000);
-			tabletOperation.closeFlightMode();
-			log("关闭飞行模式");
-			//检查网络
-			tabletOperation.isNetwork();
-		}
-
-		//第0个默认为原版快手,其他的按这个顺序来
-		if (i == 0) {
-			appName = "微视";
-		} else {
-			appName = "微视" + i;
-		}
-		if (app.getPackageName(appName)) {
-			//判断是否开启成功,不成功重启一次
-			if (tabletOperation.openApp(appName) == false) {
-				tabletOperation.killApp(appName);
-				sleep(3000);
-				tabletOperation.openApp(appName);
-			};
-		} else {
-			log(appName + "应用不存在");
-			break;
-		}
-
-		//开启一个线程检测弹窗
-		let checkPop = threads.start(function () {
-			while (true) {
-				//弹窗事件
-				kwaiMain.popUpEvent();
-				sleep(1000);
-			}
-		});
-
-		//微视刷视频
-		weiShi.run((ui.weiShiTime.text() * 60));
-
-		//关闭微视
-		tabletOperation.killApp(appName);
-
-		//关闭检测弹窗线程
-		checkPop.interrupt();
-	}
-}
-
-function shuaBao() {
-	var shuaBao = require("./刷宝/shuaBao.js"); //导入快手js文件
-	var kwaiMain = require("./快手/kuaiShou.js"); //导入快手js文件
-	let appName;	//应用名
-	// switchAccountBegin 换号区间 开始
-	// switchAccountEnd 换号区间 结束
-	for (var i = shuaBaoSwitchAccountBegin; i <= shuaBaoSwitchAccountEnd; i++) {
+	for (var i = uiObjArr[0].text(); i <= uiObjArr[1].text(); i++) {
 		// log(1);
 		//清理后台App(平台专属)
-		if (cleanApp) {
+		if (ui.swCleanApp.isChecked()) {
 			tabletOperation.clearApp(Apparr);
 			sleep(1000);
 		}
 
 		//飞行模式
-		if (flightMode) {
+		if (ui.swFlyModeBtn.isChecked()) {
 			tabletOperation.openFlightMode();
 			log("开启飞行模式");
 			sleep(3000);
@@ -347,9 +424,9 @@ function shuaBao() {
 		// log(2);
 		//第0个默认为原版快手,其他的按这个顺序来
 		if (i == 0) {
-			appName = "刷宝短视频";
+			appName = appNameStr;
 		} else {
-			appName = "刷宝短视频" + i;
+			appName = appNameStr + i;
 		}
 		if (app.getPackageName(appName)) {
 			//判断是否开启成功,不成功重启一次
@@ -367,13 +444,13 @@ function shuaBao() {
 		let checkPop = threads.start(function () {
 			while (true) {
 				//弹窗事件
-				kwaiMain.popUpEvent();
+				video.popUpEvent();
 				sleep(1000);
 			}
 		});
 
 		//刷视频
-		shuaBao.run((ui.shuaBaoTime.text() * 60));
+		video.run((uiObjArr[2].text()));
 
 		//关闭微视
 		tabletOperation.killApp(appName);
@@ -496,12 +573,13 @@ function saveConfig() {
 	// let initStorage = storages.create("InitConfig")
 	let storage = storages.create('UIConfigInfo')
 	let 需要备份和还原的控件id列表集合 = [
-		['kuaishouSwitchAccountBegin', 'kuaishouswitchAccountEnd', 'weiShiSwitchAccountBegin', 'weiShiSwitchAccountEnd'
-			, 'shuaBaoSwitchAccountBegin', 'shuaBaoSwitchAccountEnd'
-			, 'kuaiShouTime', 'weiShiTime', 'shuaBaoTime'
+		['kuaiShouSwitchAccountBegin', 'kuaiShouswitchAccountEnd', 'weiShiSwitchAccountBegin', 'weiShiSwitchAccountEnd'
+			, 'shuaBaoSwitchAccountBegin', 'shuaBaoSwitchAccountEnd', 'houShanSwitchAccountBegin', 'houShanSwitchAccountEnd'
+			, 'houHouSwitchAccountBegin', 'houHouSwitchAccountEnd', 'baiDuSwitchAccountBegin', 'baiDuSwitchAccountEnd'
+			, 'kuaiShouTime', 'weiShiTime', 'shuaBaoTime', 'houShanTime', 'houHouTime', 'baiDuTime'
 			, 'activateCode'],
 		['swFloatWindow', 'swFloatWindow', 'swFlyModeBtn', 'swCleanApp', 'swSignIn', 'swTaskCycle'
-			, 'swKuaiShou', 'swWeiShi', 'swShuaBao'],
+			, 'swKuaiShou', 'swWeiShi', 'swShuaBao', 'swHouShan', 'swHouHou', 'swBaiDu'],
 	]
 	需要备份和还原的控件id列表集合.map((viewIdList) => {
 		let inputViewIdListRegisterListener = new ViewIdListRegisterListener(viewIdList, storage, ui);
