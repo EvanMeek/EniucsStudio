@@ -1,8 +1,9 @@
+let uiBaseClick = require("../Libary/uiBase/CLICK.js");
+let uiBaseSwipe = require("../Libary/uiBase/SWIPE.js");
 /*
  趣头条
  签到，刷文章
  */
-let uiBaseClick = require("../Libary/uiBase/CLICK.js");
 
 function test() {
     总流程();
@@ -33,8 +34,8 @@ function 总流程() {
  */
 function taskGetMoney() {
     taskPapge();
-    sU(0, 400);
-    let waitGet = text("待领取").findOnce().parent().parent();
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(0, 400);
+    let waitGet = text("待领取").findOne(2000)().parent().parent();
     if (uiBaseClick.clickCenterByNode(waitGet, 0, 1000)) {
         log("趣头条---天天领现金完成。");
     } else {
@@ -51,7 +52,7 @@ function signIn() {
     let getMoneyAndWatchVideo = className("android.widget.TextView").depth(6).drawingOrder(1).textContains("看视频再领");
 
     if (getMoneyAndWatchVideo.findOne(3000) != undefined) {
-        getMoneyAndWatchVideo = getMoneyAndWatchVideo.findOnce().parent();
+        getMoneyAndWatchVideo = getMoneyAndWatchVideo.findOne(2000)().parent();
         uiBaseClick.clickCenterByNode(getMoneyAndWatchVideo, 0, 5000);
         uiBaseClick.clickCenterBySelector(text("关闭").className("android.widget.TextView").indexInParent(1).drawingOrder(2).depth(9), 60000, 3);
         back();
@@ -66,7 +67,7 @@ function signIn() {
  */
 function taskPapge() {
     // 任务页
-    let mainTaskBtn = className("android.widget.LinearLayout").depth(4).id("mg").findOnce().child(3);
+    let mainTaskBtn = className("android.widget.LinearLayout").depth(4).id("mg").findOne(2000)().child(3);
     if (uiBaseClick.clickCenterByNode(mainTaskBtn, 0, 5)) {
         log("趣头条---跳转至任务页成功!");
     } else {
@@ -92,7 +93,7 @@ function readArticleOrWatchVideo() {
         sleep(2000);
     }
     // 主页刷新
-    sU(1, 5000);
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(1, 5000);
     /**
      * 首页第一篇文章或视频
      */
@@ -117,25 +118,8 @@ function swipePapge() {
         sleep(500);
     }
     for (let i = 0; i < 10; i++) {
-        sU(1, 200);
-        sU(0, 200);
-    }
-}
-
-/**
- * 滑动页面
- * @param direction
- * @param delay
- */
-function sU(direction, delay) {
-    if (direction === 0) {
-        // log("向下滚动", "延迟:" + delay);
-        swipe(520, 1920, 528, 320, 500);
-        sleep(delay);
-    } else if (direction === 1) {
-        // log("向上滚动", "延迟:" + delay)
-        swipe(520, 320, 528, 1920, 500);
-        sleep(delay);
+        uiBaseSwipe.swipeUpOrDownByDeviceHeight(1, 200);
+        uiBaseSwipe.swipeUpOrDownByDeviceHeight(0, 200);
     }
 }
 

@@ -6,12 +6,12 @@
  * @param ignoreLog 是否忽略延迟(true/false)
  * @returns {boolean}
  */
-function clickCenterBySelector(selector, time, delay, ignoreLog ) {
-    if (time == undefined || time == 0 || delay == undefined) {
+function clickCenterBySelector(selector, time, delay, ignoreLog) {
+    if (time === undefined || time === 0 || delay === undefined) {
         time = 1000;
         delay = 0.2;
     }
-    node = selector.findOne(time);
+    let node = selector.findOne(time);
     if (node) {
         let rect = node.bounds();
         click(rect.centerX(), rect.centerY());
@@ -34,7 +34,7 @@ function clickCenterBySelector(selector, time, delay, ignoreLog ) {
  * @returns {boolean}
  */
 function clickCenterByNode(node, time, delay, ignoreLog) {
-    if (time == undefined || time == 0 || delay == undefined) {
+    if (time === undefined || time === 0 || delay === undefined) {
         time = 1000;
         delay = 0.2;
     }

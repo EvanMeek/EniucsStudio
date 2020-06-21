@@ -1,8 +1,8 @@
 let uiBaseClick = require("../Libary/uiBase/CLICK.js");
-
+let uiBaseSwipe = require("../Libary/uiBase/SWIPE.js");
 function test() {
     popupWindow();
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 30; i++) {
         readArticle();
     }
 }
@@ -20,13 +20,15 @@ function readArticle(){
     // 刷新页面;
     mainPage();
     sleep(1000);
-    sU(0,2000);
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(0,1500);
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(0,1500);
+    sleep(1000);
     // 找id为tv_news_timeline的可点击父级容器
-    let art = id("tv_news_timeline").findOnce();
+    let art = id("tv_news_timeline").findOne(2000);
     if(art!=undefined){
         log("惠头条---寻找文章成功。");
         art = art.parent().parent().parent().parent().parent().parent().parent();
-        if (uiBaseClick.clickCenterByNode(art, 0, 1)) {
+        if (uiBaseClick.clickCenterByNode(art, 0, 1,true)) {
             log("惠头条---进入文章成功。");
             swipeArticle();
             back();
@@ -45,11 +47,11 @@ function readArticle(){
 function swipeArticle(){
     log("惠头条---滑动文章或视频页中...");
     for (let i = 0; i < 5; i++) {
-        sU(0,1000);
+        uiBaseSwipe.swipeUpOrDownByDeviceHeight(0,1000);
     }
     for (let i = 0; i < 10; i++) {
-        sU(1, 1500);
-        sU(0, 1500);
+        uiBaseSwipe.swipeUpOrDownByDeviceHeight(1, 1500);
+        uiBaseSwipe.swipeUpOrDownByDeviceHeight(0, 1500);
     }
 }
 /**
@@ -57,11 +59,11 @@ function swipeArticle(){
  */
 function headLineTab(){
     sleep(1000);
-    let tabNews = id("tab_news").findOnce();
+    let tabNews = id("tab_news").findOne(2000);
     if(tabNews!==undefined){
         tabNews = tabNews.child(0);
-        let hotTab = tabNews.child(0);
-        if(uiBaseClick.clickCenterByNode(hotTab)){
+        let headLine = tabNews.child(0);
+        if(uiBaseClick.clickCenterByNode(headLine,0,1,true)){
             log("惠头条---跳转首页头条成功!");
         }else{
             log("惠头条---跳转首页头条失效，请联系上游修复。");
@@ -74,7 +76,7 @@ function headLineTab(){
  * 跳转至首页
  */
 function mainPage(){
-    let tabs = id("tabs").findOnce().child(0);
+    let tabs = id("tabs").findOne(2000).child(0);
     let mainPage = tabs.child(0);
     if(uiBaseClick.clickCenterByNode(mainPage)){
         log("惠头条---跳转首页成功!");
@@ -84,7 +86,7 @@ function mainPage(){
 }
 
 function taskPage(){
-    let tabs = id("tabs").findOnce().child(0);
+    let tabs = id("tabs").findOne(2000).child(0);
     let taskPage = tabs.child(3);
     if (uiBaseClick.clickCenterByNode(taskPage)) {
         log("惠头条---跳转任务页成功!");
@@ -92,24 +94,6 @@ function taskPage(){
         log("惠头条---跳转任务页失效，请联系上游修复。");
     }
 }
-
-/**
- * 滑动页面
- * @param direction
- * @param delay
- */
-function sU(direction, delay) {
-    if (direction === 0) {
-        // log("向下滚动", "延迟:" + delay);
-        swipe(520, 1920, 528, 320, 500);
-        sleep(delay);
-    } else if (direction === 1) {
-        // log("向上滚动", "延迟:" + delay)
-        swipe(520, 320, 528, 1920, 500);
-        sleep(delay);
-    }
-}
-
 
 function popupWindow(){
     /*
@@ -125,7 +109,7 @@ function popupWindow(){
             let img_close = id("img_close");
             uiBaseClick.clickCenterBySelector(img_close,0,1);
             let iv_card_discard = id("iv_card_discard");
-            uiBaseClick.clickCenterBySelector(iv_card_discard,0,1);
+            uiBaseClick.clickCenterBySelector(iv_card_discard,0,1)z;
         }
     });
 }

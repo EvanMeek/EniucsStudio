@@ -1,5 +1,5 @@
-let uiBaseClick = require("/Libary/uiBase/CLICK.js");
-
+let uiBaseClick = require("../Libary/uiBase/CLICK.js");
+let uiBaseSwipe = require("../Libary/uiBase/SWIPE.js");
 function test() {
     // let watchVideoGetMoney = textContains("看完视频");
     // log("hello");
@@ -34,7 +34,7 @@ function openTreasureChest() {
     // 宝箱控件
     let treasureChest = className("android.widget.Image").depth(16).indexInParent(0).clickable(false).textContains("treasure");
     if (treasureChest != undefined) {
-        treasureChest = treasureChest.findOnce().parent();
+        treasureChest = treasureChest.findOne(2000).parent();
         // 点击宝箱
         uiBaseClick.clickCenterByNode(treasureChest, 0, 20);
         sleep(2000);
@@ -53,7 +53,7 @@ function openTreasureChest() {
  */
 function taskPapge() {
     // 任务页
-    let mainTaskBtn = className("android.widget.TabWidget").depth(8).id("tabs").findOnce().child(3);
+    let mainTaskBtn = className("android.widget.TabWidget").depth(8).id("tabs").findOne(2000)().child(3);
     mainTaskBtn.click();
     // 监测是否有邀请码弹窗
     let inviteCode = textContains("点击填写邀请码");
@@ -83,7 +83,7 @@ function readArticle() {
         swipe(520, 500, 520, 1920, 2000);
         sleep(1000);
         // 首页文章列表
-        let mainArticleList = className("android.support.v7.widget.RecyclerView").depth(14).indexInParent(1).drawingOrder(2).findOnce().children();
+        let mainArticleList = className("android.support.v7.widget.RecyclerView").depth(14).indexInParent(1).drawingOrder(2).findOne(2000)().children();
         log("文章个数：" + mainArticleList.size());
         mainArticleList.forEach(function (art) {
             log(art.indexInParent() + "=======");
@@ -111,32 +111,20 @@ function readArticle() {
  */
 function swipePapge() {
     sleep(1000);
-    sU(0, 1000);
-    sU(0, 2000);
-    sU(0, 2000);
-    sU(1, 2000);
-    sU(0, 1000);
-    sU(0, 1000);
-    sU(1, 2000);
-    sU(0, 2000);
-    sU(0, 1000);
-    sU(1, 2000);
-    sU(0, 1000);
-    sU(0, 1000);
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(0, 1000);
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(0, 2000);
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(0, 2000);
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(1, 2000);
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(0, 1000);
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(0, 1000);
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(1, 2000);
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(0, 2000);
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(0, 1000);
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(1, 2000);
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(0, 1000);
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(0, 1000);
     for (let i = 0; i < 40; i++) {
-        sU(0, 200);
-    }
-}
-
-function sU(direction, delay) {
-    if (direction === 0) {
-        log("向下滚动", "延迟:" + delay);
-        swipe(520, 1920, 528, 320, 500);
-        sleep(delay);
-    } else if (direction === 1) {
-        log("向上滚动", "延迟:" + delay)
-        swipe(520, 320, 528, 1920, 500);
-        sleep(delay);
+        uiBaseSwipe.swipeUpOrDownByDeviceHeight(0, 200);
     }
 }
 
