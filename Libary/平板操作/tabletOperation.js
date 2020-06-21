@@ -1,4 +1,4 @@
-
+var debugBool = true;
 
 // test();
 
@@ -194,11 +194,17 @@ function closeSplitScreen(appName) {
 }
 
 /**
- * 日志加强
- * @param {任意对象} obj 带箭头输出任何变量
+ * 调试日志
+ * @param {对象} obj 任意可输出的对象,
+ * @param {debugBool} debugBool 在使用前确定已经声明全局变量 debugBool
  */
 function Log(obj) {
-    log("--->" + obj);
+    if (debugBool == undefined) {
+        debugBool = false;
+    }
+    if (debugBool) {
+        log("debug-->" + obj);
+    }
 }
 
 /**

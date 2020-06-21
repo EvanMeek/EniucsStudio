@@ -41,10 +41,6 @@ function goldenEgg() {
     let is;
     if (text("金蛋大奖").findOnce()) {
         clickCenter(text("金蛋大奖"));
-        is = clickCenter(id("ki"));
-        if (!is) {
-            back();
-        }
     }
 }
 
@@ -109,6 +105,9 @@ function popUpEvent() {
     }
     else if (text("立即查看").depth(5).findOnce()) {
         clickCenter(id("gn"));
+    }
+    else if(textContains("看视频再送").depth(7).findOnce()){
+        clickCenter(id("ki"));
     }
 }
 

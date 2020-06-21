@@ -86,7 +86,7 @@
 
                                         </vertical>
                                         <vertical layout_gravity="right" marginLeft="20" w="128">
-                                            <Switch text="随机点赞" textSize="16sp" textStyle="bold" checked="true" h="35" />
+                                            <Switch tag="Switch" id="swLike" text="随机点赞" textSize="16sp" textStyle="bold" checked="true" h="35" />
                                             <Switch tag="Switch" id="swTaskCycle" text="任务循环" textSize="16sp" textStyle="bold" checked="true" h="35" />
                                             <Switch text="自动优化" textSize="16sp" textStyle="bold" checked="true" h="35" />
                                         </vertical>

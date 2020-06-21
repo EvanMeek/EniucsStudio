@@ -1,9 +1,9 @@
 // // 快手刷视频
+var debugBool = true;
+const _user = "yzl178me";
+const _pass = "Yangzelin995;";
 
-// const _user = "yzl178me";
-// const _pass = "Yangzelin995;";
-
-// //请求截图权限
+//请求截图权限
 // if (!requestScreenCapture()) {
 //     toast("过滑块需要截图权限支持");
 //     exit();
@@ -19,35 +19,10 @@ function test() {
     // run(120, _user, _pass);
     // reduceSimilarWorks();
     // overSlider(_user,_pass);
-    run(1200, _user, _pass);
+    signIn();
+    cleanCache();
 
-}
-
-/**
- * 减少类似作品
- * 获取设备高度
- */
-
-function reduceSimilarWorks() {
-    Log("开始减少类似作品");
-    //获取获取坐标然后长按
-    let x = device.width / 2;
-    x = random((x - 100), (x + 100));
-    let y = device.height / 2;
-    x = random((x - 150), (x + 150));
-    press(x, y, 1500);
-    //随机选择4个选项
-    let choice = random(0, 3);
-    sleep(1000);
-    if (choice == 0) {
-        click("作品质量差");
-    } else if (choice == 1) {
-        click("不看该作者");
-    } else if (choice == 2) {
-        click("看过类似作品");
-    } else {
-        click("作品引起不适");
-    }
+    run(12);
 
 }
 
@@ -65,37 +40,35 @@ function reduceSimilarWorks() {
  *   6. 检查图集
  * 4. 刷视频完成
  */
-
-function run(totalTime, user, pass) {
+function run(totalTime, boolLikeAndFollow) {
     const perVideoWatchTime = 5;//每隔视频观看10秒
+    totalTime = totalTime * 60; //把分钟转换为秒数
     totalTime += random(-60, 180);
     log("计划时长：" + totalTime)
     let watchTime = 0;
     let overSliderCount = 0;
     let overSliderthread;
     menuArea();
-
     for (let i = 1; totalTime > watchTime; i++) {
-
         // //判断弹窗事件
         // popUpEvent();
         if (text("拖动滑块").findOne(500) && overSliderCount < 8) {
             overSliderthread = threads.start(function () {
                 sleep(3000);
-                overSlider(user, pass);
+                overSlider(_user, _pass);
                 overSliderCount++;
             })
             overSliderthread.join(30000)
             overSliderthread.interrupt();
         }
-        else if (overSliderCount >= 10) {
+        else if (overSliderCount >= 8) {
             back();
         }
         blackScreenBrushVideo(i);
         let waitTime = perVideoWatchTime + random(-2, 4)
         // log("本视频观看时长" + waitTime);
         sleep(waitTime / 2 * 1000);
-        likeAndFollow(20);
+        likeAndFollow(20, boolLikeAndFollow);
         skipAtlas();
         sleep(waitTime / 2 * 1000);
         watchTime += waitTime;
@@ -103,6 +76,33 @@ function run(totalTime, user, pass) {
     }
     // overSliderThred.interrupt();
     Log("本次观看时长" + watchTime + "秒");
+}
+
+/**
+ * 减少类似作品
+ * 获取设备高度
+ */
+
+function reduceSimilarWorks() {
+    Log("开始减少类似作品");
+    //获取获取坐标然后长按
+    let x = device.width / 2;
+    x = random((x - 100), (x + 100));
+    let y = device.height / 2;
+    x = random((x - 150), (x + 150));
+    press(x, y, 2000);
+    //随机选择4个选项
+    let choice = random(0, 3);
+    sleep(1000);
+    if (choice == 0) {
+        click("作品质量差");
+    } else if (choice == 1) {
+        click("不看该作者");
+    } else if (choice == 2) {
+        click("看过类似作品");
+    } else {
+        click("作品引起不适");
+    }
 }
 
 function blackScreenBrushVideo(i) {
@@ -170,7 +170,6 @@ function cleanCache() {
     }
     menuArea();
     // Log(clean_cache_Btn);
-
 }
 
 /**
@@ -259,8 +258,6 @@ function overSlider(usr, pass) {
  * 4. 翻到最下面找到签到按钮并判断点击或者立即签到
  */
 function signIn() {
-
-    //回到主界面
     menuArea();
     Log("开始签到");
     //判断侧边栏是否打开
@@ -284,7 +281,6 @@ function signIn() {
             signInNowBtn.click();
             sleep(500);
             back();
-
         } else {
             scrollDown(0);
             sleep(500);
@@ -313,6 +309,40 @@ function signIn() {
 }
 
 /**
+ * 处理弹窗
+ * 1. 我知道了
+ * 2. 邀请好友
+ * 3. 应用未响应
+ */
+function popUpEvent() {
+
+    if (text("我知道了").findOnce()) {
+        sleep(300);
+        click("我知道了");
+    }
+    else if (textContains("邀请").findOnce()) {
+        sleep(300);
+        back();
+    }
+    else if (textContains("没有响应").findOnce()) {
+        sleep(1000);
+        click("等待");
+    }
+    else if (text("知道了").findOnce()) {
+        sleep(300);
+        click("知道了");
+    }
+    else if (text("立即更新").findOnce()) {
+        sleep(300);
+        back();
+    }
+    else if (textContains("升级").findOnce()) {
+        sleep(1000);
+        back();
+    }
+}
+
+/**
  * 找到主界面
  * 1. 添加计时器 10秒
  * 2. 找到主界面按钮
@@ -324,6 +354,14 @@ function menuArea() {
             // Log("找到主界面");
             break;
         } else {
+            if (text("拖动滑块").findOne(500)) {
+                let overSliderthread = threads.start(function () {
+                    sleep(3000);
+                    overSlider(_user, _pass);
+                });
+                overSliderthread.join(30000);
+                overSliderthread.interrupt();
+            }
             back();
             sleep(1000);
             timeCount++;
@@ -368,46 +406,18 @@ function swipeVideo(swipeCount) {
 }
 
 /**
- * 处理弹窗
- * 1. 我知道了
- * 2. 邀请好友
- * 3. 应用未响应
- */
-function popUpEvent() {
-
-    if (text("我知道了").findOnce()) {
-        sleep(300);
-        click("我知道了");
-    }
-    else if (textContains("邀请").findOnce()) {
-        sleep(300);
-        back();
-    }
-    else if (textContains("没有响应").findOnce()) {
-        sleep(1000);
-        click("等待");
-    }
-    else if (text("知道了").findOnce()) {
-        sleep(300);
-        click("知道了");
-    }
-    else if (text("立即更新").findOnce()) {
-        sleep(300);
-        back();
-    }
-    else if (textContains("升级").findOnce()) {
-        sleep(1000);
-        back();
-    }
-}
-
-/**
  * 随机点赞或者关注和或者减少类似作品
  * @param {点赞概率} range 有range*2+1分之一的概率点喜欢,range*4+1分之一的概率点关注,关注必定喜欢
  * 1. 获取需要双击喜欢的坐标点
  * 2. 判断随机数 如果喜欢了再判断关注
  */
-function likeAndFollow(range) {
+function likeAndFollow(range, bool) {
+    if (bool == undefined) {
+        bool = true;
+    }
+    if (!bool) {
+        return;
+    }
     //获取
     const height = (device.height / 2) + random(20, 50);
     const width = (device.width / 2) + random(20, 50);
@@ -437,7 +447,7 @@ function likeAndFollow(range) {
     else if (isreduceSimilarWorks == 4) {
         //减少类似作品
         swipeVideo(1);
-        sleep(1000);
+        sleep(1500);
         reduceSimilarWorks();
         sleep(1000);
         blackScreenBrushVideo(1);
@@ -447,16 +457,6 @@ function likeAndFollow(range) {
     }
 
 
-}
-
-//以下函数可通用
-
-/**
- * 日志加强
- * @param {任意对象} obj 带箭头输出任何变量
- */
-function Log(obj) {
-    log("--->" + obj);
 }
 
 /**
@@ -561,55 +561,116 @@ function smlMove(qx, qy, zx, zy, time) {
     };
 
     for (var i = 0; i < 4; i++) {
-
         eval("point.push(dx" + i + ")");
 
     };
-    // log(point[3].x)
+    /**
+     * 仿真随机带曲线滑动的子方法
+     * @param {*} cp 
+     * @param {*} t 
+     */
+    function bezierCurves(cp, t) {
+        cx = 3.0 * (cp[1].x - cp[0].x);
+        bx = 3.0 * (cp[2].x - cp[1].x) - cx;
+        ax = cp[3].x - cp[0].x - cx - bx;
+        cy = 3.0 * (cp[1].y - cp[0].y);
+        by = 3.0 * (cp[2].y - cp[1].y) - cy;
+        ay = cp[3].y - cp[0].y - cy - by;
 
-    for (let i = 0; i < 1; i += 0.08) {
-        xxyy = [parseInt(bezierCurves(point, i).x), parseInt(bezierCurves(point, i).y)]
-
-        xxy.push(xxyy);
-
+        tSquared = t * t;
+        tCubed = tSquared * t;
+        result = {
+            "x": 0,
+            "y": 0
+        };
+        result.x = (ax * tCubed) + (bx * tSquared) + (cx * t) + cp[0].x;
+        result.y = (ay * tCubed) + (by * tSquared) + (cy * t) + cp[0].y;
+        return result;
     }
 
-    // log(xxy);
+    // Log(point[3].x)
+    for (let i = 0; i < 1; i += 0.08) {
+        xxyy = [parseInt(bezierCurves(point, i).x), parseInt(bezierCurves(point, i).y)]
+        xxy.push(xxyy);
+    }
+
+    // Log(xxy);
     gesture.apply(null, xxy);
 };
 
 /**
- * 仿真随机带曲线滑动的子方法
- * @param {*} cp 
- * @param {*} t 
+ * 点击控件中心
+ * @param {选择器} selector 可以级联
+ * @param {时间} time 选择器查找的时间
  */
+function clickCenter(selector, time) {
+    if (time == undefined) {
+        time = 1000;
+    }
+    let node = selector.findOne(time);
+    if (node) {
+        let rect = node.bounds();
+        sleep(150);
+        click(rect.centerX(), rect.centerY());
+        return true;
+    }
+    else {
+        Log("没有找到选择器--->" + selector.toString());
+        return false;
+    }
+}
 
-function bezierCurves(cp, t) {
-    cx = 3.0 * (cp[1].x - cp[0].x);
-    bx = 3.0 * (cp[2].x - cp[1].x) - cx;
-    ax = cp[3].x - cp[0].x - cx - bx;
-    cy = 3.0 * (cp[1].y - cp[0].y);
-    by = 3.0 * (cp[2].y - cp[1].y) - cy;
-    ay = cp[3].y - cp[0].y - cy - by;
+/**
+ * 区域找色(节点版)
+ * @param {图片} img 屏幕截图
+ * @param {颜色} color 需要找的颜色
+ * @param {选择器} selector 例如id("xxxx"),可以级联
+ * @param {时间} time 找色的时间
+ * 调用前确保已经获取截图权限
+ */
+function nodeFindColor(img, color, selector, time) {
+    let searchTime = 0;
+    let node = selector.findOne(1500);
+    let returnValue;
+    if (node) {
+        let rect = node.bounds();
+        for (let i = 0; searchTime <= time; i++) {
+            returnValue = images.findColor(img, color, {
+                region: [rect.left, rect.top, rect.width(), rect.height()],
+                threshold: 0.8
+            });
+            if (returnValue) {
+                return returnValue;
+            }
+            sleep(100);
+            searchTime += 100;
+        }
+        Log("找色超时");
+        return returnValue;
+    } else {
+        Log("失败");
+        return false;
+    }
+}
 
-    tSquared = t * t;
-    tCubed = tSquared * t;
-    result = {
-        "x": 0,
-        "y": 0
-
-    };
-    result.x = (ax * tCubed) + (bx * tSquared) + (cx * t) + cp[0].x;
-    result.y = (ay * tCubed) + (by * tSquared) + (cy * t) + cp[0].y;
-    return result;
-};
-
+/**
+ * 调试日志
+ * @param {对象} obj 任意可输出的对象,
+ * @param {debugBool} debugBool 在使用前确定已经声明全局变量 debugBool
+ */
+function Log(obj) {
+    if (debugBool == undefined) {
+        debugBool = false;
+    }
+    if (debugBool) {
+        log("debug-->" + obj);
+    }
+}
 // 需要调用时取消注释
 module.exports = {
     run: run,    //快手刷视频
     signIn: signIn,  //快手签到
-    cleanCache: cleanCache,  //快手清理缓存
+    // cleanCache: cleanCache,  //快手清理缓存
     popUpEvent: popUpEvent,  //快手弹窗
-    overSlider: overSlider   //滑块验证
 }
 
