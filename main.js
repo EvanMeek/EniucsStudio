@@ -22,8 +22,8 @@ var tabletOperation = require("./Libary/平板操作/tabletOperation.js");
 var ViewIdListRegisterListener = require("./Libary/utils/saveUIConfig.js");
 var dataUtils = require("./Libary/utils/dataUtils.js");
 var checkUpdate = require("./Libary/utils/checkUpdate.js");
-const _user = "yzl178me";
-const _pass = "Yangzelin995;";
+// const _user = "yzl178me";
+// const _pass = "Yangzelin995;";
 var Apparr = ["Auto.js Pro", "掘金时代"];	//不被清理的应用数组,通用
 
 //UI
@@ -69,7 +69,7 @@ setTimeout(() => {
 		]
 		// for (let i = 0; i < houShan.length-1; i++) {
 		// 	log(baiDuJiSu[i].text());
-			
+
 		// }
 		checkIniData(uiSwitchAccountData, uiTime);
 	}, 500);
@@ -169,8 +169,7 @@ function main() {
 		// 	shuaBao();
 		// }
 
-		for (let i = 3; i < appNameArr.length; i++) {
-			log(videoArr[i][3].isChecked());
+		for (let i = 0; i < appNameArr.length; i++) {
 			if (videoArr[i][3].isChecked()) {
 				log(appNameArr[i]);
 				brushVideo(pathArr[i], appNameArr[i], videoArr[i]);
@@ -400,6 +399,12 @@ function main() {
 // 	}
 // }
 
+/**
+ * 刷视频
+ * @param {路径}} path 文件引入的相对路径
+ * @param {软件的字符串} appNameStr 
+ * @param {软件UI集合} uiObjArr 
+ */
 function brushVideo(path, appNameStr, uiObjArr) {
 	var video = require(path); //导入快手js文件
 	let appName;	//应用名
@@ -449,10 +454,15 @@ function brushVideo(path, appNameStr, uiObjArr) {
 			}
 		});
 
-		//刷视频
-		video.run((uiObjArr[2].text()));
+		//判断是否需要签到
+		if (ui.swSignIn.isChecked()) {
+			video.signIn();
+		}
 
-		//关闭微视
+		//刷视频
+		video.run((uiObjArr[2].text()), ui.swLike.isChecked());
+
+		//关闭软件
 		tabletOperation.killApp(appName);
 
 		//关闭检测弹窗线程
