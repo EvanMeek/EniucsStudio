@@ -2,6 +2,7 @@
 var debugBool = true;
 const _user = "yzl178me";
 const _pass = "Yangzelin995;";
+let overSliderCount = 0;
 
 //请求截图权限
 // if (!requestScreenCapture()) {
@@ -21,7 +22,6 @@ function test() {
     // overSlider(_user,_pass);
     signIn();
     cleanCache();
-
     run(12);
 
 }
@@ -46,24 +46,11 @@ function run(totalTime, boolLikeAndFollow) {
     totalTime += random(-60, 180);
     log("计划时长：" + totalTime)
     let watchTime = 0;
-    let overSliderCount = 0;
-    let overSliderthread;
+    //清理缓存
+    cleanCache();
     menuArea();
     for (let i = 1; totalTime > watchTime; i++) {
-        // //判断弹窗事件
-        // popUpEvent();
-        if (text("拖动滑块").findOne(500) && overSliderCount < 8) {
-            overSliderthread = threads.start(function () {
-                sleep(3000);
-                overSlider(_user, _pass);
-                overSliderCount++;
-            })
-            overSliderthread.join(30000)
-            overSliderthread.interrupt();
-        }
-        else if (overSliderCount >= 8) {
-            back();
-        }
+        overSlider(_user, _pass);
         blackScreenBrushVideo(i);
         let waitTime = perVideoWatchTime + random(-2, 4)
         // log("本视频观看时长" + waitTime);
@@ -184,68 +171,87 @@ function cleanCache() {
  * 6. 计算滑动X坐标 X = 积木中间 + 两个积木之间的距离
  * 7. 回收图片
  */
-
 function overSlider(usr, pass) {
-    //找到滑块区域控件
-    let sliderArea = className("android.view.View").depth(13).findOne(1000);
-    if (sliderArea) {
-        //找到滑块验证区域范围
-        sliderArea = sliderArea.parent().bounds();
-        Log(sliderArea);
+    if (text("拖动滑块").findOne(500) && overSliderCount < 8) {
+        let overSliderthread = threads.start(function () {
+            sleep(3000);
+            //找到滑块区域控件
+            let startX, startY;
+            startY = textContains("向右拖动滑块").findOne(1500);
+            if(startY){
+                startY = startY.bounds().centerY();
+            }
+            else{
+                return;
+            }
+            let sliderArea = className("android.view.View").depth(13).findOne(1000);
+            if (sliderArea) {
+                //找到滑块验证区域范围
+                sliderArea = sliderArea.parent().bounds();
+                Log(sliderArea);
 
-        // 找到积木控件范围
-        let slideBlock = className("android.widget.Image").depth(13).find();
-        if (slideBlock.length == 2) {
-            slideBlock = slideBlock.get(1).bounds();
-            Log(slideBlock);
-        } else {
-            return 1;
-        }
+                // 找到积木控件范围
+                let slideBlock = className("android.widget.Image").depth(13).find();
+                if (slideBlock.length == 2) {
+                    slideBlock = slideBlock.get(1).bounds();
+                    startX = slideBlock.centerX();
+                    Log(slideBlock);
+                } else {
+                    return;
+                }
 
-        //获取截图
-        let p1 = images.captureScreen();
-        p1 = images.rotate(p1, 180);
-        Log(p1);
-        //截取滑块验证区域
-        let p2 = images.clip(p1, sliderArea.left, sliderArea.top, sliderArea.width(), sliderArea.height());
-        Log(p2);
+                //获取截图
+                let p1 = images.captureScreen();
+                p1 = images.rotate(p1, 180);
+                Log(p1);
+                //截取滑块验证区域
+                let p2 = images.clip(p1, sliderArea.left, sliderArea.top, sliderArea.width(), sliderArea.height());
+                Log(p2);
 
-        //对接联众
-        let pointData = getCode(usr, pass, p2);
-        if (pointData.data.res) {
-            pointData = pointData.data.res;
-            Log(pointData);
+                //对接联众
+                let pointData = getCode(usr, pass, p2);
+                if (pointData.data.res) {
+                    pointData = pointData.data.res;
+                    Log(pointData);
 
-        } else {
-            Log(JSON.stringify(pointData));
-            return 0;
-        }
+                } else {
+                    Log(JSON.stringify(pointData));
+                    return 0;
+                }
 
-        //计算X坐标
-        let x2 = pointData.split("|")[1];
-        let x1;
-        let x;
-        if (x2 != undefined) {
-            x2 = x2.split(",")[0];
-            // Log(x2);
-            x1 = pointData.split("|")[0].split(",")[0];
-            x = slideBlock.centerX() + (x2 - x1);
-        } else {
-            x2 = pointData.split("|")[0].split(",")[0];
-            x = slideBlock.centerX() + (x2 - 55);
-        }
-        Log(x);
+                //计算X坐标
+                let x2 = pointData.split("|")[1];
+                let x1;
+                let x;
+                if (x2 != undefined) {
+                    x2 = x2.split(",")[0];
+                    // Log(x2);
+                    x1 = pointData.split("|")[0].split(",")[0];
+                    x = slideBlock.centerX() + (x2 - x1);
+                } else {
+                    x2 = pointData.split("|")[0].split(",")[0];
+                    x = slideBlock.centerX() + (x2 - 55);
+                }
+                Log(x);
 
-        //滑动滑块
-        swipe(160, (500 + random(0, 10)), x - 5, (500 + random(0, 10)), 1000);
+                //滑动滑块
+                swipe(startX, (startY + random(0, 10)), x - 5, (startY + random(0, 10)), 1000);
 
-        //回收图片
-        sleep(2000);
-        p1.recycle();
-        p2.recycle();
+                //回收图片
+                sleep(2000);
+                p1.recycle();
+                p2.recycle();
 
-    } else {
-        toastLog("没有找到滑块积木")
+
+            } else {
+                toastLog("没有找到滑块积木")
+            }
+        })
+        overSliderthread.join(30000)
+        overSliderthread.interrupt();
+    }
+    else if (overSliderCount >= 8) {
+        back();
     }
 
 }
@@ -460,7 +466,7 @@ function likeAndFollow(range, bool) {
 }
 
 /**
- * 
+ * 获取联众返回
  * @param {用户名}} username 
  * @param {密码} password 
  * @param {图片} img 
@@ -471,7 +477,7 @@ function getCode(username, password, img) {
     try {
         var n = http.postJson("https://v2-api.jsdama.com/upload", {
             softwareId: 19684,
-            softwareSecret: "LXgAa7NbYVCeVDsOXwqc01Hsqza5JIKYxVt5XNFS",
+            softwareSecret: "LXgAa7NbYVCeVDsOXwqc01Hsqza5JIKYxVt5XNFS",//这里换成自己的软件 Secret
             username: username,
             password: password,
             captchaData: r,
@@ -668,6 +674,7 @@ function Log(obj) {
 }
 // 需要调用时取消注释
 module.exports = {
+    type:"video",
     run: run,    //快手刷视频
     signIn: signIn,  //快手签到
     // cleanCache: cleanCache,  //快手清理缓存

@@ -12,7 +12,7 @@ function test() {
  * 适用于类似快手极速版刷视频界面
  */
 function run(totalTime, boolLikeAndFollow) {
-    const perVideoWatchTime = 5;//每隔视频观看10秒
+    const perVideoWatchTime = 10;//每隔视频观看10秒
     totalTime = totalTime * 60; //把分钟转换为秒数
     totalTime += random(-60, 180);//随机加减总时间
     Log("计划时长：" + totalTime);
@@ -306,9 +306,10 @@ function Log(obj) {
 
 // 需要调用时取消注释
 module.exports = {
+    type:"video",
     run: run,    //刷视频
-    signIn: signIn,//签到
-    popUpEvent: popUpEvent,//弹窗事件
+    signIn: signIn,  //签到
+    popUpEvent: popUpEvent,  //弹窗
 }
 
 

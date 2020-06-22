@@ -98,7 +98,7 @@ function popUpEvent() {
         click("等待");
     }
     else if (text("立即去提现").findOnce()) {
-        clickCenter(id("gn").findOne(1000));
+        clickCenter(id("gn"));
     }
     else if (text("看视频").depth(6).findOnce()) {
         clickCenter(id("mo"));
@@ -108,6 +108,9 @@ function popUpEvent() {
     }
     else if(textContains("看视频再送").depth(7).findOnce()){
         clickCenter(id("ki"));
+    }
+    else if(text("赚钱小技巧").depth(11).findOnce()){
+        back();
     }
 }
 
@@ -333,7 +336,8 @@ function Log(obj) {
 
 // 需要调用时取消注释
 module.exports = {
+    type:"video",
     run: run,    //刷视频
-    signIn: signIn,//签到
-    popUpEvent: popUpEvent,//弹窗事件
+    signIn: signIn,  //签到
+    popUpEvent: popUpEvent,  //弹窗
 }

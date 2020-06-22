@@ -29,7 +29,7 @@ function run(totalTime, boolLikeAndFollow) {
         sleep(waitTime / 2 * 1000);
         watchTime += waitTime;
         misoperationDetection();
-        Log("已看：" + i + "个视频 " + watchTime + "秒");
+        // Log("已看：" + i + "个视频 " + watchTime + "秒");
         swipeVideo(i);
     }
     Log("本次观看时长" + watchTime + "秒");
@@ -310,7 +310,8 @@ function Log(obj) {
 
 // 需要调用时取消注释
 module.exports = {
+    type:"video",
     run: run,    //刷视频
-    signIn: signIn,//签到
-    popUpEvent: popUpEvent,//弹窗事件
+    signIn: signIn,  //签到
+    popUpEvent: popUpEvent,  //弹窗
 }
