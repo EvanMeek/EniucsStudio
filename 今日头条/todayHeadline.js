@@ -1,12 +1,22 @@
 let uiBaseClick = require("../Libary/uiBase/CLICK.js");
 let uiBaseSwipe = require("../Libary/uiBase/SWIPE.js");
 function test() {
-    // let watchVideoGetMoney = textContains("看完视频");
-    // log("hello");
-    // clickCenter(watchVideoGetMoney, 0, 2);
     openTreasureChest();
 }
 
+/**
+ * 总流程
+ * 1. 签到
+ * 2. 阅读首页任意10篇文章
+ */
+function 总流程() {
+    // 实时监测推送弹窗
+    monitorLivePush();
+    taskSignIn();
+    for (let i = 0; i < 10; i++) {
+        readArticle();
+    }
+}
 /**
  * 监测是否有即时推送弹窗
  */
@@ -18,7 +28,7 @@ function monitorLivePush() {
                 let livePushWindow = livePushWindow.parent();
                 uiBaseClick.clickCenterBySelector(text("忽略").depth(4).drawingOrder(5).className("android.widget.TextView").clickable(true), 2000);
             }
-            log("未监测到即时推送");
+            log("今日头条---未监测到即时推送");
             // 一分钟监测一次
             sleep(60000);
         }
@@ -66,8 +76,12 @@ function taskPapge() {
     sleep(4000);
 }
 
+/**
+ * 阅读文章
+ */
 function readArticle() {
     sleep(1000);
+    // 去往任务
     taskPapge();
     sleep(1000);
     swipe(520, 1920, 528, 320, 100);
@@ -157,5 +171,5 @@ function taskSignIn() {
 }
 
 
-test();
-// todayHeadlinesearch();
+// test();
+

@@ -2,7 +2,17 @@ let uiBaseClick = require("../Libary/uiBase/CLICK.js");
 let uiBaseSwipe = require("../Libary/uiBase/SWIPE.js");
 function test() {
     popupWindow();
-    for (let i = 0; i < 30; i++) {
+
+}
+
+/**
+ * 总流程
+ */
+function 总流程(){
+    // 实时监测弹窗
+    popupWindow();
+    // 阅读文章，跑20轮
+    for (let i = 0; i < 20; i++) {
         readArticle();
     }
 }
@@ -109,8 +119,9 @@ function popupWindow(){
             let img_close = id("img_close");
             uiBaseClick.clickCenterBySelector(img_close,0,1);
             let iv_card_discard = id("iv_card_discard");
-            uiBaseClick.clickCenterBySelector(iv_card_discard,0,1)z;
+            uiBaseClick.clickCenterBySelector(iv_card_discard,0,1);
         }
     });
 }
-test();
+// test();
+总流程();

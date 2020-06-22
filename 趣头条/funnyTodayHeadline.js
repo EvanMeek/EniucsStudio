@@ -5,10 +5,7 @@ let uiBaseSwipe = require("../Libary/uiBase/SWIPE.js");
  签到，刷文章
  */
 
-function test() {
-    总流程();
-}
-
+function test() {}
 /**
  * 总流程
  * 1. 签到
@@ -123,4 +120,6 @@ function swipePapge() {
     }
 }
 
-test();
+// test();
+
+总流程();

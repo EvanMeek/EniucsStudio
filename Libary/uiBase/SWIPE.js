@@ -1,7 +1,7 @@
 /**
  * 根据设备屏幕高度上下滑动
- * @param direction
- * @param delay
+ * @param direction 方向(0=下 1= 上)
+ * @param delay 每次滑动后的延迟
  */
 function swipeUpOrDownByDeviceHeight(direction, delay) {
     if (direction === 0) {
