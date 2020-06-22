@@ -262,20 +262,24 @@
                                                gravity="center"/>
                                         <text text="之间" textStyle="bold" textSize="16sp"/>
                                     </horizontal>
-                                    <!-- 今日头条 -->
+                                    <text text="新闻阅读类" textSize="18p" textStyle="bold"
+                                          layout_gravity="center_horizontal"
+                                          w="auto"/>
                                     <horizontal w="*">
                                         <Switch tag="Switch" id="swTodayHeadline"/>
-                                        <text text="百度视频" textColor="#000000" textStyle="bold"
+                                        <text text="今日头条" textColor="#000000" textStyle="bold"
                                               width="70"/>
-                                        <input tag="EditText" id="todayHeadlineTime" inputType="number" text="60"
+                                        <input tag="EditText" id="todayHeadlineCount" inputType="number" text="10"
                                                w="80" gravity="center"/>
-                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
+                                        <text text="篇" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
                                         <text text="换号区间: " textStyle="bold" textSize="16sp"/>
-                                        <input tag="EditText" inputType="number" id="todayHeadlineSwitchAccountBegin" w="80"
+                                        <input tag="EditText" inputType="number" id="todayHeadlineSwitchAccountBegin"
+                                               w="80"
                                                text="0"
                                                gravity="center"/>
                                         <text text="到" textStyle="bold" textSize="16sp"/>
-                                        <input tag="EditText" inputType="number" id="todayHeadlineSwitchAccountEnd" w="80"
+                                        <input tag="EditText" inputType="number" id="todayHeadlineSwitchAccountEnd"
+                                               w="80"
                                                text="0"
                                                gravity="center"/>
                                         <text text="之间" textStyle="bold" textSize="16sp"/>
@@ -283,17 +287,19 @@
                                     <!-- 趣头条 -->
                                     <horizontal w="*">
                                         <Switch tag="Switch" id="swFunnyHeadline"/>
-                                        <text text="百度视频" textColor="#000000" textStyle="bold"
+                                        <text text="趣头条" textColor="#000000" textStyle="bold"
                                               width="70"/>
-                                        <input tag="EditText" id="funnyHeadlineTime" inputType="number" text="60"
+                                        <input tag="EditText" id="funnyHeadlineCount" inputType="number" text="10"
                                                w="80" gravity="center"/>
-                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
+                                        <text text="篇" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
                                         <text text="换号区间: " textStyle="bold" textSize="16sp"/>
-                                        <input tag="EditText" inputType="number" id="funnyHeadlineSwitchAccountBegin" w="80"
+                                        <input tag="EditText" inputType="number" id="funnyHeadlineSwitchAccountBegin"
+                                               w="80"
                                                text="0"
                                                gravity="center"/>
                                         <text text="到" textStyle="bold" textSize="16sp"/>
-                                        <input tag="EditText" inputType="number" id="funnyHeadlineSwitchAccountEnd" w="80"
+                                        <input tag="EditText" inputType="number" id="funnyHeadlineSwitchAccountEnd"
+                                               w="80"
                                                text="0"
                                                gravity="center"/>
                                         <text text="之间" textStyle="bold" textSize="16sp"/>
@@ -301,13 +307,14 @@
                                     <!--  惠头条 -->
                                     <horizontal w="*">
                                         <Switch tag="Switch" id="swHuiHeadline"/>
-                                        <text text="百度视频" textColor="#000000" textStyle="bold"
+                                        <text text="惠头条" textColor="#000000" textStyle="bold"
                                               width="70"/>
-                                        <input tag="EditText" id="huiHeadlineTime" inputType="number" text="60"
+                                        <input tag="EditText" id="huiHeadlineCount" inputType="number" text="60"
                                                w="80" gravity="center"/>
-                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
+                                        <text text="篇" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
                                         <text text="换号区间: " textStyle="bold" textSize="16sp"/>
-                                        <input tag="EditText" inputType="number" id="huiHeadlineSwitchAccountBegin" w="80"
+                                        <input tag="EditText" inputType="number" id="huiHeadlineSwitchAccountBegin"
+                                               w="80"
                                                text="0"
                                                gravity="center"/>
                                         <text text="到" textStyle="bold" textSize="16sp"/>
@@ -316,26 +323,10 @@
                                                gravity="center"/>
                                         <text text="之间" textStyle="bold" textSize="16sp"/>
                                     </horizontal>
-                                    <!-- </list> -->
+                                    <!--                                    </list>-->
                                 </vertical>
                             </scroll>
                             <!-- 新闻阅读类 -->
-                            <vertical>
-                                <text text="新闻阅读类" textSize="18p" textStyle="bold" layout_gravity="center_horizontal"
-                                      w="auto"/>
-                                <list id="newsList">
-                                    <horizontal>
-                                        <Switch tag="Switch" id="{{appSwitchBtn}}"/>
-                                        <text text="{{appName}}" textColor="{{appNameColor}}" textStyle="bold"
-                                              width="70"/>
-                                        <text text=" 单次: "/>
-                                        <input tag="EditText" inputType="number" w="30"/>
-                                        <text text=" 上限: "/>
-                                        <input tag="EditText" inputType="number" w="30"/>
-                                        <button text="假装这个按钮有用" w="*" layout_gravity="right"/>
-                                    </horizontal>
-                                </list>
-                            </vertical>
                         </viewpager>
                     </card>
                     <button h="5" w="*"/>
@@ -346,12 +337,6 @@
                         <text id="precautions" textSize="30" layout_gravity="center_horizontal" gravity="left" h="*"/>
                     </vertical>
                 </scroll>
-                <!-- 功能 -->
-                <!-- <scroll>
-                    <vertical>
-                        <text text="pageThree"/>
-                    </vertical>
-                </scroll> -->
             </viewpager>
         </vertical>
         <!-- 应用脚 -->

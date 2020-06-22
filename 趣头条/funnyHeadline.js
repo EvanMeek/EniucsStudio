@@ -12,16 +12,12 @@ function test() {}
  * 2. 天天领现金
  * 3. 阅读文章("重复10次")
  */
-function 总流程() {
-    // 签到
-    signIn();
-    sleep(2000);
+function run(count) {
     // 天天领现金
     taskGetMoney();
     sleep(2000);
     // 阅读文章或视频
-    for (let i = 1; i <= 10; i++) {
-        log("趣头条---阅读文章或视频中...当前次数: " + i);
+    for (let i = 1; i <= count; i++) {
         readArticleOrWatchVideo();
     }
 }
@@ -121,5 +117,10 @@ function swipePapge() {
 }
 
 // test();
-
-总流程();
+function popupWindow(){}
+module.exports = {
+    type: "news",
+    run: run,
+    signIn: signIn,
+    popUpEvent: popupWindow
+}

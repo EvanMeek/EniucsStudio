@@ -1,38 +1,31 @@
 let uiBaseClick = require("../Libary/uiBase/CLICK.js");
 let uiBaseSwipe = require("../Libary/uiBase/SWIPE.js");
+
 function test() {
     openTreasureChest();
 }
 
 /**
  * 总流程
- * 1. 签到
- * 2. 阅读首页任意10篇文章
+ * @param {count} 篇数
  */
-function 总流程() {
-    // 实时监测推送弹窗
-    monitorLivePush();
-    taskSignIn();
-    for (let i = 0; i < 10; i++) {
+function run(count) {
+    for (let i = 0; i < count; i++) {
         readArticle();
     }
 }
+
 /**
  * 监测是否有即时推送弹窗
  */
 function monitorLivePush() {
-    let livePushThread = threads.start(function () {
-        while (true) {
-            let livePushWindow = text("即时推送").findOne(1000);
-            if (livePushWindow != undefined) {
-                let livePushWindow = livePushWindow.parent();
-                uiBaseClick.clickCenterBySelector(text("忽略").depth(4).drawingOrder(5).className("android.widget.TextView").clickable(true), 2000);
-            }
-            log("今日头条---未监测到即时推送");
-            // 一分钟监测一次
-            sleep(60000);
-        }
-    });
+    let livePushWindow = text("即时推送").findOne(1000);
+    if (livePushWindow != undefined) {
+        let livePushWindow = livePushWindow.parent();
+        uiBaseClick.clickCenterBySelector(text("忽略").depth(4).drawingOrder(5).className("android.widget.TextView").clickable(true), 2000);
+    }else{
+        log("今日头条---未监测到即时推送");
+    }
 }
 
 /**
@@ -69,7 +62,7 @@ function taskPapge() {
     let inviteCode = textContains("点击填写邀请码");
     if (inviteCode != undefined) {
         // 进入输入邀请码界面
-        uiBaseClick.clickCenterBySelector(inviteCode, 2000,2000);
+        uiBaseClick.clickCenterBySelector(inviteCode, 2000, 2000);
         // 然后返回;
         back();
     }
@@ -107,7 +100,7 @@ function readArticle() {
             } else {
                 log(art.bounds());
                 // 进入文章
-                uiBaseClick.clickCenterByNode(art,1000,1);
+                uiBaseClick.clickCenterByNode(art, 1000, 1);
                 // 开始阅读
                 swipePapge();
                 // 返回上个页面
@@ -150,7 +143,7 @@ function swipePapge() {
  * 3. 自动观看每日签到的广告视频
  * 4. 自动关闭广告视频
  */
-function taskSignIn() {
+function signIn() {
     // 进入任务页按钮
     taskPapge();
     // 是否已签到
@@ -173,3 +166,9 @@ function taskSignIn() {
 
 // test();
 
+module.exports = {
+    type: "news",
+    run: run,
+    signIn: signIn,
+    popUpEvent: monitorLivePush
+}
