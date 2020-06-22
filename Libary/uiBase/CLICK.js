@@ -7,9 +7,10 @@
  * @returns {boolean}
  */
 function clickCenterBySelector(selector, time, delay, ignoreLog) {
-    if (time === undefined || time === 0 || delay === undefined) {
+    if (time == undefined || time == 0) {
         time = 1000;
-        delay = 0.2;
+    }else if(delay == undefined || delay == 0){
+	delay = 0.2;
     }
     let node = selector.findOne(time);
     if (node) {
@@ -34,9 +35,10 @@ function clickCenterBySelector(selector, time, delay, ignoreLog) {
  * @returns {boolean}
  */
 function clickCenterByNode(node, time, delay, ignoreLog) {
-    if (time === undefined || time === 0 || delay === undefined) {
+    if (time == undefined || time == 0) {
         time = 1000;
-        delay = 0.2;
+    }else if(delay == undefined || delay == 0){
+	delay = 0.2;
     }
     if (node) {
         let rect = node.bounds();

@@ -2,7 +2,9 @@ let uiBaseClick = require("../Libary/uiBase/CLICK.js");
 let uiBaseSwipe = require("../Libary/uiBase/SWIPE.js");
 
 function test() {
-    popupWindow();
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(0,200);
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(0,200);
+    uiBaseSwipe.swipeUpOrDownByDeviceHeight(0,200);
 }
 
 /**
@@ -10,10 +12,13 @@ function test() {
  * @param {count} 篇数
  */
 function run(count) {
-    sleep(10*1000);
-    // 阅读文章，跑20轮
+    // 等待第一次打开时的广告
+    sleep(20*1000);
+    // 阅读文章
     for (let i = 0; i < count; i++) {
+	log("================第"+(i+1)+"次运行================");
         readArticle();
+	log("========================================");
     }
 }
 
@@ -23,22 +28,22 @@ function run(count) {
 function readArticle() {
     // 去往首页,如果仍然在首页，是会刷新的。
     mainPage();
-    sleep(1000);
+    sleep(2000);
     // 跳转至首页的头条
     headLineTab();
     sleep(1000);
     // 刷新页面;
     mainPage();
-    sleep(1000);
+    sleep(2000);
     uiBaseSwipe.swipeUpOrDownByDeviceHeight(0, 1500);
     uiBaseSwipe.swipeUpOrDownByDeviceHeight(0, 1500);
-    sleep(1000);
+    sleep(2000);
     // 找id为tv_news_timeline的可点击父级容器
     let art = id("tv_news_timeline").findOne(2000);
     if (art != undefined) {
         log("惠头条---寻找文章成功。");
         art = art.parent().parent().parent().parent().parent().parent().parent();
-        if (uiBaseClick.clickCenterByNode(art, 0, 1, true)) {
+        if (uiBaseClick.clickCenterByNode(art, 0, 2, true)) {
             log("惠头条---进入文章成功。");
             swipeArticle();
             back();
@@ -74,7 +79,7 @@ function headLineTab() {
     if (tabNews !== undefined) {
         tabNews = tabNews.child(0);
         let headLine = tabNews.child(0);
-        if (uiBaseClick.clickCenterByNode(headLine, 0, 1, true)) {
+        if (uiBaseClick.clickCenterByNode(headLine, 0, 2, true)) {
             log("惠头条---跳转首页头条成功!");
         } else {
             log("惠头条---跳转首页头条失效，请联系上游修复。");
@@ -90,7 +95,7 @@ function headLineTab() {
 function mainPage() {
     let tabs = id("tabs").findOne(2000).child(0);
     let mainPage = tabs.child(0);
-    if (uiBaseClick.clickCenterByNode(mainPage)) {
+    if (uiBaseClick.clickCenterByNode(mainPage,0,2)) {
         log("惠头条---跳转首页成功!");
     } else {
         log("惠头条---跳转首页失效，请联系上游修复。");
@@ -100,7 +105,7 @@ function mainPage() {
 function taskPage() {
     let tabs = id("tabs").findOne(2000).child(0);
     let taskPage = tabs.child(3);
-    if (uiBaseClick.clickCenterByNode(taskPage)) {
+    if (uiBaseClick.clickCenterByNode(taskPage,0,2)) {
         log("惠头条---跳转任务页成功!");
     } else {
         log("惠头条---跳转任务页失效，请联系上游修复。");
@@ -122,6 +127,7 @@ function popupWindow() {
     uiBaseClick.clickCenterBySelector(iv_card_discard, 0, 1);
 }
 function signIn(){}
+
 module.exports = {
     type: "news",
     run: run,

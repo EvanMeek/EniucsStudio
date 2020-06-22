@@ -267,7 +267,7 @@ function makeMoneyAppTemplete(path, appNameStr, uiObjArr) {
         if (ui.swSignIn.isChecked()) {
             makeMoneyApp.signIn();
         }
-        if(makeMoneyApp.type == "nes"){
+        if(makeMoneyApp.type == "news"){
             // param {}
             makeMoneyApp.run(uiObjArr[2].text());
         }else{
