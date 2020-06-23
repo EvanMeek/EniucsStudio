@@ -1,3 +1,5 @@
+var debugBool = true;
+
 /**
  * 整个视频流程(核心) 
  * @param {总时间} totalTime 刷视频的时长,单位分钟
@@ -26,7 +28,7 @@ function run(totalTime, boolLikeAndFollow) {
 /**
  * 进入刷视频界面
  */
-function brushVideoArea(){
+function brushVideoArea() {
     // menuArea(xxx,xxx);
 
 }
@@ -270,7 +272,8 @@ function Log(obj) {
 
 // 需要调用时取消注释
 // module.exports = {
+    // type:"video",
 //     run: run,    //刷视频
-// signIn:signIn,//签到
-// popUpEvent:popUpEvent,//弹窗事件
+//     signIn: signIn,//签到
+//     popUpEvent: popUpEvent,//弹窗事件
 // }

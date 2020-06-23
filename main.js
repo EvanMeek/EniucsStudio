@@ -34,6 +34,7 @@ var shuaBao;
 var houShan;
 var houHou;
 var baiDuJiSu;
+var douYin;
 // 惠头条
 var huiHeadline;
 // 趣头条
@@ -66,6 +67,7 @@ setTimeout(() => {
         houShan = [ui.houShanSwitchAccountBegin, ui.houShanSwitchAccountEnd, ui.houShanTime, ui.swHouShan];
         houHou = [ui.houHouSwitchAccountBegin, ui.houHouSwitchAccountEnd, ui.houHouTime, ui.swHouHou];
         baiDuJiSu = [ui.baiDuSwitchAccountBegin, ui.baiDuSwitchAccountEnd, ui.baiDuTime, ui.swBaiDu];
+        douYin = [ui.douYinSwitchAccountBegin, ui.douYinSwitchAccountEnd, ui.douYinTime, ui.swDouYin];
         // EvanMeek 新闻阅读类
         huiHeadline = [ui.huiHeadlineSwitchAccountBegin, ui.huiHeadlineSwitchAccountEnd, ui.huiHeadlineCount, ui.swHuiHeadline];
         todayHeadline = [ui.todayHeadlineSwitchAccountBegin, ui.todayHeadlineSwitchAccountEnd, ui.todayHeadlineCount, ui.swTodayHeadline];
@@ -76,6 +78,7 @@ setTimeout(() => {
             kuaiShou[0], kuaiShou[1], weiShi[0], weiShi[1],
             shuaBao[0], shuaBao[1], houShan[0], houShan[1],
             houHou[0], houHou[1], baiDuJiSu[0], baiDuJiSu[1],
+            douYin[0], douYin[1],
             // EvanMeek 新闻阅读类
             huiHeadline[0], huiHeadline[1],
             todayHeadline[0], todayHeadline[1],
@@ -83,7 +86,7 @@ setTimeout(() => {
         ];
         // 运行时长
         let uiTime = [
-            kuaiShou[2], weiShi[2], shuaBao[2], houShan[2], houHou[2], baiDuJiSu[2]
+            kuaiShou[2], weiShi[2], shuaBao[2], houShan[2], houHou[2], baiDuJiSu[2], douYin[2]
         ]
         // 阅读篇数
         let uiCount = [
@@ -103,31 +106,35 @@ setTimeout(() => {
             ui.remainDayText.setText(dataUtils.secondsFormat(pjy.GetTimeRemaining()));
         }
         let downloadThread = threads.start(function () {
-            let appDownloadUrl = [
+            let videoDownloadUrl = [
                 "https://178me.lanzous.com/i3i0edagc8j",//快手
                 "https://178me.lanzous.com/iRyTddagcta",//微视
                 "https://178me.lanzous.com/iaxHRdlcs9i",//刷宝
                 "https://178me.lanzous.com/iSxWzdykucj",//火山
                 "https://178me.lanzous.com/iuNWGdyks6b",//火火
                 "https://178me.lanzous.com/iHIXQdykf5c",//百度极速版
+                "https://178me.lanzous.com/iGnfAdypt4f",//抖音
+            ]
+
+            let newsDownloadUrl = [
                 //新闻
                 "https://178me.lanzous.com/iWMvhdykvng",//今日头条
                 "https://178me.lanzous.com/iJV5Udykyef",//趣头条
                 "https://178me.lanzous.com/i06bVdykpda",//惠头条
             ]
-
             //勾选快手选项时,检查应用是否安装
             //视频类
-            switchEvent(kuaiShou[3], appDownloadUrl[0], "com.kuaishou.nebula");
-            switchEvent(weiShi[3], appDownloadUrl[1], "com.tencent.weishi");
-            switchEvent(shuaBao[3], appDownloadUrl[2], "com.jm.video");
-            switchEvent(houShan[3], appDownloadUrl[3], "com.ss.android.ugc.livelite");
-            switchEvent(houHou[3], appDownloadUrl[4], "com.jt.hanhan.video");
-            switchEvent(baiDuJiSu[3], appDownloadUrl[5], "com.baidu.searchbox.lite");
+            switchEvent(kuaiShou[3], videoDownloadUrl[0], "com.kuaishou.nebula");
+            switchEvent(weiShi[3], videoDownloadUrl[1], "com.tencent.weishi");
+            switchEvent(shuaBao[3], videoDownloadUrl[2], "com.jm.video");
+            switchEvent(houShan[3], videoDownloadUrl[3], "com.ss.android.ugc.livelite");
+            switchEvent(houHou[3], videoDownloadUrl[4], "com.jt.hanhan.video");
+            switchEvent(baiDuJiSu[3], videoDownloadUrl[5], "com.baidu.searchbox.lite");
+            switchEvent(douYin[3], videoDownloadUrl[6], "com.ss.android.ugc.aweme.lite");
             //新闻类
-            switchEvent(huiHeadline[3], appDownloadUrl[6], "com.ss.android.article.lite");
-            switchEvent(funnyHeadline[3], appDownloadUrl[7], "com.jifen.qukan");
-            switchEvent(huiHeadline[3], appDownloadUrl[8], "com.cashtoutiao");
+            switchEvent(huiHeadline[3], newsDownloadUrl[0], "com.ss.android.article.lite");
+            switchEvent(funnyHeadline[3], newsDownloadUrl[1], "com.jifen.qukan");
+            switchEvent(huiHeadline[3], newsDownloadUrl[2], "com.cashtoutiao");
         });
     }, 500);
 
@@ -186,6 +193,7 @@ function main() {
         "火山极速版",
         "火火视频极速版",
         "百度极速版",
+        "抖音极速版",
         // EvanMeek 新闻阅读类
         "今日头条",
         "趣头条",
@@ -198,6 +206,7 @@ function main() {
         "./火山/houShan.js",
         "./火火/houHou.js",
         "./百度/baiDuJiSu.js",
+        "./抖音/douYin.js",
         // EvanMeek 新闻阅读类
         "./今日头条/todayHeadline.js",
         "./趣头条/funnyHeadline.js",
@@ -206,7 +215,7 @@ function main() {
     //
     let appUIArr = [
         // 178me 视频播放类
-        kuaiShou, weiShi, shuaBao, houShan, houHou, baiDuJiSu,
+        kuaiShou, weiShi, shuaBao, houShan, houHou, baiDuJiSu, douYin,
         // EvanMeek 新闻阅读类
         todayHeadline, funnyHeadline, huiHeadline
     ];
@@ -384,10 +393,11 @@ function saveConfig() {
             'kuaiShouSwitchAccountBegin', 'kuaiShouswitchAccountEnd', 'weiShiSwitchAccountBegin', 'weiShiSwitchAccountEnd'
             , 'shuaBaoSwitchAccountBegin', 'shuaBaoSwitchAccountEnd', 'houShanSwitchAccountBegin', 'houShanSwitchAccountEnd'
             , 'houHouSwitchAccountBegin', 'houHouSwitchAccountEnd', 'baiDuSwitchAccountBegin', 'baiDuSwitchAccountEnd'
+            , 'douYinSwitchAccountBegin', 'douYinSwitchAccountEnd'
             // EvanMeek 换号区间
             , 'todayHeadlineSwitchAccountBegin', 'todayHeadlineSwitchAccountEnd', 'huiHeadlineSwitchAccountBegin', 'huiHeadlineSwitchAccountEnd', 'funnyHeadlineSwitchAccountBegin', 'funnyHeadlineSwitchAccountEnd'
             // 178me 运行时长
-            , 'kuaiShouTime', 'weiShiTime', 'shuaBaoTime', 'houShanTime', 'houHouTime', 'baiDuTime'
+            , 'kuaiShouTime', 'weiShiTime', 'shuaBaoTime', 'houShanTime', 'houHouTime', 'baiDuTime', 'douYinTime'
             // EvanMeek 阅读篇数
             , 'todayHeadlineCount', 'huiHeadlineCount', 'funnyHeadlineCount'
             // 激活码
@@ -396,7 +406,7 @@ function saveConfig() {
         [
             // 178me 软件开关
             'swFloatWindow', 'swFloatWindow', 'swFlyModeBtn', 'swCleanApp', 'swSignIn', 'swTaskCycle'
-            , 'swKuaiShou', 'swWeiShi', 'swShuaBao', 'swHouShan', 'swHouHou', 'swBaiDu'
+            , 'swKuaiShou', 'swWeiShi', 'swShuaBao', 'swHouShan', 'swHouHou', 'swBaiDu', 'swDouYin'
             // EvanMeek 软件开关
             , 'swTodayHeadline', 'swHuiHeadline', 'swFunnyHeadline'
         ],
