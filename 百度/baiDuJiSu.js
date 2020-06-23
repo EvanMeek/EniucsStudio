@@ -50,7 +50,7 @@ function brushVideoArea() {
  */
 function signIn() {
     if (menuArea(text("我的").depth(8), 30000)) {
-        clickCenter(text("去签到"));
+        clickCenter(text("去签到"),3000);
     }
 }
 
