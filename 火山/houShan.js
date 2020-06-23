@@ -3,8 +3,9 @@ var debugBool = true;
 // test();
 
 function test() {
-    // signIn();
-    run(2);
+
+    signIn();
+    // run(2);
 
 }
 
@@ -72,7 +73,7 @@ function misoperationDetection() {
 function signIn() {
     //重写
     if (menuArea(text("我的"), 15000)) {
-        clickCenter(text("红包"));
+        clickCenter(text("红包"),3000);
     }
 }
 
@@ -83,6 +84,9 @@ function popUpEvent() {
     if (textContains("没有响应").findOnce()) {
         sleep(1000);
         click("等待");
+    }
+    else if(1){
+
     }
 }
 

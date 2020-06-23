@@ -4,7 +4,7 @@ var debugBool = true;
 function test() {
 
     signIn();
-    run(1);
+    // run(1);
 
 }
 

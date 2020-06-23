@@ -2,6 +2,7 @@ var debugBool = true;
 // test();
 
 function test() {
+    // popUpEvent()
     // run(10);
 
 }
@@ -46,12 +47,13 @@ function brushVideoArea() {
 function signIn() {
     let is;
     if (menuArea(id("iv_tab_icon").depth(11))) {
-        clickCenter(text("任务").depth(11), 3000);
+        clickCenter(text("任务").depth(11), 5000);
 
-        is = clickCenter(text("立即签到").depth(16), 3000);
+        is = clickCenter(text("立即签到").depth(16), 5000);
         if (!is) {
             return;
         }
+        sleep(1000);
         clickCenter(text("立即签到").depth(16), 3000);
         sleep(1500);
         is = clickCenter(text("看视频签到").depth(20), 3000);
