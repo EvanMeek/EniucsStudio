@@ -129,7 +129,8 @@ function cleanCache() {
     Log("开始清理缓存");
 
     //滑出侧边栏
-    swipe(0, 500, random(400, 600), random(400, 500), 200);
+    // swipe(0, 500, random(400, 600), random(400, 500), 200);
+    clickCenter(id("left_btn").depth(7),3000);
     //判断侧边栏是否打开
     let set_Btn = text("设置").findOne(3000);
     if (set_Btn) {
@@ -268,7 +269,8 @@ function signIn() {
     Log("开始签到");
     //判断侧边栏是否打开
     //滑出侧边栏
-    swipe(0, 500, random(400, 600), random(400, 500), 200);
+    // swipe(0, 500, random(400, 600), random(400, 500), 200);
+    clickCenter(id("left_btn").depth(7),3000);
     let moneyBtn = text("去赚钱").findOne(3000);
     if (moneyBtn) {
         sleep(500);

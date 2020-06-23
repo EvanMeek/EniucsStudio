@@ -1,15 +1,14 @@
+
 var debugBool = true;
-test(); 
 
-//弹窗
-// else if(text("知道了").findOnce()){
-//     clickCenter(text("知道了"),3000);
-// }
-
+// test();
 function test() {
+    // brushVideoArea();
+    // Log(text("开宝箱得金币").findOne(3000).depth());
     // signIn();
-    run(12);
+    run(10);
 }
+
 
 /**
  * 整个视频流程(核心) 
@@ -49,44 +48,34 @@ function reduceSimilarWorks() {
     x = random((x - 150), (x + 150));
     press(x, y, 2000);
     sleep(1000);
-    clickCenter(id("kkl").depth(14), 1500);
+    clickCenter(depth(9).text("不感兴趣"), 1500);
 }
-
 
 /**
  * 进入刷视频界面
  */
 function brushVideoArea() {
-    if (menuArea(id("pkd").depth(10))) {
-        clickCenter(id("pkb").depth(10), 3000);
+    if(menuArea(depth(12).text("首页"), 15000)){
+        if(text("开宝箱得金币").depth(13).findOne(3000)){
+            back();
+        }
     }
-
+    sleep(1500);
+    back();
 }
 
 /**
  * 签到
  */
 function signIn() {
-    // let is;
-    // if (menuArea(id("pkd").depth(10))) {
-    //     is = clickCenter(id("pkd").depth(10),3000);
-    //     if(!is){
-    //         return;
-    //     }
-    //     let temp = text("编辑资料").depth(14).findOne(3000);
-    //     if(temp){
-    //         temp = temp.parent();
-    //         if (temp.childCount() > 2) {
-    //             temp = temp.child(1).bounds();
-    //             click(temp.centerX(), temp.centerY());
-    //         }
-    //     }
-    //     clickCenter(text("签到领红包").depth(15),5000);
-    //     clickCenter(text("我知道了"),5000);
-    //     back();
-    //     sleep(1000);
-    //     back();
-    // }
+    //重写
+    if (menuArea(depth(12).text("首页"), 30000)) {
+        // Log("签到");
+        clickCenter(depth(8).id("com.ss.android.ugc.aweme.lite:id/ay8"), 3000);
+        if(text("开宝箱得金币").findOne(3000)){
+            // back();
+        }
+    }
 }
 
 /**
@@ -96,9 +85,6 @@ function popUpEvent() {
     if (textContains("没有响应").findOnce()) {
         sleep(1000);
         click("等待");
-    }
-    else if (text("知道了").findOnce()) {
-        clickCenter(text("知道了"));
     }
 }
 
@@ -331,6 +317,6 @@ function Log(obj) {
 module.exports = {
     type:"video",
     run: run,    //刷视频
-    signIn: signIn,  //签到
-    popUpEvent: popUpEvent,  //弹窗
+    signIn: signIn,//签到
+    popUpEvent: popUpEvent,//弹窗事件
 }

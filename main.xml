@@ -245,23 +245,22 @@
                                                gravity="center"/>
                                         <text text="之间" textStyle="bold" textSize="16sp"/>
                                     </horizontal>
-                                    <!-- 抖音视频 -->
-                                    <horizontal w="*">
-                                        <Switch/>
-                                        <text text="抖音视频" textColor="#CDC5BF" textStyle="bold"
-                                              width="70"/>
-                                        <input inputType="number" text="60"
-                                               w="80" gravity="center"/>
-                                        <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
-
-                                        <text text="换号区间: " textStyle="bold" textSize="16sp"/>
-                                        <input tag="EditText" inputType="number" w="80" text="0"
-                                               gravity="center"/>
-                                        <text text="到" textStyle="bold" textSize="16sp"/>
-                                        <input tag="EditText" inputType="number" w="80" text="0"
-                                               gravity="center"/>
-                                        <text text="之间" textStyle="bold" textSize="16sp"/>
-                                    </horizontal>
+                                     <!-- 抖音视频 -->
+                                            <horizontal w="*">
+                                                <Switch tag="Switch" id="swDouYin"/>
+                                                <text text="抖音视频" textColor="#000000" textStyle="bold"
+                                                    width="70"/>
+                                                <input tag="EditText" id="douYinTime" inputType="number" text="60"
+                                                    w="80" gravity="center"/>
+                                                <text text="分钟" textSize="16sp" w="auto" laygravity_center="right" w="60"/>
+                                               <text text="换号区间: " textStyle="bold" textSize="16sp"/>
+                                                <input tag="EditText" inputType="number" id="douYinSwitchAccountBegin" w="80" text="0"
+                                                    gravity="center"/>
+                                                <text text="到" textStyle="bold" textSize="16sp"/>
+                                                <input tag="EditText" inputType="number" id="douYinSwitchAccountEnd" w="80" text="0"
+                                                    gravity="center"/>
+                                                <text text="之间" textStyle="bold" textSize="16sp"/>
+                                            </horizontal>
                                     <text text="新闻阅读类" textSize="18p" textStyle="bold"
                                           layout_gravity="center_horizontal"
                                           w="auto"/>

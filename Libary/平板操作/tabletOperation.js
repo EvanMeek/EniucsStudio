@@ -43,7 +43,7 @@ function openApp(appName) {
  */
 function killApp(appName) {
     appName = app.getPackageName(appName);
-    shell('am force-stop ' + appName, true);
+    shell('am force-stop ' + appName);
     Log("退出app");
 };
 
@@ -64,7 +64,7 @@ function clearApp(runAppRetain) {
     home();
     //打开最近任务
     recents();
-    sleep(1500);
+    className("ScrollView").findOne(3000);
     //循环滑动任务 (最多15次)
     for (var time = 0;time < 15;time++){
 	
