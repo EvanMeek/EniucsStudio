@@ -3,8 +3,8 @@ var debugBool = true;
 // test();
 
 function test() {
-    
-    
+
+
 }
 
 /**
@@ -13,22 +13,27 @@ function test() {
  */
 function openApp(appName) {
     let openAppTimeout = 0;//超时时间
+    let curPackageName;
     //回到主页
     home();
     sleep(100);
     home();
-    
+
     //应用名转换包名
     appName = app.getPackageName(appName);
     //打开应用
     app.launch(appName);
     //判断应用是否打开成功
     while (true) {
-	
-        if (currentPackage() == appName) {
-            Log("打开app成功");
-            return appName;
-        } else if (openAppTimeout >= 30) {
+        curPackageName = depth(5).findOnce();
+        if (curPackageName) {
+            curPackageName = curPackageName.packageName();
+            if (curPackageName == appName) {
+                Log("打开app成功");
+                return appName;
+            }
+        }
+        else if (openAppTimeout >= 60) {
             Log("打开app失败，超时了!!!");
             return false;
         }
@@ -55,7 +60,7 @@ function killApp(appName) {
 function clearApp(runAppRetain) {
     let isDelete;//是否清除
     let x, y1, y2;//滑动坐标
-    
+
     let runAppList;//运行app列表
     let currentText;//当前app文本
     let searchDelete;//清除按钮
@@ -64,27 +69,25 @@ function clearApp(runAppRetain) {
     home();
     //打开最近任务
     recents();
-    className("ScrollView").findOne(3000);
+    searchDelete = descContains("移除").findOne(10000);
     //循环滑动任务 (最多15次)
-    for (var time = 0;time < 15;time++){
-	
-        runAppList = className("ScrollView").findOne(3000);
+    for (var time = 0; time < 15; time++) {
+        runAppList = className("ScrollView").packageName("com.android.systemui").findOne(3000);
         if (runAppList != null) {
             runAppList = runAppList.children();
         } else {
             home();
-	    
             break;
         }
         // Log(run_app_list);
         //遍历所有任务
         for (let i = runAppList.length - 1; i >= 0; i--) {
             //遍历需要保留的任务
-	    
+
             for (let j = 0; j <= runAppRetain.length; j++) {
                 //当前任务和保存任务比较 true 跳过
                 currentText = runAppList[i].findOne(className("TextView"));
-                if(currentText){
+                if (currentText) {
                     currentText = currentText.text();
                 }
                 if (currentText == runAppRetain[j]) {
@@ -99,10 +102,10 @@ function clearApp(runAppRetain) {
                 // Log("清除任务");
                 searchDelete = runAppList[i].findOne(descContains("移除"));
                 // Log(search_delete);
-                if (searchDelete){
+                if (searchDelete) {
                     sleep(500);
                     searchDelete.click();
-                }else{
+                } else {
                     break;
                 }
                 sleep(300);
@@ -116,28 +119,27 @@ function clearApp(runAppRetain) {
             }
         }
         sleep(100);
-	
         if (runAppList.length <= runAppRetain.length) {
             break;
         }
-	
-    } 
+
+    }
     //结束
     home();
 }
 
-function clearAppPro(){
+function clearAppPro() {
     // 回到主页
     home();
     //打开最近任务
     recents();
     sleep(1500);
-    for(var i = 0;i < 4;i++){
-        swipe(400,50,400,1100,300);
+    for (var i = 0; i < 4; i++) {
+        swipe(400, 50, 400, 1100, 300);
     }
-    if (text("全部清除").findOne(3000)){
-        click(700,75);
-    }else{
+    if (text("全部清除").findOne(3000)) {
+        click(700, 75);
+    } else {
         home();
     }
 }
@@ -146,7 +148,7 @@ function clearAppPro(){
  * 打开飞行模式
  */
 function openFlightMode() {
-    
+
     // 打开飞行模式
     new Shell().exec("su -c 'settings put global airplane_mode_on 1; am broadcast -a android.intent.action.AIRPLANE_MODE --ez state true'")
 }
@@ -171,7 +173,7 @@ function openSplitScreen(appName1, appName2) {
     splitScreen();
     sleep(2000);
     // 打开app2
-    
+
     home();
     sleep(500);
     //应用名转换包名
@@ -212,10 +214,11 @@ function Log(obj) {
  */
 function isNetwork() {
     importClass(android.net.ConnectivityManager);
-    var cm = context.getSystemService(context.CONNECTIVITY_SERVICE);
-    var net = cm.getActiveNetworkInfo();
-    log(net);
-    for (var i = 0;i < 10;i++){
+    var cm, net;
+    for (var i = 0; i < 10; i++) {
+        cm = context.getSystemService(context.CONNECTIVITY_SERVICE);
+        net = cm.getActiveNetworkInfo();
+        // log(net);
         if (net == null || !net.isAvailable()) {
             Log("网络连接不可用!");
         } else {
@@ -230,9 +233,9 @@ function isNetwork() {
 /**
  * 关机
  */
-function powerOff(){
+function powerOff() {
     powerDialog();
-    if (text("关机").findOne(3000)){
+    if (text("关机").findOne(3000)) {
         click("关机");
     }
 }
@@ -247,7 +250,7 @@ module.exports = {
     openSplitScreen: openSplitScreen,    //打开分屏
     closeSplitScreen: closeSplitScreen,  //关闭分屏  
     Log: Log,                            //加强日志
-    isNetwork:isNetwork,                 //判断网络是否可用
-    powerOff:powerOff,                   //关机
+    isNetwork: isNetwork,                 //判断网络是否可用
+    powerOff: powerOff,                   //关机
     // clearAppPro:clearAppPro
 }

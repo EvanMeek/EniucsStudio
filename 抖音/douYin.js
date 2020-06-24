@@ -159,7 +159,7 @@ function likeAndFollow(range, bool) {
         Log("双击喜欢");
         let isFollow = random(-1 * range, range);
         if (isFollow == 0) {
-            click("关注");
+            // click("关注");
             Log("点了关注");
         } else {
             // Log("不是点关注的概率:"+isFollow)
