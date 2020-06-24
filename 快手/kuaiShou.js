@@ -16,13 +16,13 @@ let overSliderCount = 0;
 
 
 function test() {
-    // swipeVideo();
-    // run(120, _user, _pass);
-    // reduceSimilarWorks();
-    // overSlider(_user,_pass);
-    signIn();
-    cleanCache();
-    run(12);
+    let tt = depth(5).findOne(30000)
+    if(tt){
+        Log("当前应用包名为"+tt.packageName());
+    }
+    // signIn();
+    // cleanCache();
+    // run(12);
 
 }
 
@@ -44,7 +44,7 @@ function run(totalTime, boolLikeAndFollow) {
     const perVideoWatchTime = 5;//每隔视频观看10秒
     totalTime = totalTime * 60; //把分钟转换为秒数
     totalTime += random(-60, 180);
-    log("计划时长：" + totalTime)
+    Log("计划时长：" + totalTime)
     let watchTime = 0;
     //清理缓存
     cleanCache();
@@ -53,13 +53,13 @@ function run(totalTime, boolLikeAndFollow) {
         overSlider(_user, _pass);
         blackScreenBrushVideo(i);
         let waitTime = perVideoWatchTime + random(-2, 4)
-        // log("本视频观看时长" + waitTime);
+        // Log("本视频观看时长" + waitTime);
         sleep(waitTime / 2 * 1000);
         likeAndFollow(20, boolLikeAndFollow);
         skipAtlas();
         sleep(waitTime / 2 * 1000);
         watchTime += waitTime;
-        // log("已看：" + i + "个视频 " + watchTime + "秒");
+        // Log("已看：" + i + "个视频 " + watchTime + "秒");
     }
     // overSliderThred.interrupt();
     Log("本次观看时长" + watchTime + "秒");
@@ -101,7 +101,7 @@ function blackScreenBrushVideo(i) {
         sleep(1000);
         node.scrollForward();
     } else {
-        log("滑动");
+        Log("滑动");
         swipeVideo(1);
     }
 }
@@ -130,7 +130,7 @@ function cleanCache() {
 
     //滑出侧边栏
     // swipe(0, 500, random(400, 600), random(400, 500), 200);
-    clickCenter(id("left_btn").depth(7),3000);
+    clickCenter(id("left_btn"),3000);
     //判断侧边栏是否打开
     let set_Btn = text("设置").findOne(3000);
     if (set_Btn) {
@@ -236,7 +236,7 @@ function overSlider(usr, pass) {
                 Log(x);
 
                 //滑动滑块
-                swipe(startX, (startY + random(0, 10)), x - 5, (startY + random(0, 10)), 1000);
+                swipe(startX, (startY + random(0, 10)), x - 5, (startY + random(0, 10)), random(1000,1500));
 
                 //回收图片
                 sleep(2000);
@@ -270,7 +270,7 @@ function signIn() {
     //判断侧边栏是否打开
     //滑出侧边栏
     // swipe(0, 500, random(400, 600), random(400, 500), 200);
-    clickCenter(id("left_btn").depth(7),3000);
+    clickCenter(id("left_btn"),3000);
     let moneyBtn = text("去赚钱").findOne(3000);
     if (moneyBtn) {
         sleep(500);
@@ -437,7 +437,7 @@ function likeAndFollow(range, bool) {
         click(width, height);
         sleep(50);
         click(width, height);
-        log("双击喜欢");
+        Log("双击喜欢");
         let isFollow = random(-1 * range, range);
         if (isFollow == 0) {
             swipeVideo(1);
@@ -446,9 +446,9 @@ function likeAndFollow(range, bool) {
             if (follow) {
                 click("关注");
             }
-            log("点了关注");
+            Log("点了关注");
         } else {
-            // log("不是点关注的概率:"+isFollow)
+            // Log("不是点关注的概率:"+isFollow)
         }
         blackScreenBrushVideo(1);
     }
@@ -461,7 +461,7 @@ function likeAndFollow(range, bool) {
         blackScreenBrushVideo(1);
     }
     else {
-        // log("不是点喜欢的概率:"+isLike)
+        // Log("不是点喜欢的概率:"+isLike)
     }
 
 
@@ -679,7 +679,6 @@ module.exports = {
     type:"video",
     run: run,    //快手刷视频
     signIn: signIn,  //快手签到
-    // cleanCache: cleanCache,  //快手清理缓存
     popUpEvent: popUpEvent,  //快手弹窗
 }
 

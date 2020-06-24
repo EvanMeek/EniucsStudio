@@ -1,5 +1,5 @@
 var debugBool = true;
-test(); 
+// test(); 
 
 //弹窗
 // else if(text("知道了").findOnce()){
