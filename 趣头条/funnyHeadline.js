@@ -146,6 +146,8 @@ function popupWindow() {
 	// 初始化界面的广告
 	let initPage = textContains("跳过广告");
 	uiBaseClick.clickCenterBySelector(initPage, 5000, 2);
+	let rewardMoney = id("a3u").depth(4);
+	uiBaseClick.clickCenterBySelector(rewardMoney,0,1);
 }
 
 module.exports = {
