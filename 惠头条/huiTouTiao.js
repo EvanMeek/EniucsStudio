@@ -5,8 +5,9 @@ var debugBool = true;
 test();
 
 function test() {
-    // run(5);
-    if (id("iv_banner_comment").depth(12).findOnce()) { click("文章"); }else{Log(id("iv_banner_comment").depth(12).findOnce())}
+    // signIn();
+
+    run(5);
 }
 
 function run(count) {
@@ -14,18 +15,18 @@ function run(count) {
     //确定在头条页面
     readArticleOrWatchVideo();
     while (newCount < count) {
-        Log(id("xw").depth(15).findOne(5000));
-        let newList = id("xw").depth(15).find();  //获取所有文章的时间标注
+        Log(id("tv_news_timeline").depth(21).findOne(5000));
+        let newList = id("tv_news_timeline").depth(21).find();  //获取所有文章的时间标注
         Log(newList.length);
         if (newList.length > 0) {
-            clickCenterByNode(newList[random(0, newList.length - 1)]);
+            clickCenterByNode(newList[random(0, (newList.length - 1))]);
             log("================第" + (newCount + 1) + "次阅读================");
             read() ? newCount++ : Log("没有找到文章");
             log("=========================================");
             do {
                 back();
                 Log("退出文章");
-            } while (!id("xw").depth(15).findOne(5000));
+            } while (!depth(10).text("我的").findOne(5000));
         }
         Log("翻页");
         swipeVideo(1, 1000, 1500);
@@ -35,25 +36,29 @@ function run(count) {
 }
 
 function readArticleOrWatchVideo() {
-    if (!menuArea(depth(7).text("我的"))) { return; }
+    if (!menuArea(depth(10).text("我的"))) { return; }
 
-    clickCenter(depth(7).text("我的"), 5000);
+    clickCenter(depth(10).text("我的"), 5000);
+    if (id("img_close").depth(5).findOne(1500)) { back(); }
+
+    clickCenter(depth(10).text("头条"), 3000);
+
+    clickCenter(depth(10).text("刷新"), 3000);
     sleep(1500);
-
-    clickCenter(depth(7).text("头条"), 3000);
-
-    clickCenter(depth(7).text("刷新"), 3000);
 }
 
 function read() {
     //找到赏金控件
-    if (!id("bvk").depth(11).findOne(15000)) { return false; }
-
+    if (!id("circle_progress").depth(11).findOne(15000)) { return false; }
     sleep(3000);
     log("趣头条---滑动文章或视频页中...");
     for (let i = 0; i < 10; i++) {
         swipeVideo(i);
         sleep(random(100, 150));
+        if (textContains("展开全文").depth(18).findOnce()) {  //Log(textContains("展开全文").depth(18).findOnce()); 
+        clickCenter(textContains("展开全文").depth(18)); }
+
+        if (id("iv_banner_comment").depth(12).findOnce()) { click("文章"); }
     }
     return true;
 
@@ -62,13 +67,16 @@ function read() {
 
 //未测试
 function signIn() {
-    if (!menuArea(depth(7).text("我的"))) { return; }
+    if (!menuArea(depth(10).text("我的"))) { return; }
 
-    clickCenter(depth(7).text("任务"), 5000);
+    clickCenter(depth(10).text("任务中心"), 5000);
 
-    if (clickCenter(depth(6).text("看视频再领"), 3000)) {
+    if (clickCenter(depth(11).id("sign_btn_container"), 5000)) {
+        if (text("您今天已签到！").depth(7).findOne(3000)) { back(); return; }
         Log("签到");
-        clickCenter(text("关闭").className("android.widget.TextView").depth(9), 60000);
+        clickCenter(id("rl_count").depth(7), 10000);
+        sleep(1500);
+        back();
     } else {
         Log("已签到");
     }
@@ -107,6 +115,9 @@ function popUpEvent() {
     }
     else if (textContains("跳过广告").findOnce()) {
         clickCenter(textContains("跳过广告"));
+    }
+    else if (id("img_close").depth(5).findOnce()) {
+        back();
     }
 }
 

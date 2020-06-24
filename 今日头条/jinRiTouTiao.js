@@ -5,8 +5,9 @@ var debugBool = true;
 test();
 
 function test() {
-    // run(5);
-    if (id("iv_banner_comment").depth(12).findOnce()) { click("文章"); }else{Log(id("iv_banner_comment").depth(12).findOnce())}
+    // signIn();
+    run(5);
+    // if (id("iv_banner_comment").depth(12).findOnce()) { click("文章"); }else{Log(id("iv_banner_comment").depth(12).findOnce())}
 }
 
 function run(count) {
@@ -14,8 +15,8 @@ function run(count) {
     //确定在头条页面
     readArticleOrWatchVideo();
     while (newCount < count) {
-        Log(id("xw").depth(15).findOne(5000));
-        let newList = id("xw").depth(15).find();  //获取所有文章的时间标注
+        Log(id("k_").depth(17).findOne(5000));
+        let newList = id("k_").depth(17).find();  //获取所有文章的时间标注
         Log(newList.length);
         if (newList.length > 0) {
             clickCenterByNode(newList[random(0, newList.length - 1)]);
@@ -25,7 +26,7 @@ function run(count) {
             do {
                 back();
                 Log("退出文章");
-            } while (!id("xw").depth(15).findOne(5000));
+            } while (!id("k_").depth(17).findOne(5000));
         }
         Log("翻页");
         swipeVideo(1, 1000, 1500);
@@ -35,19 +36,19 @@ function run(count) {
 }
 
 function readArticleOrWatchVideo() {
-    if (!menuArea(depth(7).text("我的"))) { return; }
+    if (!menuArea(depth(10).text("我的"))) { return; }
 
-    clickCenter(depth(7).text("我的"), 5000);
+    clickCenter(depth(10).text("我的"), 5000);
     sleep(1500);
 
-    clickCenter(depth(7).text("头条"), 3000);
+    clickCenter(depth(10).text("首页"), 3000);
 
-    clickCenter(depth(7).text("刷新"), 3000);
+    clickCenter(depth(15).text("推荐"), 3000);
 }
 
 function read() {
     //找到赏金控件
-    if (!id("bvk").depth(11).findOne(15000)) { return false; }
+    if (!id("a8s").depth(14).findOne(15000)) { return false; }
 
     sleep(3000);
     log("趣头条---滑动文章或视频页中...");
@@ -62,16 +63,17 @@ function read() {
 
 //未测试
 function signIn() {
-    if (!menuArea(depth(7).text("我的"))) { return; }
+    if (!menuArea(depth(10).text("我的"))) { return; }
+log(1)
+    clickCenter(depth(10).text("任务"), 5000);
 
-    clickCenter(depth(7).text("任务"), 5000);
-
-    if (clickCenter(depth(6).text("看视频再领"), 3000)) {
-        Log("签到");
-        clickCenter(text("关闭").className("android.widget.TextView").depth(9), 60000);
-    } else {
-        Log("已签到");
+    if(textContains("签到成功").depth(16).findOne(5000)){
+        clickCenter(depth(17).text("看视频再领"), 3000);
+        sleep(20000);
+        back();
     }
+    else if(text("签到未成功，请重试").depth(16).findOne(5000)){clickCenter(text("好的").depth(16)); signIn();}
+
 }
 
 /**
