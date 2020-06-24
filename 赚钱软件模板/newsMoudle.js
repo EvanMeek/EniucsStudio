@@ -1,31 +1,51 @@
-
-
 var debugBool = true;
 
-test();
-
 function test() {
-    // run(5);
-    if (id("iv_banner_comment").depth(12).findOnce()) { click("文章"); }else{Log(id("iv_banner_comment").depth(12).findOnce())}
+    run(5);
 }
 
 function run(count) {
-    let newCount = 0;
     //确定在头条页面
-    readArticleOrWatchVideo();
+    newsArea();
+    //开始刷
+    readNews(count);
+}
+
+/**
+ * 进入刷文章的界面
+ */
+function newsArea() {
+    if (!menuArea(depth(10).text("我的"))) { return; }
+
+    clickCenter(depth(10).text("我的"), 5000);
+    sleep(1500);
+
+    clickCenter(depth(10).text("头条"), 3000);
+
+    clickCenter(depth(10).text("刷新"), 3000);
+}
+
+/**
+ * 刷文章
+ * @param {数量}} count 文章的篇数
+ * 
+ */
+function readNews(count){
+    let newCount = 0;
+    let selector = id("tv_news_timeline").depth(21);    //文章的选择器
     while (newCount < count) {
-        Log(id("xw").depth(15).findOne(5000));
-        let newList = id("xw").depth(15).find();  //获取所有文章的时间标注
+        Log(selector.findOne(5000));
+        let newList = selector.find();  //获取所有文章的时间标注
         Log(newList.length);
         if (newList.length > 0) {
-            clickCenterByNode(newList[random(0, newList.length - 1)]);
+            clickCenterByNode(newList[random(0, (newList.length - 1))]);
             log("================第" + (newCount + 1) + "次阅读================");
             read() ? newCount++ : Log("没有找到文章");
             log("=========================================");
             do {
                 back();
                 Log("退出文章");
-            } while (!id("xw").depth(15).findOne(5000));
+            } while (!selector.findOne(5000));
         }
         Log("翻页");
         swipeVideo(1, 1000, 1500);
@@ -34,31 +54,24 @@ function run(count) {
     }
 }
 
-function readArticleOrWatchVideo() {
-    if (!menuArea(depth(7).text("我的"))) { return; }
-
-    clickCenter(depth(7).text("我的"), 5000);
-    sleep(1500);
-
-    clickCenter(depth(7).text("头条"), 3000);
-
-    clickCenter(depth(7).text("刷新"), 3000);
-}
-
+/**
+ * 模拟人工阅读新闻
+ * 如果在阅读中会有其他的情况,可以重构
+ */
 function read() {
-    //找到赏金控件
-    if (!id("bvk").depth(11).findOne(15000)) { return false; }
-
+    //找到进入文章后唯一特征
+    if (!id("circle_progress").depth(11).findOne(15000)) { return false; }
     sleep(3000);
-    log("趣头条---滑动文章或视频页中...");
+    log("头条---滑动文章或视频页中...");
     for (let i = 0; i < 10; i++) {
         swipeVideo(i);
         sleep(random(100, 150));
+        // if (textContains("展开全文").depth(18).findOnce()) { clickCenter(textContains("展开全文").depth(18)); }
+
+        // if (id("iv_banner_comment").depth(12).findOnce()) { click("文章"); }
     }
     return true;
-
 }
-
 
 //未测试
 function signIn() {
