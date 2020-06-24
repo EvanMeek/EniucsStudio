@@ -5,7 +5,6 @@ function test() {
 
     signIn();
     // run(1);
-
 }
 
 /**
@@ -68,24 +67,6 @@ function signIn() {
         else {
             return;
         }
-
-        // is = clickCenter(textContains("金币翻倍"),3000);
-        // if (!is) {
-        //     return;
-        // }
-        // if (text("点击重播").findOne(65000)) {
-        //     clickCenter(id("tt_video_ad_close"),65000);
-        //     back();
-        // }
-        // sleep(20000);
-        // for (let i = 0; i < 10; i++) {
-        //     if (id("tt_video_ad_close").findOnce() || text("点击重播").findOnce()) {
-        //         break;
-        //     }
-        //     sleep(5000);
-        // }
-        // back();
-        // clickCenter(id("ki"));
     }
 }
 

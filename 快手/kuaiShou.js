@@ -336,9 +336,9 @@ function popUpEvent() {
         sleep(1000);
         click("等待");
     }
-    else if (text("知道了").findOnce()) {
+    else if (text("立即参加").findOnce()) {
         sleep(300);
-        click("知道了");
+        back();
     }
     else if (text("立即更新").findOnce()) {
         sleep(300);
