@@ -1,9 +1,10 @@
 var debugBool = true;
 // test();
 
-function test() {
-
-    signIn();
+function test(str) {
+    str = str ? str : "默认值";
+    Log(str);
+    // signIn();
     // run(1);
 }
 
@@ -87,10 +88,10 @@ function popUpEvent() {
     else if (text("立即查看").depth(5).findOnce()) {
         clickCenter(id("gn"));
     }
-    else if(textContains("看视频再送").depth(7).findOnce()){
+    else if (textContains("看视频再送").depth(7).findOnce()) {
         clickCenter(id("ki"));
     }
-    else if(text("赚钱小技巧").depth(11).findOnce()){
+    else if (text("赚钱小技巧").depth(11).findOnce()) {
         back();
     }
 }
@@ -317,7 +318,7 @@ function Log(obj) {
 
 // 需要调用时取消注释
 module.exports = {
-    type:"video",
+    type: "video",
     run: run,    //刷视频
     signIn: signIn,  //签到
     popUpEvent: popUpEvent,  //弹窗
