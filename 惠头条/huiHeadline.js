@@ -125,6 +125,8 @@ function popupWindow() {
     uiBaseClick.clickCenterBySelector(img_close, 0, 1);
     let iv_card_discard = id("iv_card_discard");
     uiBaseClick.clickCenterBySelector(iv_card_discard, 0, 1);
+    let rewardMoney = id("a3u").depth(4);
+    uiBaseClick.clickCenterBySelector(rewardMoney,0,1);
 }
 function signIn(){}
 

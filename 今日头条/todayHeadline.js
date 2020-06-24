@@ -2,7 +2,9 @@ let uiBaseClick = require("../Libary/uiBase/CLICK.js");
 let uiBaseSwipe = require("../Libary/uiBase/SWIPE.js");
 
 function test() {
-    openTreasureChest();
+    for (let i = 0; i < 5; i++) {
+        readArticle();
+    }
 }
 
 /**
@@ -23,7 +25,7 @@ function monitorLivePush() {
     if (livePushWindow != undefined) {
         let livePushWindow = livePushWindow.parent();
         uiBaseClick.clickCenterBySelector(text("忽略").depth(4).drawingOrder(5).className("android.widget.TextView").clickable(true), 2000);
-    }else{
+    } else {
         log("今日头条---未监测到即时推送");
     }
 }
@@ -35,12 +37,11 @@ function openTreasureChest() {
     // 跳转到任务页
     taskPapge();
     // 宝箱控件
-    let treasureChest = className("android.widget.Image").depth(16).indexInParent(0).clickable(false).textContains("treasure");
-    if (treasureChest != undefined) {
+    let treasureChest = className("android.widget.Image").depth(16).indexInParent(0).textContains("treasure");
+    if (treasureChest) {
         treasureChest = treasureChest.findOne(2000).parent();
         // 点击宝箱
-        uiBaseClick.clickCenterByNode(treasureChest, 0, 20);
-        sleep(2000);
+        uiBaseClick.clickCenterByNode(treasureChest, 0, 2);
         // 看视频领金币
         let watchVideoGetMoney = textContains("看完视频再领");
         uiBaseClick.clickCenterBySelector(watchVideoGetMoney, 0, 2);
@@ -56,17 +57,20 @@ function openTreasureChest() {
  */
 function taskPapge() {
     // 任务页
-    let mainTaskBtn = className("android.widget.TabWidget").depth(8).id("tabs").findOne(2000)().child(3);
-    mainTaskBtn.click();
-    // 监测是否有邀请码弹窗
-    let inviteCode = textContains("点击填写邀请码");
-    if (inviteCode != undefined) {
-        // 进入输入邀请码界面
-        uiBaseClick.clickCenterBySelector(inviteCode, 2000, 2000);
-        // 然后返回;
-        back();
+    let mainTaskBtn = className("android.widget.TabWidget").depth(8).id("tabs").findOne(2000);
+    if (mainTaskBtn) {
+        mainTaskBtn = mainTaskBtn.child(3);
+        mainTaskBtn.click();
+        // 监测是否有邀请码弹窗
+        let inviteCode = textContains("点击填写邀请码");
+        if (inviteCode) {
+            // 进入输入邀请码界面
+            uiBaseClick.clickCenterBySelector(inviteCode, 2000, 2000);
+            // 然后返回;
+            back();
+        }
+        sleep(4000);
     }
-    sleep(4000);
 }
 
 /**
@@ -83,31 +87,34 @@ function readArticle() {
     sleep(800);
     swipe(520, 1920, 528, 320, 100);
     // 从任务页找到阅读文章入口
-    let taskReadArticleOrVideo = className("android.view.View").depth(15).clickable(true).indexInParent(23);
-    if (uiBaseClick.clickCenterBySelector(taskReadArticleOrVideo, 2000)) {
+    let taskReadArticleOrVideo = textContains("阅读文章或视频");
+    if (uiBaseClick.clickCenterBySelector(taskReadArticleOrVideo, 2000, 2)) {
         swipe(520, 500, 520, 1920, 2000);
         sleep(1000);
         swipe(520, 500, 520, 1920, 2000);
         sleep(1000);
         // 首页文章列表
-        let mainArticleList = className("android.support.v7.widget.RecyclerView").depth(14).indexInParent(1).drawingOrder(2).findOne(2000)().children();
-        log("文章个数：" + mainArticleList.size());
-        mainArticleList.forEach(function (art) {
-            log(art.indexInParent() + "=======");
-            // 过滤掉两个置顶
-            if (art.indexInParent() == 2 || art.indexInParent() == 3 || art.indexInParent() == 0) {
-                log("fuck autojs bug!!!");
-            } else {
-                log(art.bounds());
-                // 进入文章
-                uiBaseClick.clickCenterByNode(art, 1000, 1);
-                // 开始阅读
-                swipePapge();
-                // 返回上个页面
-                back();
-                sleep(1000);
-            }
-        });
+        let mainArticleList = className("android.support.v7.widget.RecyclerView").depth(14).indexInParent(1).drawingOrder(2).findOne(2000);
+        if (mainArticleList) {
+            mainArticleList = mainArticleList.children();
+            log("文章个数：" + mainArticleList.size());
+            mainArticleList.forEach(function (art) {
+                log(art.indexInParent() + "=======");
+                // 过滤掉两个置顶
+                if (art.indexInParent() == 2 || art.indexInParent() == 3 || art.indexInParent() == 0 || art.indexInParent == 1) {
+                    log("fuck autojs bug!!!");
+                } else {
+                    log(art.bounds());
+                    // 进入文章
+                    log("是否进入文章: "+uiBaseClick.clickCenterByNode(art, 1000, 1));
+                    // 开始阅读
+                    swipePapge();
+                    // 返回上个页面
+                    back();
+                    sleep(1000);
+                }
+            });
+        }
     } else {
         log("今日头条---进入阅读文章模块失效，请联系上游修复。");
     }
@@ -164,11 +171,11 @@ function signIn() {
 }
 
 
-// test();
-
-module.exports = {
-    type: "news",
-    run: run,
-    signIn: signIn,
-    popUpEvent: monitorLivePush
-}
+test();
+//
+// module.exports = {
+//     type: "news",
+//     run: run,
+//     signIn: signIn,
+//     popUpEvent: monitorLivePush
+// }
