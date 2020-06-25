@@ -1,11 +1,19 @@
 
 
 var debugBool = true;
+var appName = app.getPackageName("惠头条");
 
-test();
+// test();
+
+module.exports = {
+    type: "news",
+    run: run,
+    signIn: signIn,
+    popUpEvent: popUpEvent
+}
 
 function test() {
-    // signIn();
+    signIn();
 
     run(5);
 }
@@ -15,7 +23,7 @@ function run(count) {
     //确定在头条页面
     readArticleOrWatchVideo();
     while (newCount < count) {
-        Log(id("tv_news_timeline").depth(21).findOne(5000));
+        id("tv_news_timeline").depth(21).findOne(5000);
         let newList = id("tv_news_timeline").depth(21).find();  //获取所有文章的时间标注
         Log(newList.length);
         if (newList.length > 0) {
@@ -24,7 +32,7 @@ function run(count) {
             read() ? newCount++ : Log("没有找到文章");
             log("=========================================");
             do {
-                back();
+                appBack(appName);
                 Log("退出文章");
             } while (!depth(10).text("我的").findOne(5000));
         }
@@ -51,13 +59,18 @@ function read() {
     //找到赏金控件
     if (!id("circle_progress").depth(11).findOne(15000)) { return false; }
     sleep(3000);
-    log("趣头条---滑动文章或视频页中...");
+    log("惠头条---滑动文章或视频页中...");
     for (let i = 0; i < 10; i++) {
         swipeVideo(i);
         sleep(random(100, 150));
         if (textContains("展开全文").depth(18).findOnce()) {  //Log(textContains("展开全文").depth(18).findOnce()); 
-        clickCenter(textContains("展开全文").depth(18)); }
-
+            try {
+                sleep(500);
+                clickCenter(textContains("展开全文").depth(18));
+            } catch (error) {
+                Log(error)
+            }
+        }
         if (id("iv_banner_comment").depth(12).findOnce()) { click("文章"); }
     }
     return true;
@@ -113,8 +126,8 @@ function popUpEvent() {
         sleep(1000);
         click("等待");
     }
-    else if (textContains("跳过广告").findOnce()) {
-        clickCenter(textContains("跳过广告"));
+    else if (textContains("跳过").findOnce()) {
+        clickCenter(textContains("跳过"));
     }
     else if (id("img_close").depth(5).findOnce()) {
         back();
@@ -255,6 +268,20 @@ function clickCenterByNode(node, time) {
     }
 }
 
+function appBack(appName) {
+    let curPackageName;
+    curPackageName = depth(5).findOnce();
+    if (curPackageName) {
+        curPackageName = curPackageName.packageName();
+        if (curPackageName == appName) {
+            back();
+        }
+        else {
+            app.launch(appName);
+        }
+    }
+}
+
 
 /**
  * 调试日志
@@ -269,3 +296,4 @@ function Log(obj) {
         log("debug-->" + obj);
     }
 }
+

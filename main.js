@@ -208,9 +208,9 @@ function main() {
         "./百度/baiDuJiSu.js",
         "./抖音/douYin.js",
         // EvanMeek 新闻阅读类
-        "./今日头条/todayHeadline.js",
-        "./趣头条/funnyHeadline.js",
-        "./惠头条/huiHeadline.js"
+        "./今日头条/jinRiTouTiao.js",
+        "./趣头条/quTouTiao.js",
+        "./惠头条/huiTouTiao.js"
     ];
     //
     let appUIArr = [
@@ -223,11 +223,11 @@ function main() {
     while (true) {
         for (let i = 0; i < appNameArr.length; i++) {
             if (appUIArr[i][3].isChecked()) {
-                let appthread = threads.start(function(){
+                let appthread = threads.start(function () {
                     log(appNameArr[i]);
                     makeMoneyAppTemplete(pathArr[i], appNameArr[i], appUIArr[i]);
-                } )
-               appthread.join(0);
+                })
+                appthread.join(0);
             }
         }
         //是否开启循环
