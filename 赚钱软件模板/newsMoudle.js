@@ -130,11 +130,10 @@ function popUpEvent() {
  * @param {随机时间下限} randTime2 
  * @param {滑动高度下限} baifenbi 例如0.8  屏幕高度的80%处
  */
-function swipeVideo(swipeCount, randTime1, randTime2, baifenbi) {
+function swipeNews(swipeCount, randTime1, randTime2, baifenbi) {
     randTime1 = randTime1 || 3000;
     randTime2 = randTime2 || 3500;
     baifenbi = baifenbi || 0.75;
-
     const height = device.height;
     const width = device.width / 2;
     const upY = height * 0.15 + random(-50, 50);//视频下滑的长度 px
