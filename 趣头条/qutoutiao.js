@@ -5,8 +5,7 @@ var debugBool = true;
 test();
 
 function test() {
-    // run(5);
-    if (id("iv_banner_comment").depth(12).findOnce()) { click("文章"); }else{Log(id("iv_banner_comment").depth(12).findOnce())}
+    run(5);
 }
 
 function run(count) {
