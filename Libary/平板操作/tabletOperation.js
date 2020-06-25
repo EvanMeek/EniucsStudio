@@ -47,6 +47,8 @@ function openApp(appName) {
  * @param {应用名} appName 需要退出的应用名
  */
 function killApp(appName) {
+    home();
+    sleep(1500);
     appName = app.getPackageName(appName);
     shell('am force-stop ' + appName);
     Log("退出app");

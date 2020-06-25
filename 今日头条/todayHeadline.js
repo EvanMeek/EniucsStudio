@@ -31,7 +31,7 @@ function openTreasureChest() {
     // 跳转到任务页
     taskPapge();
     // 宝箱控件
-    let treasureChest = className("android.widget.Image").depth(16).indexInParent(0).textContains("treasure");
+    let treasureChest = className("android.widget.Image").depth(16).textContains("treasure");
     if (treasureChest) {
         treasureChest = treasureChest.findOne(2000).parent();
         // 点击宝箱

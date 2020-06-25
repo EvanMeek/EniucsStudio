@@ -5,10 +5,22 @@ let uiBaseSwipe = require("../Libary/uiBase/SWIPE.js");
  签到，刷文章
  */
 
-// test();
+test();
 
 function test() {
     run(5);
+    // let art = id("xw").depth(15).indexInParent(3).findOne(5000);
+    // if (art!=undefined){
+    //     if (uiBaseClick.clickCenterByNode(art, 5000, 3)) {
+    //         log("趣头条---进入文章成功。");
+    //         sleep(1000);
+    //         swipePapge();
+    //         back();
+    //         sleep(1000);
+    //     } else {
+    //         log("趣头条---进入文章模块失效，请联系上游修复。");
+    //     }
+    // }
 }
 /**
  * 总流程
@@ -100,12 +112,12 @@ function readArticleOrWatchVideo() {
     }
     // 主页刷新
     uiBaseSwipe.swipeUpOrDownByDeviceHeight(1, 5000);
-    sleep(5000);
+    sleep(random(4500, 5000));
     /**
      * 首页第一篇文章或视频
      */
     let art = id("xw").depth(15).indexInParent(3).findOne(5000);
-    if (art!=undefined){
+    if (art != undefined) {
         if (uiBaseClick.clickCenterByNode(art, 5000, 3)) {
             log("趣头条---进入文章成功。");
             sleep(1000);
@@ -123,8 +135,8 @@ function readArticleOrWatchVideo() {
  */
 function mainPage() {
     let myPageBtn = textContains("我的").depth(7).findOne(5000);
-    if(myPageBtn){
-        uiBaseClick.clickCenterByNode(myPageBtn,5000,5);
+    if (myPageBtn) {
+        uiBaseClick.clickCenterByNode(myPageBtn, 5000, 5);
         let mainPageBtn = textContains("头条").depth(7).findOne(5000);
         if (mainPageBtn) {
             if (uiBaseClick.clickCenterByNode(mainPageBtn, 5000, 5)) {
@@ -161,8 +173,8 @@ function popupWindow() {
 
 
 module.exports = {
-	type: "news",
-	run: run,
-	signIn: signIn,
-	popUpEvent: popupWindow
+    type: "news",
+    run: run,
+    signIn: signIn,
+    popUpEvent: popupWindow
 }

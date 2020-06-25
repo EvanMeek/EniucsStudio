@@ -2,7 +2,14 @@
 
 var debugBool = true;
 
-test();
+// test();
+
+module.exports = {
+    type: "news",
+    run: run,
+    signIn: signIn,
+    popUpEvent: popUpEvent
+}
 
 function test() {
     run(5);
@@ -13,7 +20,7 @@ function run(count) {
     //确定在头条页面
     readArticleOrWatchVideo();
     while (newCount < count) {
-        Log(id("xw").depth(15).findOne(5000));
+        id("xw").depth(15).findOne(5000);
         let newList = id("xw").depth(15).find();  //获取所有文章的时间标注
         Log(newList.length);
         if (newList.length > 0) {
@@ -63,7 +70,7 @@ function read() {
 function signIn() {
     if (!menuArea(depth(7).text("我的"))) { return; }
 
-    clickCenter(depth(7).text("任务"), 5000);
+    if (!clickCenter(depth(7).text("去签到"), 5000)) { return; }
 
     if (clickCenter(depth(6).text("看视频再领"), 3000)) {
         Log("签到");

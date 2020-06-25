@@ -5,21 +5,28 @@ const _pass = "Yangzelin995;";
 let overSliderCount = 0;
 
 //请求截图权限
-// if (!requestScreenCapture()) {
-//     toast("过滑块需要截图权限支持");
-//     exit();
-// };
-// test();
+if (!requestScreenCapture()) {
+    toast("过滑块需要截图权限支持");
+    exit();
+};
+test();
 
 // ////// 当调用moudle.export时,以上代码全部注释 //////
 // ////////////////////////////////////////////////////
 
 
 function test() {
-    let tt = depth(5).findOne(30000)
-    if(tt){
-        Log("当前应用包名为"+tt.packageName());
+
+    // let tt = depth(13).className("android.view.View").findOnce();
+
+    // Log(tt);
+
+    for (let i = 0; i < 60; i++) {
+        swipeVideo(1);
+        sleep(3000)
+
     }
+    // overSlider(_user, _pass);
     // signIn();
     // cleanCache();
     // run(12);
@@ -120,7 +127,7 @@ function cleanCache() {
 
     //滑出侧边栏
     // swipe(0, 500, random(400, 600), random(400, 500), 200);
-    clickCenter(id("left_btn"),3000);
+    clickCenter(id("left_btn"), 3000);
     //判断侧边栏是否打开
     let set_Btn = text("设置").findOne(3000);
     if (set_Btn) {
@@ -169,10 +176,10 @@ function overSlider(usr, pass) {
             //找到滑块区域控件
             let startX, startY;
             startY = textContains("向右拖动滑块").findOne(1500);
-            if(startY){
+            if (startY) {
                 startY = startY.bounds().centerY();
             }
-            else{
+            else {
                 return;
             }
             let sliderArea = className("android.view.View").depth(13).findOne(1000);
@@ -211,22 +218,21 @@ function overSlider(usr, pass) {
                 }
 
                 //计算X坐标
-                let x2 = pointData.split("|")[1];
+                let x2;
                 let x1;
-                let x;
-                if (x2 != undefined) {
-                    x2 = x2.split(",")[0];
-                    // Log(x2);
-                    x1 = pointData.split("|")[0].split(",")[0];
-                    x = slideBlock.centerX() + (x2 - x1);
-                } else {
-                    x2 = pointData.split("|")[0].split(",")[0];
-                    x = slideBlock.centerX() + (x2 - 55);
+                let endX;
+                if (pointData.indexOf("|") != -1) {
+                    x1 = parseInt(pointData.split("|")[0].split(",")[0]);
+                    x2 = parseInt(pointData.split("|")[1].split(",")[0]);
+                    endX = (x2 - x1) + (sliderArea.left + x1);
+                } 
+                else {
+                    return;
                 }
-                Log(x);
+                Log(endX);
 
                 //滑动滑块
-                swipe(startX, (startY + random(0, 10)), x - 5, (startY + random(0, 10)), random(1000,1500));
+                swipe(startX, (startY + random(0, 10)), endX - 5, (startY + random(0, 10)), random(1000, 1500));
 
                 //回收图片
                 sleep(2000);
@@ -240,10 +246,17 @@ function overSlider(usr, pass) {
         })
         overSliderthread.join(30000)
         overSliderthread.interrupt();
+        sleep(random(1500, 3000));
+        // 如果找到刷新就刷新
+        if (depth(13).className("android.view.View").findOnce()) {
+            clickCenter(depth(13).className("android.view.View"));
+        }
     }
     else if (overSliderCount >= 8) {
         back();
     }
+
+
 
 }
 
@@ -260,7 +273,7 @@ function signIn() {
     //判断侧边栏是否打开
     //滑出侧边栏
     // swipe(0, 500, random(400, 600), random(400, 500), 200);
-    clickCenter(id("left_btn"),3000);
+    clickCenter(id("left_btn"), 3000);
     let moneyBtn = text("去赚钱").findOne(3000);
     if (moneyBtn) {
         sleep(500);
@@ -384,7 +397,7 @@ function swipeVideo(swipeCount) {
         // smlMove( (width - random(-50, 50)), (height + offSet + (videoSwipeDistance / 2)),
         //     (width + random(-50, 50)), (height + offSet - (videoSwipeDistance / 2), 30));
         smlMove(width + random(-50, 50), height + offSet,
-            width + random(-50, 50), height + offSet + (videoSwipeDistance / 2), 30);
+            width + random(-50, 50), height + offSet + (videoSwipeDistance / 2), 130);
     }
     // else if (swipeCount % 2 == 0) {
     //     //双数次上滑        
@@ -392,8 +405,8 @@ function swipeVideo(swipeCount) {
     //         width + random(-50, 50), height + offSet + (videoSwipeDistance / 2), 30);
     // }
     else if (swipeCount == 1 || swipeCount == 5) {
-        smlMove((width - random(-50, 50)), (height + offSet + (videoSwipeDistance / 2)),
-            (width + random(-50, 50)), (height + offSet - (videoSwipeDistance / 2)), 30);
+        swipe((width - random(-50, 50)), (height + offSet + (videoSwipeDistance / 2)),
+            (width + random(-50, 50)), (height + offSet - (videoSwipeDistance / 2)), 130);
     }
     else {
         //单数下滑
@@ -666,7 +679,7 @@ function Log(obj) {
 }
 // 需要调用时取消注释
 module.exports = {
-    type:"video",
+    type: "video",
     run: run,    //快手刷视频
     signIn: signIn,  //快手签到
     popUpEvent: popUpEvent,  //快手弹窗
