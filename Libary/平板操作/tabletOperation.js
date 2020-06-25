@@ -69,6 +69,7 @@ function clearApp(runAppRetain) {
     home();
     //打开最近任务
     recents();
+    sleep(3000);
     searchDelete = descContains("移除").findOne(10000);
     //循环滑动任务 (最多15次)
     for (var time = 0; time < 15; time++) {

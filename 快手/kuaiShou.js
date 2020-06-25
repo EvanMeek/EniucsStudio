@@ -79,17 +79,7 @@ function reduceSimilarWorks() {
     x = random((x - 150), (x + 150));
     press(x, y, 2000);
     //随机选择4个选项
-    let choice = random(0, 3);
-    sleep(1000);
-    if (choice == 0) {
-        click("作品质量差");
-    } else if (choice == 1) {
-        click("不看该作者");
-    } else if (choice == 2) {
-        click("看过类似作品");
-    } else {
-        click("作品引起不适");
-    }
+    click("不感兴趣");
 }
 
 function blackScreenBrushVideo(i) {
@@ -336,9 +326,9 @@ function popUpEvent() {
         sleep(1000);
         click("等待");
     }
-    else if (text("知道了").findOnce()) {
+    else if (text("立即参加").findOnce()) {
         sleep(300);
-        click("知道了");
+        back();
     }
     else if (text("立即更新").findOnce()) {
         sleep(300);
@@ -401,7 +391,7 @@ function swipeVideo(swipeCount) {
     //     smlMove(width + random(-50, 50), height + offSet,
     //         width + random(-50, 50), height + offSet + (videoSwipeDistance / 2), 30);
     // }
-    else if (swipeCount == 1) {
+    else if (swipeCount == 1 || swipeCount == 5) {
         smlMove((width - random(-50, 50)), (height + offSet + (videoSwipeDistance / 2)),
             (width + random(-50, 50)), (height + offSet - (videoSwipeDistance / 2)), 30);
     }
@@ -455,7 +445,7 @@ function likeAndFollow(range, bool) {
     else if (isreduceSimilarWorks == 4) {
         //减少类似作品
         swipeVideo(1);
-        sleep(1500);
+        sleep(3000);
         reduceSimilarWorks();
         sleep(1000);
         blackScreenBrushVideo(1);
