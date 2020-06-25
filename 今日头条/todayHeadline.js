@@ -1,12 +1,6 @@
 let uiBaseClick = require("../Libary/uiBase/CLICK.js");
 let uiBaseSwipe = require("../Libary/uiBase/SWIPE.js");
 
-function test() {
-    for (let i = 0; i < 5; i++) {
-        readArticle();
-    }
-}
-
 /**
  * 总流程
  * @param {count} 篇数
@@ -74,49 +68,48 @@ function taskPapge() {
 }
 
 /**
+ * 跳转到任务页，并且处理筛选掉弹窗
+ */
+function mainPapge() {
+    // 任务页
+    let mainTaskBtn = className("android.widget.TabWidget").depth(8).id("tabs").findOne(2000);
+    if (mainTaskBtn) {
+        mainTaskBtn = mainTaskBtn.child(0);
+        if (uiBaseClick.clickCenterByNode(mainTaskBtn, 2000, 5)) {
+            log("进入首页成功");
+            sleep(2000);
+        } else {
+            log("进入首页失败");
+        }
+    }
+}
+
+/**
  * 阅读文章
  */
 function readArticle() {
     sleep(1000);
     // 去往任务
-    taskPapge();
-    sleep(1000);
-    swipe(520, 1920, 528, 320, 100);
-    sleep(800);
-    swipe(520, 1920, 528, 320, 100);
-    sleep(800);
-    swipe(520, 1920, 528, 320, 100);
-    // 从任务页找到阅读文章入口
-    let taskReadArticleOrVideo = textContains("阅读文章或视频");
-    if (uiBaseClick.clickCenterBySelector(taskReadArticleOrVideo, 2000, 2)) {
-        swipe(520, 500, 520, 1920, 2000);
-        sleep(1000);
-        swipe(520, 500, 520, 1920, 2000);
-        sleep(1000);
+    mainPapge();
+    swipe(520, 500, 520, 1920, 2000);
+    sleep(5000);
+    swipe(520, 500, 520, 1920, 2000);
+    sleep(5000);
+    let mainArticleList = className("android.support.v7.widget.RecyclerView").depth(14).find();
+    if (!mainArticleList.empty()) {
         // 首页文章列表
-        let mainArticleList = className("android.support.v7.widget.RecyclerView").depth(14).indexInParent(1).drawingOrder(2).findOne(2000);
-        if (mainArticleList) {
-            mainArticleList = mainArticleList.children();
-            log("文章个数：" + mainArticleList.size());
-            mainArticleList.forEach(function (art) {
-                log(art.indexInParent() + "=======");
-                // 过滤掉两个置顶
-                if (art.indexInParent() == 2 || art.indexInParent() == 3 || art.indexInParent() == 0 || art.indexInParent == 1) {
-                    log("fuck autojs bug!!!");
-                } else {
-                    log(art.bounds());
-                    // 进入文章
-                    log("是否进入文章: "+uiBaseClick.clickCenterByNode(art, 1000, 1));
-                    // 开始阅读
-                    swipePapge();
-                    // 返回上个页面
-                    back();
-                    sleep(1000);
-                }
-            });
+        mainArticleList = mainArticleList[1].children();
+        // 可点击文章列表
+        mainArticleList = mainArticleList.find(className("android.widget.RelativeLayout").depth(15));
+        if (uiBaseClick.clickCenterByNode(mainArticleList[2], 5000, 5)) {
+            log("今日头条---进入文章成功!");
+            // 开始阅读
+            swipePapge();
+            back();
+            sleep(5000);
+        } else {
+            log("今日头条---进入文章失败.");
         }
-    } else {
-        log("今日头条---进入阅读文章模块失效，请联系上游修复。");
     }
 }
 
@@ -170,12 +163,9 @@ function signIn() {
     }
 }
 
-
-test();
-//
-// module.exports = {
-//     type: "news",
-//     run: run,
-//     signIn: signIn,
-//     popUpEvent: monitorLivePush
-// }
+module.exports = {
+    type: "news",
+    run: run,
+    signIn: signIn,
+    popUpEvent: monitorLivePush
+}

@@ -32,10 +32,10 @@ function run(count) {
 function taskGetMoney() {
 	taskPapge();
 	uiBaseSwipe.swipeUpOrDownByDeviceHeight(0, 400);
-	let waitGet = text("待领取").findOne(2000);
+	let waitGet = text("待领取").findOne(5000);
 	if (waitGet) {
 		waitGet = waitGet.parent().parent();
-		if (uiBaseClick.clickCenterByNode(waitGet, 0, 1)) {
+		if (uiBaseClick.clickCenterByNode(waitGet, 5, 5)) {
 			log("趣头条---天天领现金完成。");
 		} else {
 			log("趣头条---天天领现金模块失效，请联系上游修复。");
@@ -54,7 +54,7 @@ function signIn() {
 
 	if (getMoneyAndWatchVideo.findOne(3000) != undefined) {
 		getMoneyAndWatchVideo = getMoneyAndWatchVideo.findOne(2000).parent();
-		uiBaseClick.clickCenterByNode(getMoneyAndWatchVideo, 0, 5);
+		uiBaseClick.clickCenterByNode(getMoneyAndWatchVideo, 5, 5);
 		uiBaseClick.clickCenterBySelector(text("关闭").className("android.widget.TextView").indexInParent(1).drawingOrder(2).depth(9), 60000, 3);
 		back();
 		log("趣头条---签到完成。");
@@ -68,8 +68,8 @@ function signIn() {
  */
 function taskPapge() {
 	// 任务页
-	let mainTaskBtn = className("android.widget.LinearLayout").depth(4).id("mg").findOne(2000).child(3);
-	if (uiBaseClick.clickCenterByNode(mainTaskBtn, 0, 5)) {
+	let mainTaskBtn = className("android.widget.LinearLayout").depth(4).id("mg").findOne(5000).child(3);
+	if (uiBaseClick.clickCenterByNode(mainTaskBtn, 5, 5)) {
 		log("趣头条---跳转至任务页成功!");
 	} else {
 		log("趣头条---无法跳转至任务页");
@@ -82,14 +82,14 @@ function taskPapge() {
 function readArticleOrWatchVideo() {
 	// 回到首页
 	mainPage();
-	sleep(3000);
+	sleep(5000);
 	// 首页右上角时段奖励
-	let getMoney = className("android.widget.TextView").depth(13).indexInParent(3).drawingOrder(3).findOne(2000);
+	let getMoney = className("android.widget.TextView").depth(13).indexInParent(3).drawingOrder(3).findOne(5000);
 	if (getMoney) {
 		getMoney = getMoney.parent().parent();
-		uiBaseClick.clickCenterByNode(getMoney, 2000, 2);
+		uiBaseClick.clickCenterByNode(getMoney, 5000, 5);
 		let popupWindow = text("我知道了");
-		if (uiBaseClick.clickCenterBySelector(popupWindow, 0, 2)) {
+		if (uiBaseClick.clickCenterBySelector(popupWindow, 5, 5)) {
 			log("趣头条---时段奖励CD中...");
 		} else {
 			log("趣头条---时段奖励领取成功。");
@@ -97,18 +97,18 @@ function readArticleOrWatchVideo() {
 		sleep(2000);
 	}
 	// 主页刷新
-	uiBaseSwipe.swipeUpOrDownByDeviceHeight(1, 2000);
-	sleep(3000);
+	uiBaseSwipe.swipeUpOrDownByDeviceHeight(1, 5000);
+	sleep(5000);
 	/**
 	 * 首页第一篇文章或视频
 	 */
 	let art = className("android.widget.RelativeLayout").depth(13).drawingOrder(5).indexInParent(3).clickable(true);
-	if (uiBaseClick.clickCenterBySelector(art, 0, 2)) {
+	if (uiBaseClick.clickCenterBySelector(art, 5, 5)) {
 		log("趣头条---进入文章成功。");
-		sleep(2000);
+		sleep(5000);
 		swipePapge();
 		back();
-		sleep(2000);
+		sleep(5000);
 	} else {
 		log("趣头条---进入文章模块失效，请联系上游修复。");
 	}
@@ -117,10 +117,10 @@ function readArticleOrWatchVideo() {
  * 跳转至首页
  */
 function mainPage() {
-	let mainBtn = className("android.widget.LinearLayout").depth(4).id("mg").findOne(2000);
+	let mainBtn = className("android.widget.LinearLayout").depth(4).id("mg").findOne(5000);
 	if (mainBtn) {
 		mainBtn = mainBtn.child(0);
-		if (uiBaseClick.clickCenterByNode(mainBtn, 0, 3)) {
+		if (uiBaseClick.clickCenterByNode(mainBtn, 5, 5)) {
 			log("趣头条---跳转至首页成功!");
 		} else {
 			log("趣头条---无法跳转至首页。");
@@ -136,8 +136,8 @@ function swipePapge() {
 		sleep(500);
 	}
 	for (let i = 0; i < 10; i++) {
-		uiBaseSwipe.swipeUpOrDownByDeviceHeight(1, 200);
-		uiBaseSwipe.swipeUpOrDownByDeviceHeight(0, 200);
+		uiBaseSwipe.swipeUpOrDownByDeviceHeight(1, 500);
+		uiBaseSwipe.swipeUpOrDownByDeviceHeight(0, 500);
 	}
 }
 
@@ -147,7 +147,7 @@ function popupWindow() {
 	let initPage = textContains("跳过广告");
 	uiBaseClick.clickCenterBySelector(initPage, 5000, 2);
 	let rewardMoney = id("a3u").depth(4);
-	uiBaseClick.clickCenterBySelector(rewardMoney,0,1);
+	uiBaseClick.clickCenterBySelector(rewardMoney,0,2);
 }
 
 module.exports = {
