@@ -100,6 +100,7 @@ function readArticleOrWatchVideo() {
     }
     // 主页刷新
     uiBaseSwipe.swipeUpOrDownByDeviceHeight(1, 5000);
+    sleep(5000);
     /**
      * 首页第一篇文章或视频
      */
