@@ -223,8 +223,11 @@ function main() {
     while (true) {
         for (let i = 0; i < appNameArr.length; i++) {
             if (appUIArr[i][3].isChecked()) {
-                log(appNameArr[i]);
-                makeMoneyAppTemplete(pathArr[i], appNameArr[i], appUIArr[i]);
+                let appthread = threads.start(function(){
+                    log(appNameArr[i]);
+                    makeMoneyAppTemplete(pathArr[i], appNameArr[i], appUIArr[i]);
+                } )
+               appthread.join(0);
             }
         }
         //是否开启循环
