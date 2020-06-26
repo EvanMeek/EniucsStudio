@@ -5,11 +5,11 @@ const _pass = "Yangzelin995;";
 let overSliderCount = 0;
 
 //请求截图权限
-if (!requestScreenCapture()) {
-    toast("过滑块需要截图权限支持");
-    exit();
-};
-test();
+// if (!requestScreenCapture()) {
+//     toast("过滑块需要截图权限支持");
+//     exit();
+// };
+// test();
 
 // ////// 当调用moudle.export时,以上代码全部注释 //////
 // ////////////////////////////////////////////////////
@@ -171,7 +171,7 @@ function cleanCache() {
  */
 function overSlider(usr, pass) {
     if (text("拖动滑块").findOne(500) && overSliderCount < 8) {
-        let overSliderthread = threads.start(function () {
+        try {
             sleep(3000);
             //找到滑块区域控件
             let startX, startY;
@@ -224,32 +224,29 @@ function overSlider(usr, pass) {
                 if (pointData.indexOf("|") != -1) {
                     x1 = parseInt(pointData.split("|")[0].split(",")[0]);
                     x2 = parseInt(pointData.split("|")[1].split(",")[0]);
-                    endX = (x2 - x1) + (sliderArea.left + x1);
-                } 
+                    endX = (x2 - x1) + (sliderArea.left + x1 + 15);
+                }
                 else {
                     return;
                 }
                 Log(endX);
-
                 //滑动滑块
-                swipe(startX, (startY + random(0, 10)), endX - 5, (startY + random(0, 10)), random(1000, 1500));
-
+                swipe(startX, (startY + random(0, 10)), endX - 5, (startY + random(0, 10)), random(1450, 1500));
                 //回收图片
                 sleep(2000);
                 p1.recycle();
                 p2.recycle();
-
-
             } else {
                 toastLog("没有找到滑块积木")
             }
-        })
-        overSliderthread.join(30000)
-        overSliderthread.interrupt();
+        } catch (error) {
+            Log(error);
+        }
         sleep(random(1500, 3000));
         // 如果找到刷新就刷新
         if (depth(13).className("android.view.View").findOnce()) {
             clickCenter(depth(13).className("android.view.View"));
+            overSlider(usr,pass);
         }
     }
     else if (overSliderCount >= 8) {
