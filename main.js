@@ -13,9 +13,9 @@ var initFloatWindowThread = threads.start(function () {
     initFloatWindow.close();
 });
 
-threads.start(function () {
-    initFloatWindowThread.join(0);
-})
+// threads.start(function () {
+//     initFloatWindowThread.join(0);
+// })
 
 // 本程序未加密，如果你尝试反编译学习，非常欢迎。但是你要是拿去倒卖，你全家死光光。
 var pjyModule = require("./Libary/utils/pjy.js");
@@ -23,6 +23,7 @@ var tabletOperation = require("./Libary/平板操作/tabletOperation.js");
 var ViewIdListRegisterListener = require("./Libary/utils/saveUIConfig.js");
 var dataUtils = require("./Libary/utils/dataUtils.js");
 var checkUpdate = require("./Libary/utils/checkUpdate.js");
+// const { Log } = require("./Libary/平板操作/tabletOperation.js");
 // const _user = "yzl178me";
 // const _pass = "Yangzelin995;";
 var Apparr = ["Auto.js Pro", "掘金时代"];	//不被清理的应用数组,通用
@@ -158,7 +159,7 @@ function switchEvent(uiobj, url, appPackages) {
     let is;
     uiobj.on("check", function (checked) {
         if (checked) {
-            let filePath = files.getSdcardPath() + "/test.apk";
+            // let filePath = files.getSdcardPath() + "/test.apk";
             is = appIsInstalled(appPackages);
             if (!is) {
                 confirm("检查到该应用未安装,是否安装?").then(value => {
@@ -181,10 +182,6 @@ function switchEvent(uiobj, url, appPackages) {
  * 主函数
  */
 function main() {
-    // 等待线程完成之后杀死初始化权限线程
-    initPermissionThread.join(60000);
-    initPermissionThread.interrupt();
-
     let appNameArr = [
         // 178me 视频播放类
         "快手极速版",
@@ -223,11 +220,12 @@ function main() {
     while (true) {
         for (let i = 0; i < appNameArr.length; i++) {
             if (appUIArr[i][3].isChecked()) {
-                let appthread = threads.start(function () {
+                try {
                     log(appNameArr[i]);
                     makeMoneyAppTemplete(pathArr[i], appNameArr[i], appUIArr[i]);
-                })
-                appthread.join(0);
+                } catch (error) {
+                    log(error);
+                }
             }
         }
         //是否开启循环
@@ -289,7 +287,6 @@ function makeMoneyAppTemplete(path, appNameStr, uiObjArr) {
             while (true) {
                 //弹窗事件
                 makeMoneyApp.popUpEvent();
-                sleep(1000);
             }
         });
 
@@ -300,7 +297,8 @@ function makeMoneyAppTemplete(path, appNameStr, uiObjArr) {
         if (makeMoneyApp.type == "news") {
             // param {}
             makeMoneyApp.run(uiObjArr[2].text());
-        } else {
+        }
+        else if (makeMoneyApp.type == "video") {
             makeMoneyApp.run((uiObjArr[2].text()), ui.swLike.isChecked());
         }
         //关闭软件
@@ -390,7 +388,6 @@ function saveConfig() {
     // let initStorage = storages.create("InitConfig")
     let storage = storages.create('UIConfigInfo')
     let 需要备份和还原的控件id列表集合 = [
-
         [
             // 178me 换号区间
             'kuaiShouSwitchAccountBegin', 'kuaiShouswitchAccountEnd', 'weiShiSwitchAccountBegin', 'weiShiSwitchAccountEnd'
@@ -521,5 +518,4 @@ function initPermission() {
         toast("过滑块需要截图权限支持");
         exit();
     }
-    ;
 }
